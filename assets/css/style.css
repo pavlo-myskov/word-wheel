@@ -14,7 +14,7 @@ body {
     background-color: whitesmoke;
     font-family: 'Open Sans', sans-serif ;
     font-weight: regular;
-    color: #2A2F1F;
+    color: #6c582c;
 }
 
 .game-container {
@@ -30,6 +30,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    align-items: center;
     height: 40vh;
     background: linear-gradient(to left bottom, #9ddcdc, #bee399);
     border-radius: 0 0 50% 50%;
@@ -55,7 +56,32 @@ body {
 }
 
 .spin-button {
-    margin-left: auto;
-    margin-right: auto;
     width: 30%;
+    height: 20%;
+    background: linear-gradient(#a58e57, #bee399, #a58e57);
+    border: 5px groove #7f8b7ced;
+    border-radius: 10px;
+}
+
+.wheel-wrapper {
+    aspect-ratio: 1 / 1;
+    height: 50%;
+}
+
+.wheel-outer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: #d9d9db;
+    border-radius: 50%;
+    border: 10px solid #7f8b7c;
+}
+
+.wheel-inner {
+    background: #bac189;
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
 }
