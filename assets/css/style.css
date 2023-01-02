@@ -31,6 +31,8 @@ body {
     flex-direction: column;
     justify-content: space-around;
     height: 40vh;
+    background: linear-gradient(to left bottom, #9ddcdc, #bee399);
+    border-radius: 0 0 50% 50%;
 }
 
 .heading {
