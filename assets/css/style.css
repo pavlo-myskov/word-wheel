@@ -37,6 +37,7 @@ body {
     height: 35vh;
     background: linear-gradient(to left bottom, #9ddcdc, #bee399);
     border-radius: 0 0 50% 50%;
+    z-index: 2;
 }
 
 /* Header */
@@ -47,6 +48,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    z-index: 3;
 }
 
 .heading > * {
@@ -66,6 +68,7 @@ body {
     border: 5px groove #7f8b7c;
     border-radius: 10px;
     font-size: 1.1em;
+    z-index: 8;
 }
 
 /* Wheel */
@@ -100,3 +103,19 @@ body {
       transform: rotateZ(360deg);
     }
   }
+
+
+/* MAIN SECTION */
+
+/* Word Definition */
+#definition-wrapper {
+    overflow: hidden;
+    color: black;
+    text-align: center;
+    margin: 30px 40px 5px;
+    padding: 5px 0;
+    border-top: 2px inset;
+    border-bottom: 2px outset;
+    height: 0px;
+    transition: height 0.4s ease-out;
+}
