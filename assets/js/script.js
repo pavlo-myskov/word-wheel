@@ -1,6 +1,6 @@
 let but = document.getElementsByTagName('button')[0]
+but.addEventListener('click', insertWord)
 but.addEventListener('click', displayDefinition)
-
 
 /**
  * Displays the word definition for the user
@@ -16,3 +16,22 @@ function displayDefinition() {
   definitionWrapper.style.height = `${textHeight + 15}px`;  // Expand the definition-wrapper to text height;
 }
 
+let word = 'potato';
+
+function insertWord() {
+  let wordListEl = document.getElementById('word-list');
+
+  for (char of word) {
+    let li = document.createElement('li');
+    li.setAttribute('class', 'flip')
+    li.innerHTML = char
+    wordListEl.appendChild(li)
+
+    li.addEventListener('click', flipper)
+  }
+}
+
+function flipper() {
+  this.removeAttribute('class')
+  console.log(this)
+}
