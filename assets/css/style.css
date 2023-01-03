@@ -87,8 +87,27 @@ body {
 }
 
 .wheel-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: #bac189;
     width: 90%;
     height: 90%;
     border-radius: 50%;
 }
+
+.animated-circle {
+    background: transparent;
+    width: 85%;
+    height: 85%;
+    border: 8px double #bac189;
+    border-radius: 50%;
+    border-left-color: #7f8b7c;
+    border-right-color: #7f8b7c;
+    animation: spin 20s linear infinite;
+}
+@keyframes spin {
+    100% {
+      transform: rotateZ(360deg);
+    }
+  }
