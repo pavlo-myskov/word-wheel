@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
+/* GLOBAL AREA*/
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +8,7 @@
 }
 
 html {
-    font-size: 18px;
+    font-size: 20px;
   }
 
 body {
@@ -17,6 +18,7 @@ body {
     color: #6c582c;
 }
 
+/* MAIN GAME CONTAINER */
 .game-container {
     position: relative;
     background-color: #ecece6;
@@ -26,6 +28,7 @@ body {
     margin-right: auto;
 }
 
+/* SPIN AND HEADER SECTION */
 .spin-section {
     display: flex;
     flex-direction: column;
@@ -36,33 +39,37 @@ body {
     border-radius: 0 0 50% 50%;
 }
 
+/* Header */
 .heading {
     position: absolute;
     top: 0;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.heading h1, .heading p {
-    font-size: 20px;
-    font-weight: bold;
+.heading > * {
+    font-size: 1.2em;
+    font-weight: 700;
     padding: 10px 20px;
 }
 
-.heading h1 {
-    float: left;
-}
-.heading p {
-    float: right;
+.logo {
+    width: 7em;
 }
 
+/* Spin button */
 .spin-button {
     width: 30%;
     height: 20%;
     background: linear-gradient(#a58e57, #bee399, #a58e57);
-    border: 5px groove #7f8b7ced;
+    border: 5px groove #7f8b7c;
     border-radius: 10px;
+    font-size: 1.1em;
 }
 
+/* Wheel */
 .wheel-wrapper {
     aspect-ratio: 1 / 1;
     height: 50%;
