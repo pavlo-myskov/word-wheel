@@ -78,6 +78,7 @@ body {
 }
 
 .wheel-outer {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,6 +95,7 @@ body {
     height: 85%;
     border: 5px double #bac189;
     border-radius: 50%;
+    border-color: transparent;
     border-left-color: #7f8b7c;
     border-right-color: #7f8b7c;
     animation: spin 20s linear infinite;
@@ -104,6 +106,10 @@ body {
     }
   }
 
+#wheel-letter {
+    position: absolute;
+    font-size: 6vh;
+}
 
 /* MAIN SECTION */
 
@@ -167,7 +173,6 @@ body {
     background: #7f8b7c;
     transform: rotateY(-179deg);
 }
-
 
 .flip .front{
     transform: rotateY(180deg);
