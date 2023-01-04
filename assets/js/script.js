@@ -5,6 +5,9 @@ spinButton.addEventListener('click', runGame)
  * Insert random letters to the wheel by interval and than Run functions
  */
 function runGame() {
+  let word = getRandomWord();  // get random word from and store it to the var
+  let definition = getDefinition(word); // get definition by the word and store it to the var
+
   spinButton.disabled = true;  // disable the spin-button to prevent restart the 'runGame' function
 
   // start changing random letters in the wheel by interval
@@ -16,10 +19,6 @@ function runGame() {
 
   // Set a delay 1sec for running functions
   setTimeout(function() {
-    // let word = getRandomWord();  // store the recieved word to the var
-    // let definition = getDefinition(); // store the recieved definition to the var
-    let word = 'potato';
-    let definition = 'Annual native to South America having underground stolons bearing edible starchy tubers; widely cultivated as a garden vegetable; vines are poisonous'
     displayDefinition(definition);  // run displayDefinition func with passed definition
     insertWord(word);  // run insertWord func with passed word
 
@@ -27,6 +26,20 @@ function runGame() {
     document.getElementById('wheel-letter').innerHTML = "?";  // insert '?' instead of random letters
     animCircle.style.animationDuration = '20s';  // return the wheel animation to normal rotation speed
   }, 1000);
+}
+
+/**
+ * Get random word from the object
+ */
+function getRandomWord() {
+  let keys = Object.keys(dict);
+  let randNum = Math.floor(Math.random() * keys.length);
+  let word = keys[randNum];
+  return word.toLowerCase();
+}
+
+function getDefinition(word) {
+  return dict[word];
 }
 
 /**
@@ -46,6 +59,8 @@ function displayDefinition(definition) {
   let definitionEl = document.getElementById('definition');
   let definitionWrapper = document.getElementById('definition-wrapper');
 
+  definitionWrapper.style.height = '0px';  // reset height of the definition field
+
   definitionEl.innerHTML = definition;  // Insert the definition into definition element
   let textHeight = definitionEl.offsetHeight;  // Get the height of the inserted text;
   definitionWrapper.style.height = `${textHeight + 15}px`;  // Expand the definition-wrapper to text height;
@@ -57,6 +72,7 @@ function displayDefinition(definition) {
  */
 function insertWord(word) {
   let wordListEl = document.getElementById('word-list');
+  wordListEl.innerHTML = '';  // clear the wordListEl element before inserting new word
 
   for (char of word) {
     let li = document.createElement('li');  // loop the word and create 'li'element-card for each letter
@@ -72,7 +88,9 @@ function insertWord(word) {
   };
 }
 
-
+/**
+ * Show the hidden letter by removing the 'flip' class from 'li' element
+ */
 function showLetter() {
   this.removeAttribute('class')
   // add func that decrease counter
