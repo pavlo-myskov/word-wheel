@@ -62,7 +62,7 @@ body {
 }
 
 /* Spin button */
-.spin-button {
+#spin-button {
     padding: 13px;
     background: linear-gradient(#a58e57, #bee399, #a58e57);
     border: 5px groove #7f8b7c;
@@ -98,12 +98,17 @@ body {
     border-color: transparent;
     border-left-color: #7f8b7c;
     border-right-color: #7f8b7c;
-    animation: spin 20s linear infinite;
+
+    animation-name: spin;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-play-state: running;
 }
 @keyframes spin {
     100% {
-      transform: rotateZ(360deg);
-    }
+        transform: rotateZ(360deg);
+      }
   }
 
 #wheel-letter {

@@ -1,14 +1,20 @@
-let but = document.getElementsByTagName('button')[0]
-but.addEventListener('click', runGame)
+let spinButton = document.getElementById('spin-button');
+spinButton.addEventListener('click', runGame)
 
 /**
  * Insert random letters to the wheel by interval and than Run functions
  */
 function runGame() {
-  let charWindow = document.getElementById('wheel-letter');
-  let timer = setInterval(insertRandomChar, 100); // insert random letters to the wheel by interval
+  spinButton.disabled = true;  // disable the spin-button to prevent restart the 'runGame' function
 
-  // Set a delay for running functions
+  // start changing random letters in the wheel by interval
+  let timer = setInterval(insertRandomChar, 100);
+
+  // start spinning the wheel faster
+  let animCircle = document.getElementsByClassName('animated-circle')[0];
+  animCircle.style.animationDuration = '0.3s';
+
+  // Set a delay 1sec for running functions
   setTimeout(function() {
     // let word = getRandomWord();  // store the recieved word to the var
     // let definition = getDefinition(); // store the recieved definition to the var
@@ -16,9 +22,11 @@ function runGame() {
     let definition = 'Annual native to South America having underground stolons bearing edible starchy tubers; widely cultivated as a garden vegetable; vines are poisonous'
     displayDefinition(definition);  // run displayDefinition func with passed definition
     insertWord(word);  // run insertWord func with passed word
+
     clearInterval(timer);  // stop changing random letters in the wheel
-    charWindow.innerHTML = "?";
-  }, 1000)
+    document.getElementById('wheel-letter').innerHTML = "?";  // insert '?' instead of random letters
+    animCircle.style.animationDuration = '20s';  // return the wheel animation to normal rotation speed
+  }, 1000);
 }
 
 /**
