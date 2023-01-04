@@ -3,7 +3,7 @@ but.addEventListener('click', insertWord)
 but.addEventListener('click', displayDefinition)
 
 /**
- * Displays the word definition for the user
+ * Displays the word definition to the user
  */
 function displayDefinition() {
   // let definition = getDefinition() //the func returns recieved definition from api and store in var
@@ -16,22 +16,32 @@ function displayDefinition() {
   definitionWrapper.style.height = `${textHeight + 15}px`;  // Expand the definition-wrapper to text height;
 }
 
-let word = 'potato';
-
+/**
+ * Get and Divide the correct word into flip cards for each letter
+ * and show them to the user with the reverse sider
+ */
 function insertWord() {
+  let word = 'potato';
+  // let word = getRandomWord();  // store the recieved word to the var
   let wordListEl = document.getElementById('word-list');
 
   for (char of word) {
-    let li = document.createElement('li');
-    li.setAttribute('class', 'flip')
-    li.innerHTML = char
-    wordListEl.appendChild(li)
+    let li = document.createElement('li');  // loop the word and create 'li'element-card for each letter
+    li.setAttribute('class', 'flip');  // add a css property to allow the card to be flipped
+    let listInner = `
+        <div class="front">${char}</div>
+        <div class="back"></div>`;  // add front and back side to the card
+    li.innerHTML = listInner;
+    wordListEl.appendChild(li);
+    wordListEl.style.background = 'none';
 
-    li.addEventListener('click', flipper)
+    li.addEventListener('click', showLetter);
   }
+  console.log(wordListEl)
 }
 
-function flipper() {
+
+function showLetter() {
   this.removeAttribute('class')
-  console.log(this)
+  // add func that decrease counter
 }

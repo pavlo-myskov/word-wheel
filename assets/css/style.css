@@ -122,7 +122,6 @@ body {
 
 /* Hidden word */
 #word-wrapper {
-    /* background-color: #bac189; */
     height: 10vh;
     margin: 30px 40px 5px;
 }
@@ -131,25 +130,49 @@ body {
     display: flex;
     list-style: none;
     height: 100%;
+    background: #7f8b7c;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.9);
 }
 
 #word-list li {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
     width: 100%;
     height: 100%;
     border: 5px solid #ecece6;
     font-weight: bold;
     font-size: 2em;
     cursor: pointer;
-    transition: 1s;
+    perspective: 600px;
     }
 
-.flip {
-    background-color: #9ddcdc;
-    transform: rotateY(180deg);
+.front, .back {
+    position: absolute;
     transform-style: preserve-3d;
-    overflow: hidden;
+    backface-visibility: hidden;
+    transition: all 0.2s ease-in;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.9);
+    width: 100%;
+    height: 100%;
+}
 
+.front {
+    background: #bac189;
+    transform: rotateX(0) rotateY(0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.back {
+    background: #7f8b7c;
+    transform: rotateY(-179deg);
+}
+
+
+.flip .front{
+    transform: rotateY(180deg);
+}
+
+.flip .back {
+    transform: rotateX(0) rotateY(0);
 }
