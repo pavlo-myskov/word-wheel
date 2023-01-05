@@ -66,6 +66,7 @@ body {
 
 /* Spin button */
 #spin-button {
+    margin-top: 50px;
     padding: 13px;
     background: linear-gradient(#a58e57, #bee399, #a58e57);
     border: 5px groove #7f8b7c;
@@ -147,6 +148,7 @@ body {
 
 #definition {
     line-height: 1.5em;
+    font-size: 1em;
 }
 
 /* Hidden word */
@@ -171,7 +173,7 @@ body {
     border: 5px solid #ecece6;
     border-radius: 30px;
     font-weight: bold;
-    font-size: 2em;
+    font-size: 1.8em;
     cursor: pointer;
     perspective: 600px;
     }
@@ -227,7 +229,7 @@ body {
 
 #answer-box::placeholder {
     font-style: italic;
-    font-size: 0.8em;
+    font-size: 0.7em;
     color: #7f8b7c;
 }
 
@@ -245,4 +247,25 @@ body {
     background: linear-gradient(to left bottom, #bee399, #9ddcdc);
     border-radius: 50% 50% 0 0;
     z-index: 2;
+}
+
+
+/* ---- MEDIA QUERIES ---- */
+
+/* for tablets and screen sizes from 768px wide and DOWN */
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 18px;
+      }
+}
+
+/* for mobile and screen sizes from 480px wide and DOWN */
+@media screen and (max-width: 480px) {
+    html {
+        font-size: 16px;
+    }
+    #spin-button {
+    margin-top: 50px;
+    padding: 7px 4px;
+    }
 }
