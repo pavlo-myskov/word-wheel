@@ -2,14 +2,14 @@ let spinButton = document.getElementById('spin-button');
 spinButton.addEventListener('click', runGame)
 
 /**
- * Insert random letters to the wheel by interval and than Run functions
+ * Run game functions
  */
 function runGame() {
   resetFields();
   let word = getRandomWord();  // get random word from and store it to the var
   let definition = getDefinition(word); // get definition by the word and store it to the var
 
-  // spinButton.disabled = true;  // disable the spin-button to prevent restart the 'runGame' function
+  // spinButton.disabled = true;  // disable the spin-button to prevent restart the 'runGame' function while the word not guessed
 
   // start changing random letters in the wheel by interval
   let timer = setInterval(insertRandomChar, 100);
@@ -22,7 +22,7 @@ function runGame() {
   setTimeout(function() {
     displayDefinition(definition);  // run displayDefinition func with passed definition
     insertWord(word);  // run insertWord func with passed word
-
+    document.getElementById('answer-box').focus();
     clearInterval(timer);  // stop changing random letters in the wheel
     document.getElementById('wheel-letter').innerHTML = "?";  // insert '?' instead of random letters
     animCircle.style.animationDuration = '20s';  // return the wheel animation to normal rotation speed
@@ -98,11 +98,12 @@ function showLetter() {
 }
 
 /**
- * Reset wheel, definition, word fields
+ * Clear the wheel, definition, word sections and input field
  */
 function resetFields() {
   document.getElementById('wheel-letter').innerHTML = "";  // clear the wheel
   document.getElementById('definition-wrapper').style.height = '0px';  // collapse borders of definition section by reseting the element height
   document.getElementById('word-section').innerHTML = '';  // clear the card-letter section
   document.getElementById('word-section').style.background = '#7f8b7c';  // return the initial background-color for word section rectangle
+  document.getElementById('answer-box').value = '';  // clear input field
 }
