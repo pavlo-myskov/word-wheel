@@ -277,9 +277,36 @@ body {
     z-index: 2;
 }
 
+/* submit button */
 #btn-sm {
     color: #2f350d;
     background: linear-gradient(#cae0b3, #ede3cd, #cae0b3);
+}
+
+/* score section */
+.score-section {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.score-section p {
+    display: flex;
+    align-items: center;
+}
+
+.score-title {
+    font-size: 1.1em;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: right;
+
+}
+
+.score {
+    font-size: 1.4em;
+    font-weight: 600;
+    padding-left: 10px;
 }
 
 
