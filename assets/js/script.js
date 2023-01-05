@@ -1,4 +1,4 @@
-let spinButton = document.getElementById('spin-button');
+let spinButton = document.getElementById('btn-spin');
 spinButton.addEventListener('click', runGame)
 
 /**
@@ -9,7 +9,7 @@ function runGame() {
   let word = getRandomWord();  // get random word from and store it to the var
   let definition = getDefinition(word); // get definition by the word and store it to the var
 
-  // spinButton.disabled = true;  // disable the spin-button to prevent restart the 'runGame' function while the word not guessed
+  // spinButton.disabled = true;  // disable the btn-spin to prevent restart the 'runGame' function while the word not guessed
 
   // start changing random letters in the wheel by interval
   let timer = setInterval(insertRandomChar, 100);

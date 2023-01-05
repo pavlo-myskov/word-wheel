@@ -18,6 +18,23 @@ body {
     color: #6c582c;
 }
 
+/* All Buttons */
+.btn {
+    padding: 13px;
+    border: 3px groove;
+    border-radius: 10px;
+    font-size: 1.1em;
+    z-index: 8;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.btn:active {
+    border: 3px inset;
+}
+
 /* MAIN GAME CONTAINER */
 .game-container {
     position: relative;
@@ -65,22 +82,9 @@ body {
 }
 
 /* Spin button */
-#spin-button {
+#btn-spin {
     margin-top: 50px;
-    padding: 13px;
     background: linear-gradient(#a4946f, #cae0b3, #a4946f);
-    border: 4px groove #7f8b7c;
-    border-radius: 10px;
-    font-size: 1.1em;
-    z-index: 8;
-}
-
-#spin-button:hover {
-    cursor: pointer;
-}
-
-#spin-button:active {
-    border: 4px inset #7f8b7c;
 }
 
 /* Wheel */
@@ -262,11 +266,20 @@ body {
 
 /* Submit section */
 .submit-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
     width: 100%;
     height: 40%;
     background: linear-gradient(to left bottom, #bee399, #9ddcdc);
     border-radius: 50% 50% 0 0;
     z-index: 2;
+}
+
+#btn-sm {
+    color: #2f350d;
+    background: linear-gradient(#cae0b3, #ede3cd, #cae0b3);
 }
 
 
@@ -284,7 +297,7 @@ body {
     html {
         font-size: 16px;
     }
-    #spin-button {
+    #btn-spin {
     margin-top: 50px;
     padding: 7px 4px;
     }
