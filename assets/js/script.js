@@ -22,7 +22,7 @@ function runGame() {
   setTimeout(function() {
     displayDefinition(definition);  // run displayDefinition func with passed definition
     insertWord(word);  // run insertWord func with passed word
-    document.getElementById('answer-box').focus();
+    activateInputBox();  // focus text cursor on the input field
     clearInterval(timer);  // stop changing random letters in the wheel
     document.getElementById('wheel-letter').innerHTML = "?";  // insert '?' instead of random letters
     animCircle.style.animationDuration = '20s';  // return the wheel animation to normal rotation speed
@@ -95,6 +95,20 @@ function insertWord(word) {
 function showLetter() {
   this.removeAttribute('class')
   // add func that decrease counter
+}
+
+/**
+ * Enable access to the input field and and get focus text cursor on it
+ */
+function activateInputBox() {
+  let answerBox = document.getElementById('answer-box');
+
+  answerBox.disabled = false;
+  answerBox.placeholder = 'type your answer';
+  answerBox.focus();
+  answerBox.onmouseenter = function () {
+    this.style.cursor = 'text';
+  }
 }
 
 /**

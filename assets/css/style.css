@@ -249,6 +249,7 @@ body {
 
 #answer-box:hover {
     box-shadow: 0px 0px 10px #a58e57;
+    cursor: not-allowed;
 }
 
 #answer-box:focus {
