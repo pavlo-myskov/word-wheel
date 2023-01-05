@@ -5,10 +5,11 @@ spinButton.addEventListener('click', runGame)
  * Insert random letters to the wheel by interval and than Run functions
  */
 function runGame() {
+  resetFields();
   let word = getRandomWord();  // get random word from and store it to the var
   let definition = getDefinition(word); // get definition by the word and store it to the var
 
-  spinButton.disabled = true;  // disable the spin-button to prevent restart the 'runGame' function
+  // spinButton.disabled = true;  // disable the spin-button to prevent restart the 'runGame' function
 
   // start changing random letters in the wheel by interval
   let timer = setInterval(insertRandomChar, 100);
@@ -57,13 +58,10 @@ function insertRandomChar() {
  */
 function displayDefinition(definition) {
   let definitionEl = document.getElementById('definition');
-  let definitionWrapper = document.getElementById('definition-wrapper');
-
-  definitionWrapper.style.height = '0px';  // reset height of the definition field
 
   definitionEl.innerHTML = definition;  // Insert the definition into definition element
   let textHeight = definitionEl.offsetHeight;  // Get the height of the inserted text;
-  definitionWrapper.style.height = `${textHeight + 15}px`;  // Expand the definition-wrapper to text height;
+  document.getElementById('definition-wrapper').style.height = `${textHeight + 15}px`;  // Expand the definition-wrapper to text height;
 }
 
 /**
@@ -71,27 +69,40 @@ function displayDefinition(definition) {
  * and show them to the user with the reverse sider
  */
 function insertWord(word) {
-  let wordListEl = document.getElementById('word-list');
-  wordListEl.innerHTML = '';  // clear the wordListEl element before inserting new word
+  let wordListEl = document.getElementById('word-section');
 
+  // loop the word and create 'li' element-card for each letter
   for (char of word) {
-    let li = document.createElement('li');  // loop the word and create 'li'element-card for each letter
+    let li = document.createElement('li');
     li.setAttribute('class', 'flip');  // add a css property to allow the card to be flipped
+
+    // add front and back side to the card with word letter
     let listInner = `
         <div class="front">${char}</div>
-        <div class="back"></div>`;  // add front and back side to the card
+        <div class="back"></div>`;
     li.innerHTML = listInner;
     wordListEl.appendChild(li);
-    wordListEl.style.background = 'none';
 
-    li.addEventListener('click', showLetter);
+    wordListEl.style.background = 'none';  // remove the initial background rectangle below the word
+
+    li.addEventListener('click', showLetter);  // add event listener for each flip-card with letter
   };
 }
 
 /**
- * Show the hidden letter by removing the 'flip' class from 'li' element
+ * Reveal the hidden letter by fliping the card and removing the 'flip' class from 'li' element
  */
 function showLetter() {
   this.removeAttribute('class')
   // add func that decrease counter
+}
+
+/**
+ * Reset wheel, definition, word fields
+ */
+function resetFields() {
+  document.getElementById('wheel-letter').innerHTML = "";  // clear the wheel
+  document.getElementById('definition-wrapper').style.height = '0px';  // collapse borders of definition section by reseting the element height
+  document.getElementById('word-section').innerHTML = '';  // clear the card-letter section
+  document.getElementById('word-section').style.background = '#7f8b7c';  // return the initial background-color for word section rectangle
 }
