@@ -21,6 +21,8 @@ body {
 /* MAIN GAME CONTAINER */
 .game-container {
     position: relative;
+    display: flex;
+    flex-direction: column;
     background-color: #ecece6;
     height: 100vh;
     max-width: 768px;
@@ -34,7 +36,8 @@ body {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 35vh;
+    width: 100%;
+    height: 70%;
     background: linear-gradient(to left bottom, #9ddcdc, #bee399);
     border-radius: 0 0 50% 50%;
     z-index: 2;
@@ -119,10 +122,14 @@ body {
 /* MAIN SECTION */
 .main-section {
     padding: 30px 0;
-    height: 45vh;
+    height: 80%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+}
+
+.main-section div{
+    padding: 10px 0;
 }
 
 /* Word Definition */
@@ -136,6 +143,10 @@ body {
     border-bottom: 2px outset;
     height: 0px;
     transition: height 0.4s ease-out;
+}
+
+#definition {
+    line-height: 1.5em;
 }
 
 /* Hidden word */
@@ -230,7 +241,7 @@ body {
 /* Submit section */
 .submit-section {
     width: 100%;
-    height: 20vh;
+    height: 40%;
     background: linear-gradient(to left bottom, #bee399, #9ddcdc);
     border-radius: 50% 50% 0 0;
     z-index: 2;
