@@ -1,5 +1,5 @@
 let spinButton = document.getElementById('btn-spin');
-spinButton.addEventListener('click', () => {runGame(bathroom_accessories);})
+spinButton.addEventListener('click', () => {runGame('bathroom_accessories');})
 
 
 /**
@@ -35,20 +35,20 @@ function runGame(topic) {
  */
 function getRandomWord(topicName) {
   let word;
-  for (obj of wordList) {
-    if (obj.topic === topicName) {
-      let words = obj.words;
-      let randNum = Math.floor(Math.random() * words.length);
-      word = words[randNum];
-      break;
-    }
+  if (data.hasOwnProperty(topicName)) {
+    let wordList = data[topicName];
+    let randNum = Math.floor(Math.random() * wordList.length);
+    word = wordList[randNum];
+  } else {
+    alert(`Topic "${topicName}" not found! Try another.`)
+    throw(`Error! User selected Topic "${topicName}" not found!`)
   }
 
   return word.toLowerCase();
 }
 
 function getDefinition(word) {
-  return dict[word];
+  return 'some description';
 }
 
 /**
