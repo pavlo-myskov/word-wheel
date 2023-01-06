@@ -16,14 +16,14 @@ const util = require('util');
 
 /**
  * @description Read all files synchronously from a folder,
- * split words from the file by the line break and store to the array
+ * split words from the file by the line break and store to the arrays
  *
  * @param {String} dir path to directory
- * @returns {Object[]} List of objects, each object represent a file
- * structured like so: `{ topic: topicName, words: wordList }`
+ * @returns {Object} Object with topics as properties and values as lists of related words:
+ * `topicName: wordList`
  */
 function readFilesSync(dir) {
-  let data = [];
+  let data = {};
 
   fs.readdirSync(dir).forEach(filename => {
     let filepath = path.resolve(dir, filename);  // get absolute path to the file
@@ -33,23 +33,19 @@ function readFilesSync(dir) {
     wordList = [... new Set(wordList)]; // remove dublicates and store as array
     let topicName = path.parse(filename).name;  // remove type of file (e.g .txt)
 
-    data.push({ topic: topicName, words: wordList });
+    data[topicName] = wordList;
   });
 
   return data;
 }
 
-// array of objects: { topic: topicName, words: wordList }
-const wordList = readFilesSync('assets/data/topics/');
-const getWordList = () => {
-  return wordList;
-}
+const words = readFilesSync('assets/data/topics/');
 
-const wordListString = util.inspect(wordList, { maxArrayLength: null });  // returns a string representation of object
-const result = `const wordList = ${wordListString}`; // create variable with wordList string for javascript file
+const string = util.inspect(words, { maxArrayLength: null });  // convert an object to a string
+const stringForJS = `const data = ${string}`; // create variable contains an object with topics and words for javascript file
 
 try {
-  fs.writeFileSync('assets/js/data.js', result, 'utf-8');  // generate javascript file with wordList
+  fs.writeFileSync('assets/js/data.js', stringForJS, 'utf-8');  // generate javascript file with object of topics and words
   console.log('data.js file is sucsesfully generated')
 } catch (err) {
   console.error(err);
