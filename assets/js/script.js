@@ -1,12 +1,13 @@
 let spinButton = document.getElementById('btn-spin');
-spinButton.addEventListener('click', runGame)
+spinButton.addEventListener('click', () => {runGame(bathroom_accessories);})
+
 
 /**
  * Run game functions
  */
-function runGame() {
+function runGame(topic) {
   resetFields();
-  let word = getRandomWord();  // get random word from and store it to the var
+  let word = getRandomWord(topic);  // get random word by topic from wordList array
   let definition = getDefinition(word); // get definition by the word and store it to the var
 
   // spinButton.disabled = true;  // disable the btn-spin to prevent restart the 'runGame' function while the word not guessed
@@ -30,12 +31,19 @@ function runGame() {
 }
 
 /**
- * Get random word from the object
+ * Get random word by topic from the wordList array in data.js file
  */
-function getRandomWord() {
-  let keys = Object.keys(dict);
-  let randNum = Math.floor(Math.random() * keys.length);
-  let word = keys[randNum];
+function getRandomWord(topicName) {
+  let word;
+  for (obj of wordList) {
+    if (obj.topic === topicName) {
+      let words = obj.words;
+      let randNum = Math.floor(Math.random() * words.length);
+      word = words[randNum];
+      break;
+    }
+  }
+
   return word.toLowerCase();
 }
 
