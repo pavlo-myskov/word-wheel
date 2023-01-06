@@ -1,0 +1,25 @@
+Bookcase
+Sofa
+Wardrobe
+Bed
+Cupboard
+Chair
+Table
+Door
+Chest of drawers/ Dresser
+Window
+Armchair
+Cabinet
+Desk
+Coffee table
+Dressing table
+Shelves
+Fireplace
+Bedside table
+Crib/ cot
+Filing cabinet
+Sideboard
+Wall unit
+Bureau
+Bunk bed
+TV stand
