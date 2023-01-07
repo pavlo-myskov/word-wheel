@@ -1,5 +1,5 @@
 let spinButton = document.getElementById('btn-spin');
-spinButton.addEventListener('click', () => {runGame('bathroom_accessories');})
+spinButton.addEventListener('click', () => {runGame('wild_animals');})
 
 const capitalLatinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -90,6 +90,8 @@ function displayDefinition(definition) {
  * and show them to the user with the reverse sider
  */
 function insertWord(word) {
+  let letterCounter = 0;
+
   let wordListEl = document.getElementById('word-section');
   wordListEl.style.background = 'none';  // remove the initial background rectangle below the word
 
@@ -110,16 +112,15 @@ function insertWord(word) {
 
     wordListEl.appendChild(li);
 
-    li.addEventListener('click', showLetter);  // add event listener for each flip-card with letter
+    // if li element not empty add event listeners
+    if (li.innerText) {
+      letterCounter++;  //
+      // Reveal the hidden letter by fliping the card and removing the 'flip' class from 'li' element
+      li.addEventListener('click', function() {this.removeAttribute('class')});
+      // reduce current score on click
+      li.addEventListener('click', () => {decrementCurrentScore(letterCounter);});
+    };
   };
-}
-
-/**
- * Reveal the hidden letter by fliping the card and removing the 'flip' class from 'li' element
- */
-function showLetter() {
-  this.removeAttribute('class')
-  // add func that decrease counter
 }
 
 /**
@@ -146,6 +147,20 @@ function disableInputBox() {
 }
 
 /**
+ * @description Calculate the average score per letter depending on the length of the word.
+ * For each open letter removes a certain number of points from 'currentScore'
+ * @param {Number} numLetters Takes the number of letters in the word as an argument.
+ */
+function decrementCurrentScore(numLetters) {
+  let currentScoreEl = document.getElementById('current-score');
+  let currentScore = parseFloat(currentScoreEl.innerText); // get current score
+
+  let pointsPerChar = 10 / numLetters; // get average score per letter
+  currentScore -= pointsPerChar;
+  currentScoreEl.innerHTML = currentScore.toFixed(1);  //  rounds the string to a specified number of decimals
+}
+
+/**
  * Clear the wheel, definition, word sections and input field
  */
 function resetFields() {
@@ -153,5 +168,6 @@ function resetFields() {
   document.getElementById('definition-wrapper').style.height = '0px';  // collapse borders of definition section by reseting the element height
   document.getElementById('word-section').innerHTML = '';  // clear the card-letter section
   document.getElementById('word-section').style.background = '#7f8b7c';  // return the initial background-color for word section rectangle
+  document.getElementById('current-score').innerHTML = '10';
   disableInputBox();
 }
