@@ -35,6 +35,19 @@ body {
     border: 3px inset;
 }
 
+/* disabled buttons */
+.btn:disabled {
+    color: hsla(0, 0%, 0%, 0.422) !important;
+}
+
+.btn:hover:disabled {
+    cursor: not-allowed;
+}
+
+.btn:active:disabled {
+    border: 3px groove;
+}
+
 /* MAIN GAME CONTAINER */
 .game-container {
     position: relative;
