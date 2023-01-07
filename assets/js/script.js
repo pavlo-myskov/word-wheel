@@ -166,16 +166,29 @@ function checkAnswer(correctWord) {
     };
 
   displayCorrectWord();
+  removeWord();
   setTimeout(function() {
     resetFields();
   }, 3000);
   }
 
-function incrementTotalScore() {}; //TODO
+/**
+ * Get the remaining points from the credit score and adds them to the total
+ */
+function incrementTotalScore() {
+  let totalScoreEl = document.getElementById('total-score');
+  let creditScoreEl = document.getElementById('credit-score');
+
+  let totalScore = parseInt(totalScoreEl.innerText);
+  let creditScore = parseFloat(creditScoreEl.innerText);
+
+  totalScoreEl.innerHTML = totalScore + Math.round(creditScore); // rounds a creditScore number to the nearest integer and add to total
+};
 function displayWin() {}; // display green wheel
 function resetScore() {}; //reset total score
 function displayGameOver() {}; // display red wheel
 function displayCorrectWord() {}; // reveal all letter-cards
+function removeWord(); // remove word from data
 
 /**
  * @description Calculate the average score per letter depending on the length of the word.
