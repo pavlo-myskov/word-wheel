@@ -1,6 +1,7 @@
 let spinButton = document.getElementById('btn-spin');
 spinButton.addEventListener('click', () => {runGame('bathroom_accessories');})
 
+const capitalLatinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 /**
  * Run game functions
@@ -21,8 +22,8 @@ function runGame(topic) {
 
   // Set a delay 1sec for running functions
   setTimeout(function() {
-    displayDefinition(definition);  // run displayDefinition func with passed definition
-    insertWord(word);  // run insertWord func with passed word
+    displayDefinition(definition);  // call displayDefinition func with passed definition
+    insertWord(word);  // call insertWord func with passed word
     activateInputBox();  // focus text cursor on the input field
     clearInterval(timer);  // stop changing random letters in the wheel
     document.getElementById('wheel-letter').innerHTML = "?";  // insert '?' instead of random letters
@@ -44,7 +45,20 @@ function getRandomWord(topicName) {
     throw(`Error! User selected Topic "${topicName}" not found!`)
   }
 
-  return word.toLowerCase();
+  word = validateWord(word);
+
+  return word;
+}
+
+/**
+ * Clean a word from excess spaces and special characters. Convert to lower case
+ */
+function validateWord(word) {
+  word = word.toLowerCase().trim();  // convert to LowerCase and Remove the leading and trailing whitespace
+  word = word.replace(/  +/g, ' ');  // replace multiple spaces with a single space
+  word = word.replace(/[^a-z ]/g, '');  // remove all special characters except lower case letters and spaces
+
+  return word;
 }
 
 function getDefinition(word) {
@@ -56,9 +70,8 @@ function getDefinition(word) {
  */
 function insertRandomChar() {
   let wheel = document.getElementById('wheel-letter');
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  let ranNum = Math.floor(Math.random() * chars.length);  //generate random num from 0 to 'chars' string length
-  wheel.innerHTML = chars[ranNum];  // get random char from the 'chars' string and insert to the 'wheel' element
+  let ranNum = Math.floor(Math.random() * capitalLatinChars.length);  //generate random num from 0 to 'chars' string length
+  wheel.innerHTML = capitalLatinChars[ranNum];  // get random char from the 'chars' string and insert to the 'wheel' element
 };
 
 /**
@@ -73,25 +86,29 @@ function displayDefinition(definition) {
 }
 
 /**
- * Get and Divide the correct word into flip cards for each letter
+ * Insert a word into flip cards for each letter
  * and show them to the user with the reverse sider
  */
 function insertWord(word) {
   let wordListEl = document.getElementById('word-section');
+  wordListEl.style.background = 'none';  // remove the initial background rectangle below the word
 
   // loop the word and create 'li' element-card for each letter
-  for (char of word) {
+  for (let char of word) {
     let li = document.createElement('li');
-    li.setAttribute('class', 'flip');  // add a css property to allow the card to be flipped
 
-    // add front and back side to the card with word letter
-    let listInner = `
-        <div class="front">${char}</div>
-        <div class="back"></div>`;
-    li.innerHTML = listInner;
+    // if the char not a space, insert it to li element and add css property to allow the card to be flipped,
+    // otherwise the letter-card space will be empty
+    if (char !== ' ') {
+      li.setAttribute('class', 'flip');
+      // add front and back side to the card with word letter
+      let listInner = `
+      <div class="front">${char}</div>
+      <div class="back"></div>`;
+      li.innerHTML = listInner;
+    };
+
     wordListEl.appendChild(li);
-
-    wordListEl.style.background = 'none';  // remove the initial background rectangle below the word
 
     li.addEventListener('click', showLetter);  // add event listener for each flip-card with letter
   };
