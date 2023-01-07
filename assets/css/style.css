@@ -252,16 +252,23 @@ body {
 }
 
 #answer-box:hover {
-    box-shadow: 0px 0px 10px #a58e57;
     cursor: not-allowed;
 }
 
-#answer-box:focus {
-    outline: none;
+/* If answer box is active*/
+#answer-box.active {
     border-radius: 20px;
     border: 2px ridge #7f8b7c;
+}
+
+#answer-box.active:hover {
     box-shadow: 0px 0px 5px #a58e57;
-    transition: 0.1s ease-in;
+    cursor: text;
+}
+
+#answer-box.active:focus {
+    outline: none;
+    box-shadow: 0px 0px 5px #a58e57;
 }
 
 /* Submit section */

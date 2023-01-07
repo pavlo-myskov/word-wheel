@@ -113,10 +113,19 @@ function activateInputBox() {
 
   answerBox.disabled = false;
   answerBox.placeholder = 'type your answer';
-  answerBox.focus();
-  answerBox.onmouseenter = function () {
-    this.style.cursor = 'text';
-  }
+  answerBox.classList.add('active');
+}
+
+/**
+ * Clear and disable input box
+ */
+function disableInputBox() {
+  let answerBox = document.getElementById('answer-box');
+
+  answerBox.placeholder = 'spin the wheel';
+  answerBox.value = '';  // clear input field
+  answerBox.disabled = true;
+  answerBox.classList.remove('active');
 }
 
 /**
@@ -127,5 +136,5 @@ function resetFields() {
   document.getElementById('definition-wrapper').style.height = '0px';  // collapse borders of definition section by reseting the element height
   document.getElementById('word-section').innerHTML = '';  // clear the card-letter section
   document.getElementById('word-section').style.background = '#7f8b7c';  // return the initial background-color for word section rectangle
-  document.getElementById('answer-box').value = '';  // clear input field
+  disableInputBox();
 }
