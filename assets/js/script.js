@@ -10,7 +10,7 @@ function runGame(topic) {
   let word = getRandomWord(topic);  // get random word by topic from wordList array
   let definition = getDefinition(word); // get definition by the word and store it to the var
 
-  // spinButton.disabled = true;  // disable the btn-spin to prevent restart the 'runGame' function while the word not guessed
+  document.getElementById('btn-spin').disabled = true;  // disable the btn-spin to prevent restart the 'runGame' function while the word not guessed
 
   // check user answer on click submit button
   document.getElementById('btn-sm').addEventListener('click', () => {checkAnswer(word);});
@@ -30,6 +30,7 @@ function runGame(topic) {
     clearInterval(charChanger);  // stop changing random letters in the wheel
     document.getElementById('wheel-letter').innerHTML = "?";  // insert '?' instead of random letters
     animCircle.style.animationDuration = '20s';  // return the wheel animation to normal rotation speed
+    document.getElementById('btn-sm').disabled = false; // enable submit button
   }, 1000);
 }
 
@@ -49,7 +50,7 @@ function getRandomWord(topicName) {
 
   word = validateWord(word);
 
-  return word;
+  return 'hello'; //FIXME
 }
 
 /**
@@ -165,11 +166,11 @@ function checkAnswer(correctWord) {
       displayGameOver(); // display red wheel
     };
 
+  document.getElementById('credit-score').innerHTML = '0'; // reset credit-score
+  document.getElementById('btn-sm').disabled = true;  // disable submit button
+  document.getElementById('btn-spin').disabled = false;  // enable spin button
   displayCorrectWord();
   removeWord();
-  setTimeout(function() {
-    resetFields();
-  }, 3000);
   }
 
 /**
@@ -184,11 +185,14 @@ function incrementTotalScore() {
 
   totalScoreEl.innerHTML = totalScore + Math.round(creditScore); // rounds a creditScore number to the nearest integer and add to total
 };
+
+//TODO---------------
 function displayWin() {}; // display green wheel
 function resetScore() {}; //reset total score
 function displayGameOver() {}; // display red wheel
 function displayCorrectWord() {}; // reveal all letter-cards
-function removeWord(); // remove word from data
+function removeWord() {}; // remove word from data
+//TODO---------------
 
 /**
  * @description Calculate the average score per letter depending on the length of the word.
@@ -198,7 +202,7 @@ function removeWord(); // remove word from data
 function decrementCreditScore(numLetters) {
   let creditScoreEl = document.getElementById('credit-score');
   let creditScore = parseFloat(creditScoreEl.innerText); // get credit score
-
+  //FIXME: When I click on an open letter, points are still removed
   let pointsPerChar = 10 / numLetters; // get average score per letter
   creditScore -= pointsPerChar;
   creditScoreEl.innerHTML = creditScore.toFixed(1);  //  rounds the string to a specified number of decimals
