@@ -1,5 +1,4 @@
-let spinButton = document.getElementById('btn-spin');
-spinButton.addEventListener('click', () => {runGame('wild_animals');})
+document.getElementById('btn-spin').addEventListener('click', () => {runGame('wild_animals');})
 
 const capitalLatinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -13,8 +12,11 @@ function runGame(topic) {
 
   // spinButton.disabled = true;  // disable the btn-spin to prevent restart the 'runGame' function while the word not guessed
 
+  // check user answer on click submit button
+  document.getElementById('btn-sm').addEventListener('click', () => {checkAnswer(word);});
+
   // start changing random letters in the wheel by interval
-  let timer = setInterval(insertRandomChar, 100);
+  let charChanger = setInterval(insertRandomChar, 100);
 
   // start spinning the wheel faster
   let animCircle = document.getElementsByClassName('animated-circle')[0];
@@ -25,7 +27,7 @@ function runGame(topic) {
     displayDefinition(definition);  // call displayDefinition func with passed definition
     insertWord(word);  // call insertWord func with passed word
     activateInputBox();  // focus text cursor on the input field
-    clearInterval(timer);  // stop changing random letters in the wheel
+    clearInterval(charChanger);  // stop changing random letters in the wheel
     document.getElementById('wheel-letter').innerHTML = "?";  // insert '?' instead of random letters
     animCircle.style.animationDuration = '20s';  // return the wheel animation to normal rotation speed
   }, 1000);
@@ -146,6 +148,35 @@ function disableInputBox() {
   answerBox.classList.remove('active');
 }
 
+
+function checkAnswer(correctWord) {
+  let answer = document.getElementById('answer-box').value
+
+  if (!answer) {
+    alert('Type the anwer!');
+    return;
+  }
+
+  if (answer.toLowerCase() === correctWord) {
+    incrementTotalScore();
+    displayWin();
+    } else {
+      resetScore(); // reset total score
+      displayGameOver(); // display red wheel
+    };
+
+  displayCorrectWord();
+  setTimeout(function() {
+    resetFields();
+  }, 3000);
+  }
+
+function incrementTotalScore() {}; //TODO
+function displayWin() {}; // display green wheel
+function resetScore() {}; //reset total score
+function displayGameOver() {}; // display red wheel
+function displayCorrectWord() {}; // reveal all letter-cards
+
 /**
  * @description Calculate the average score per letter depending on the length of the word.
  * For each open letter removes a certain number of points from 'currentScore'
@@ -161,7 +192,7 @@ function decrementCurrentScore(numLetters) {
 }
 
 /**
- * Clear the wheel, definition, word sections and input field
+ * Clear the wheel, definition, word sections; reset current score; clear and disable input field;
  */
 function resetFields() {
   document.getElementById('wheel-letter').innerHTML = "";  // clear the wheel
