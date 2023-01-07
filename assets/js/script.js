@@ -119,8 +119,8 @@ function insertWord(word) {
       letterCounter++;  //
       // Reveal the hidden letter by fliping the card and removing the 'flip' class from 'li' element
       li.addEventListener('click', function() {this.removeAttribute('class')});
-      // reduce current score on click
-      li.addEventListener('click', () => {decrementCurrentScore(letterCounter);});
+      // reduce credit score on click
+      li.addEventListener('click', () => {decrementCreditScore(letterCounter);});
     };
   };
 }
@@ -179,26 +179,26 @@ function displayCorrectWord() {}; // reveal all letter-cards
 
 /**
  * @description Calculate the average score per letter depending on the length of the word.
- * For each open letter removes a certain number of points from 'currentScore'
+ * For each open letter removes a certain number of points from 'creditScore'
  * @param {Number} numLetters Takes the number of letters in the word as an argument.
  */
-function decrementCurrentScore(numLetters) {
-  let currentScoreEl = document.getElementById('current-score');
-  let currentScore = parseFloat(currentScoreEl.innerText); // get current score
+function decrementCreditScore(numLetters) {
+  let creditScoreEl = document.getElementById('credit-score');
+  let creditScore = parseFloat(creditScoreEl.innerText); // get credit score
 
   let pointsPerChar = 10 / numLetters; // get average score per letter
-  currentScore -= pointsPerChar;
-  currentScoreEl.innerHTML = currentScore.toFixed(1);  //  rounds the string to a specified number of decimals
+  creditScore -= pointsPerChar;
+  creditScoreEl.innerHTML = creditScore.toFixed(1);  //  rounds the string to a specified number of decimals
 }
 
 /**
- * Clear the wheel, definition, word sections; reset current score; clear and disable input field;
+ * Clear the wheel, definition, word sections; reset credit score; clear and disable input field;
  */
 function resetFields() {
   document.getElementById('wheel-letter').innerHTML = "";  // clear the wheel
   document.getElementById('definition-wrapper').style.height = '0px';  // collapse borders of definition section by reseting the element height
   document.getElementById('word-section').innerHTML = '';  // clear the card-letter section
   document.getElementById('word-section').style.background = '#7f8b7c';  // return the initial background-color for word section rectangle
-  document.getElementById('current-score').innerHTML = '10';
+  document.getElementById('credit-score').innerHTML = '10';
   disableInputBox();
 }
