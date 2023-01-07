@@ -6,7 +6,7 @@ Cupboard
 Chair
 Table
 Door
-Chest of drawers/ Dresser
+Dresser
 Window
 Armchair
 Cabinet
@@ -16,7 +16,7 @@ Dressing table
 Shelves
 Fireplace
 Bedside table
-Crib/ cot
+Crib
 Filing cabinet
 Sideboard
 Wall unit

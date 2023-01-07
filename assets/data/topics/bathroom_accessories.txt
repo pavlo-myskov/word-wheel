@@ -1,7 +1,7 @@
 Bath toys
 Bathrobe
 Bathroom cabinet
-Bathtub/ bath
+Bathtub
 Bucket
 Clothespin
 Comb
@@ -20,7 +20,7 @@ Shampoo
 Shower
 Soap
 Sponge
-Tap/ faucet
+Tap
 Toilet
 Toilet paper
 Toothbrush

@@ -68,7 +68,6 @@ Bat
 Bald eagle
 Badger
 Arctic wolf
-White-Tailed Deer
 Warbler
 Walleye
 Wallaby
@@ -87,7 +86,6 @@ Skunk
 Scorpion
 Salamander
 Potoroo
-Poison Dart Frog
 Piranha
 Parakeet
 Orangutan
@@ -151,9 +149,6 @@ Klipspringer
 Kiang
 Ibex
 Hyrax
-Guinea Pig
-Giant Panda
-Geoffroy’s Cat
 Flowerpecker
 Falcon
 Echidna
@@ -169,7 +164,6 @@ Cotton Rat
 Cotinga
 Colugo
 Coati
-Clouded Leopard
 Civet
 Chough
 Chiru
@@ -186,11 +180,5 @@ Blue Sheep
 Bird
 Beetle
 Bee
-Asian Black Bear
-Andean Mountain Cat
-Alpine Salamander
-Alpine Chough
 Alpaca
-African Wild Dog
-African Buffalo
 Accentor
