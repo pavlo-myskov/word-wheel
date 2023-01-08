@@ -27,11 +27,25 @@ function runGame(topic) {
     displayDefinition(definition);  // call displayDefinition func with passed definition
     insertWord(word);  // call insertWord func with passed word
     activateInputBox();  // focus text cursor on the input field
+    giveCredit(word);  // fill credit score field based on word length
+
     clearInterval(charChanger);  // stop changing random letters in the wheel
     document.getElementById('wheel-letter').innerHTML = "?";  // insert '?' instead of random letters
     animCircle.style.animationDuration = '20s';  // return the wheel animation to normal rotation speed
     document.getElementById('btn-sm').disabled = false; // enable submit button
   }, 1000);
+}
+
+/**
+ * Clear the wheel, definition, word sections; reset credit score; clear and disable input field;
+ */
+function resetFields() {
+  document.getElementById('wheel-letter').innerHTML = "";  // clear the wheel
+  document.getElementById('definition-wrapper').style.height = '0px';  // collapse borders of definition section by reseting the element height
+  document.getElementById('word-section').innerHTML = '';  // clear the card-letter section
+  document.getElementById('word-section').style.background = '#7f8b7c';  // return the initial background-color for word section rectangle
+  document.getElementById('credit-score').innerHTML = '0';  // reset credit-score
+  disableInputBox();
 }
 
 /**
@@ -50,11 +64,11 @@ function getRandomWord(topicName) {
 
   word = validateWord(word);
 
-  return 'hello'; //FIXME
+  return word;
 }
 
 /**
- * Clean a word from excess spaces and special characters. Convert to lower case
+ * Clean the word from excess spaces and special characters. Convert to lower case
  */
 function validateWord(word) {
   word = word.toLowerCase().trim();  // convert to LowerCase and Remove the leading and trailing whitespace
@@ -121,7 +135,7 @@ function insertWord(word) {
       // Reveal the hidden letter by fliping the card and removing the 'flip' class from 'li' element
       li.addEventListener('click', function() {this.removeAttribute('class')});
       // reduce credit score on click
-      li.addEventListener('click', () => {decrementCreditScore(letterCounter);});
+      li.addEventListener('click', decrementCreditScore);
     };
   };
 }
@@ -181,9 +195,9 @@ function incrementTotalScore() {
   let creditScoreEl = document.getElementById('credit-score');
 
   let totalScore = parseInt(totalScoreEl.innerText);
-  let creditScore = parseFloat(creditScoreEl.innerText);
+  let creditScore = parseInt(creditScoreEl.innerText);
 
-  totalScoreEl.innerHTML = totalScore + Math.round(creditScore); // rounds a creditScore number to the nearest integer and add to total
+  totalScoreEl.innerHTML = totalScore + creditScore;
 };
 
 //TODO---------------
@@ -195,27 +209,25 @@ function removeWord() {}; // remove word from data
 //TODO---------------
 
 /**
- * @description Calculate the average score per letter depending on the length of the word.
- * For each open letter removes a certain number of points from 'creditScore'
- * @param {Number} numLetters Takes the number of letters in the word as an argument.
+ * @description Gives the number of credit points to the user based on word length
+ * @param {String} word extracted from data.js using 'getRandomWord' function
  */
-function decrementCreditScore(numLetters) {
-  let creditScoreEl = document.getElementById('credit-score');
-  let creditScore = parseFloat(creditScoreEl.innerText); // get credit score
-  //FIXME: When I click on an open letter, points are still removed
-  let pointsPerChar = 10 / numLetters; // get average score per letter
-  creditScore -= pointsPerChar;
-  creditScoreEl.innerHTML = creditScore.toFixed(1);  //  rounds the string to a specified number of decimals
+function giveCredit(word) {
+  word = word.replace(/ /g, '');  // remove all spaces from the string
+  numLetters = word.length;
+
+  document.getElementById('credit-score').innerHTML = numLetters;  // insert credit points
 }
 
 /**
- * Clear the wheel, definition, word sections; reset credit score; clear and disable input field;
+ * Decrement credit score on click a hidden letter
  */
-function resetFields() {
-  document.getElementById('wheel-letter').innerHTML = "";  // clear the wheel
-  document.getElementById('definition-wrapper').style.height = '0px';  // collapse borders of definition section by reseting the element height
-  document.getElementById('word-section').innerHTML = '';  // clear the card-letter section
-  document.getElementById('word-section').style.background = '#7f8b7c';  // return the initial background-color for word section rectangle
-  document.getElementById('credit-score').innerHTML = '10';
-  disableInputBox();
+function decrementCreditScore() {
+  let creditScoreEl = document.getElementById('credit-score');
+  let creditScore = parseInt(creditScoreEl.innerText); // get current credit score
+
+  creditScoreEl.innerHTML = --creditScore;
+
+  // remove the event listener from the open char to prevent re-clicking which could lead to the next creditScore decreasing
+  this.removeEventListener('click', decrementCreditScore);
 }
