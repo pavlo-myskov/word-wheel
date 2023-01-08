@@ -13,7 +13,7 @@ function runGame(topic) {
   document.getElementById('btn-spin').disabled = true;  // disable the btn-spin to prevent restart the 'runGame' function while the word not guessed
 
   // check user answer on click submit button
-  document.getElementById('btn-sm').addEventListener('click', () => {checkAnswer(word);});
+  document.getElementById('btn-sm').addEventListener('click', () => {checkAnswer(topic, word);});
 
   // start changing random letters in the wheel by interval
   let charChanger = setInterval(insertRandomChar, 100);
@@ -49,14 +49,14 @@ function resetFields() {
 }
 
 /**
- * Get random word by topic from the wordList array in data.js file
+ * Extract random word by topic from the array of words in data.js file
  */
 function getRandomWord(topicName) {
   let word;
   if (data.hasOwnProperty(topicName)) {
-    let wordList = data[topicName];
-    let randNum = Math.floor(Math.random() * wordList.length);
-    word = wordList[randNum];
+    let wordList = data[topicName];  // het array of words by topic
+    let randNum = Math.floor(Math.random() * wordList.length); // get rand number from 0 to word array length
+    word = wordList.splice(randNum, 1)[0];  // pop the word from array by random index
   } else {
     alert(`Topic "${topicName}" not found! Try another.`)
     throw(`Error! User selected Topic "${topicName}" not found!`)
@@ -181,7 +181,6 @@ function checkAnswer(correctWord) {
   document.getElementById('btn-sm').disabled = true;  // disable submit button
   document.getElementById('btn-spin').disabled = false;  // enable spin button
   displayCorrectWord();
-  removeWord();
   }
 
 /**
@@ -208,7 +207,7 @@ function displayWin() {}; // display green wheel
 function displayGameOver() {}; // display red wheel
 
 /**
- * /Reveal all letter-cards
+ * Reveal all letter-cards
  */
 function displayCorrectWord() {
   document.querySelectorAll('.flip').forEach(function(li) {
@@ -218,9 +217,6 @@ function displayCorrectWord() {
     li.removeEventListener('click', decrementCreditScore);
   })
 };
-
-function removeWord() {}; // remove word from data
-//TODO---------------
 
 /**
  * @description Gives the number of credit points to the user based on word length
