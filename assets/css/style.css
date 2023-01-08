@@ -199,7 +199,6 @@ body {
     border: 5px solid #ecece6;
     font-weight: bold;
     font-size: 1.8em;
-    cursor: pointer;
     perspective: 600px;
     }
 
@@ -228,6 +227,7 @@ body {
 }
 
 .flip:hover {
+    cursor: pointer;
     transform: scale(1.05);
     z-index: 9;
 }
