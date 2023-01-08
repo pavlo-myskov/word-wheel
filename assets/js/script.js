@@ -62,20 +62,25 @@ function getRandomWord(topicName) {
     throw(`Error! User selected Topic "${topicName}" not found!`)
   }
 
-  word = validateWord(word);
+  word = validateWord(topicName, word);
 
   return word;
 }
 
 /**
- * Clean the word from excess spaces and special characters. Convert to lower case
+ * Cleans the word from excess spaces and special characters; converts to lower case and
+ * returns if word.length > 1, otherwise restarts the game
  */
-function validateWord(word) {
+function validateWord(topicName, word) {
   word = word.toLowerCase().trim();  // convert to LowerCase and Remove the leading and trailing whitespace
   word = word.replace(/  +/g, ' ');  // replace multiple spaces with a single space
   word = word.replace(/[^a-z ]/g, '');  // remove all special characters except lower case letters and spaces
 
-  return word;
+  if (word && word.length > 1) {
+    return word;
+  } else {
+    runGame(topicName);
+  }
 }
 
 function getDefinition(word) {
