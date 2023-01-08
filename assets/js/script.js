@@ -83,10 +83,6 @@ function validateWord(topicName, word) {
   }
 }
 
-function getDefinition(word) {
-  return 'some description';
-}
-
 /**
  * Insert random char to the wheel
  */
@@ -207,8 +203,10 @@ function resetScore() {
   document.getElementById('total-score').innerHTML = 0;
 };
 
+// TODO ----
 function displayWin() {}; // display green wheel
 function displayGameOver() {}; // display red wheel
+// TODO ----
 
 /**
  * Reveal all letter-cards
