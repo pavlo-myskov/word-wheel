@@ -171,22 +171,21 @@ function checkAnswer(correctWord) {
 
   if (!answer) {
     alert('Type the anwer!');
-    return;
-  }
-
-  if (answer.toLowerCase() === correctWord) {
-    incrementTotalScore();
-    displayWin();
+  } else {
+    if (answer.toLowerCase() === correctWord) {
+      incrementTotalScore();
+      displayWin();
     } else {
       resetScore(); // reset total score
       displayGameOver(); // display red wheel
     };
 
-  document.getElementById('credit-score').innerHTML = '0'; // reset credit-score
-  document.getElementById('btn-sm').disabled = true;  // disable submit button
-  document.getElementById('btn-spin').disabled = false;  // enable spin button
-  displayCorrectWord();
+    document.getElementById('credit-score').innerHTML = '0'; // reset credit-score
+    document.getElementById('btn-sm').disabled = true;  // disable submit button
+    document.getElementById('btn-spin').disabled = false;  // enable spin button
+    displayCorrectWord();
   }
+}
 
 /**
  * Get the remaining points from the credit score and adds them to the total
