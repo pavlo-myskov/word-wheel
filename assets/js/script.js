@@ -200,11 +200,20 @@ function incrementTotalScore() {
   totalScoreEl.innerHTML = totalScore + creditScore;
 };
 
-//TODO---------------
+/**
+ * Reset total score
+ */
+function resetScore() {
+  document.getElementById('total-score').innerHTML = 0;
+};
+
 function displayWin() {}; // display green wheel
-function resetScore() {}; //reset total score
 function displayGameOver() {}; // display red wheel
-function displayCorrectWord() {}; // reveal all letter-cards
+
+function displayCorrectWord() {
+
+  
+}; // reveal all letter-cards
 function removeWord() {}; // remove word from data
 //TODO---------------
 
