@@ -107,8 +107,6 @@ function displayDefinition(definition) {
  * and show them to the user with the reverse sider
  */
 function insertWord(word) {
-  let letterCounter = 0;
-
   let wordListEl = document.getElementById('word-section');
   wordListEl.style.background = 'none';  // remove the initial background rectangle below the word
 
@@ -129,15 +127,24 @@ function insertWord(word) {
 
     wordListEl.appendChild(li);
 
-    // if li element not empty add event listeners
+    // if li element not empty add event listener
     if (li.innerText) {
-      letterCounter++;  //
       // Reveal the hidden letter by fliping the card and removing the 'flip' class from 'li' element
-      li.addEventListener('click', function() {this.removeAttribute('class')});
-      // reduce credit score on click
-      li.addEventListener('click', decrementCreditScore);
+      li.addEventListener('click', showLetter);
     };
   };
+}
+
+/**
+ * Reveal the hidden letter by fliping the card and removing the 'flip' class from 'li' element
+ */
+function showLetter() {
+  this.classList.remove('flip')
+
+  // remove the event listener from the open char to prevent re-clicking which could lead to the next creditScore decreasing
+  this.removeEventListener('click', decrementCreditScore);
+
+  decrementCreditScore();  // deacrease credit score on click
 }
 
 /**
@@ -210,10 +217,14 @@ function resetScore() {
 function displayWin() {}; // display green wheel
 function displayGameOver() {}; // display red wheel
 
+/**
+ * /Reveal all letter-cards
+ */
 function displayCorrectWord() {
 
-  
-}; // reveal all letter-cards
+
+};
+
 function removeWord() {}; // remove word from data
 //TODO---------------
 
@@ -236,7 +247,4 @@ function decrementCreditScore() {
   let creditScore = parseInt(creditScoreEl.innerText); // get current credit score
 
   creditScoreEl.innerHTML = --creditScore;
-
-  // remove the event listener from the open char to prevent re-clicking which could lead to the next creditScore decreasing
-  this.removeEventListener('click', decrementCreditScore);
 }
