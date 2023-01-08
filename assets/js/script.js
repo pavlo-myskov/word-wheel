@@ -130,7 +130,9 @@ function insertWord(word) {
     // if li element not empty add event listener
     if (li.innerText) {
       // Reveal the hidden letter by fliping the card and removing the 'flip' class from 'li' element
-      li.addEventListener('click', showLetter);
+      li.addEventListener('click', function () {showLetter(li)});
+      // reduce credit score on click
+      li.addEventListener('click', decrementCreditScore);
     };
   };
 }
@@ -138,13 +140,11 @@ function insertWord(word) {
 /**
  * Reveal the hidden letter by fliping the card and removing the 'flip' class from 'li' element
  */
-function showLetter() {
-  this.classList.remove('flip')
+function showLetter(li) {
+  li.classList.remove('flip');
 
   // remove the event listener from the open char to prevent re-clicking which could lead to the next creditScore decreasing
-  this.removeEventListener('click', decrementCreditScore);
-
-  decrementCreditScore();  // deacrease credit score on click
+  li.removeEventListener('click', decrementCreditScore);
 }
 
 /**
@@ -221,8 +221,10 @@ function displayGameOver() {}; // display red wheel
  * /Reveal all letter-cards
  */
 function displayCorrectWord() {
-
-
+  let letters = document.getElementsByClassName('flip');
+  for (let letter of letters) {
+    showLetter(letter);
+  }
 };
 
 function removeWord() {}; // remove word from data
