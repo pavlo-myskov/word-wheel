@@ -51,9 +51,15 @@ async function getDefinition(word) {
     let response = await fetch(BASE_API_URL + word);
     console.log(response)
     if (!response.ok) {
-      definition = undefined;
-      console.log(`|${arguments.callee.name}()| Definition for word: <${word}> not found!`)
-      return definition;
+      switch (response.status) {
+        case 404:
+          console.log(`Definition for word: <${word}> not found!`)
+          break;
+        default:
+          alert('There has been a breakdown. Restart the game or try again later');
+          throw new Error(`HTTP error: ${response.status}`);
+      }
+
     } else {
       let dataObj = await response.json();  // .json method convert json to js obj
 
@@ -76,7 +82,7 @@ function parseDefinition(dataObj) {
 }
 
 function validateDefinition(definition) {
-  console.log(definition.length);
+  console.log('definition.length:', definition.length);
   return definition;
 }
 
