@@ -3,40 +3,32 @@
  * Extract and delete a random word by topic from the an array of words in data.js file
  */
 async function getRandomWord(topicName) {
-  let word;
+  // TODO if topic is end and start new topic
+  // FIXME total score counter
+  let result;
   try {
-    if (data.hasOwnProperty(topicName)) {
-      let wordList = data[topicName];  // het array of words by topic
-      let randNum = Math.floor(Math.random() * wordList.length); // get rand number from 0 to word array length
-      word = wordList.splice(randNum, 1)[0];  // pop the word from array by random index
-    } else {
-      alert(`Topic "${topicName}" not found! Try another.`)
-      throw (`Error! User selected Topic "${topicName}" not found!`)
-    }
+    let wordList = data[topicName];  // het array of words by topic
+    let randNum = Math.floor(Math.random() * wordList.length); // get rand number from 0 to word array length
+    let word = wordList.splice(randNum, 1)[0];  // pop the word from array by random index
 
-    result = validateWord(topicName, word);
-    console.log(`|${arguments.callee.name}()| Validated word: ${result}`);  // func name
+    if (word) {
+      lowerCaseWord = word.toLowerCase().trim();  // convert to LowerCase and Remove the leading and trailing whitespace
+      withoutSpacesWord = lowerCaseWord.replace(/  +/g, ' ');  // replace multiple spaces with a single space
+      result = withoutSpacesWord.replace(/[^a-z ]/g, '');  // remove all special characters except lower case letters and spaces
+      if (result) {
+        return result;
+      } else {
+        result = getRandomWord(topicName);  // recursive function that extracts new word from data
+      };
+    } else {
+      result = getRandomWord(topicName);
+    }
+    console.log(`Validated word: ${result}`);
     return result;
   }
   catch (error) {
     console.log(error)
   }
-}
-
-/**
- * Cleans the word from excess spaces and special characters; converts to lower case
- */
-function validateWord(topicName, word) {
-  word = word.toLowerCase().trim();  // convert to LowerCase and Remove the leading and trailing whitespace
-  word = word.replace(/  +/g, ' ');  // replace multiple spaces with a single space
-  word = word.replace(/[^a-z ]/g, '');  // remove all special characters except lower case letters and spaces
-
-  if (!word) {
-    console.log(`Word is undefined. Searching the new word`);
-    word = getRandomWord(topicName);
-  }
-
-  return word;
 }
 
 /**
