@@ -1,36 +1,44 @@
-document.getElementById('btn-spin').addEventListener('click', () => {runGame(getTopic());})
+document.getElementById('btn-spin').addEventListener('click', () => { runGame(getTopic()); })
 
 const capitalLatinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 function getTopic() {
   //TODO: get topic, choosed by user from dropdown list elements
-  return 'my_topic'
+  return 'wild_animals'
 }
 
 /**
- * Run game functions
+ * Initializes the launch of the game
  */
 async function runGame(topic) {
-  resetFields();
-  let letterChanger = spinWheel();
+  let word;
+  let definition;
 
-  let obj = await getData(topic);
-  let word = obj.word
-  let definition = obj.definition
+  try {
+    resetFields();
+    let letterChanger = spinWheel();
 
-  // Set a delay 1sec for running functions
-  setTimeout(function() {
-    displayDefinition(definition);  // call displayDefinition func with passed definition
-    insertWord(word);  // call insertWord func with passed word
-    activateInputBox();  // focus text cursor on the input field
-    giveCredit(word);  // fill credit score field based on word length
+    let obj = await getData(topic);  // waiting until it is resolved
+    word = obj.word
+    definition = obj.definition
 
-    stopWheel(letterChanger);
-    // enable submit button
-    document.getElementById('btn-sm').disabled = false;
-    // check user answer on click submit button
-    document.getElementById('btn-sm').addEventListener('click', () => {checkAnswer(topic, word);});
-  }, 1000);
+    // Set a delay 1sec for running functions
+    setTimeout(function () {
+      displayDefinition(definition);  // call displayDefinition func with passed definition
+      insertWord(word);  // call insertWord func with passed word
+      activateInputBox();  // focus text cursor on the input field
+      giveCredit(word);  // fill credit score field based on word length
+
+      stopWheel(letterChanger);
+      // enable submit button
+      document.getElementById('btn-sm').disabled = false;
+      // check user answer on click submit button
+      document.getElementById('btn-sm').addEventListener('click', () => { checkAnswer(topic, word); });
+    }, 1000);
+  }
+  catch (error) {
+    console.log(error)
+  }
 }
 
 /**
@@ -113,7 +121,7 @@ function displayDefinition(definition) {
  * Reveal all letter-cards
  */
 function displayCorrectWord() {
-  document.querySelectorAll('.flip').forEach(function(li) {
+  document.querySelectorAll('.flip').forEach(function (li) {
     // Reveal the hidden letter by fliping the card and removing the 'flip' class from 'li' element
     li.classList.remove('flip');
     // remove the event listener from the open char to prevent re-clicking which could lead to the next creditScore decreasing
@@ -149,7 +157,7 @@ function insertWord(word) {
     // if li element not empty add event listener
     if (li.innerText) {
       // Reveal the hidden letter by fliping the card and removing the 'flip' class from 'li' element
-      li.addEventListener('click', function() {this.classList.remove('flip');});
+      li.addEventListener('click', function () { this.classList.remove('flip'); });
       // reduce credit score on click
       li.addEventListener('click', decrementCreditScore);
     };
@@ -203,8 +211,8 @@ function resetScore() {
 };
 
 // TODO ----
-function displayWin() {}; // display green wheel
-function displayGameOver() {}; // display red wheel
+function displayWin() { }; // display green wheel
+function displayGameOver() { }; // display red wheel
 // TODO ----
 
 
