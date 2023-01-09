@@ -1,26 +1,22 @@
-document.getElementById('btn-spin').addEventListener('click', () => {runGame('wild_animals');})
+document.getElementById('btn-spin').addEventListener('click', () => {runGame(getTopic());})
 
 const capitalLatinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+function getTopic() {
+  //TODO: get topic, choosed by user from dropdown list elements
+  return 'my_topic'
+}
 
 /**
  * Run game functions
  */
-function runGame(topic) {
+async function runGame(topic) {
   resetFields();
-  let word = getRandomWord(topic);  // get random word by topic from wordList array
-  let definition = getDefinition(word); // get definition by the word and store it to the var
+  let letterChanger = spinWheel();
 
-  document.getElementById('btn-spin').disabled = true;  // disable the btn-spin to prevent restart the 'runGame' function while the word not guessed
-
-  // check user answer on click submit button
-  document.getElementById('btn-sm').addEventListener('click', () => {checkAnswer(topic, word);});
-
-  // start changing random letters in the wheel by interval
-  let charChanger = setInterval(insertRandomChar, 100);
-
-  // start spinning the wheel faster
-  let animCircle = document.getElementsByClassName('animated-circle')[0];
-  animCircle.style.animationDuration = '0.3s';
+  let obj = await getData(topic);
+  let word = obj.word
+  let definition = obj.definition
 
   // Set a delay 1sec for running functions
   setTimeout(function() {
@@ -29,15 +25,17 @@ function runGame(topic) {
     activateInputBox();  // focus text cursor on the input field
     giveCredit(word);  // fill credit score field based on word length
 
-    clearInterval(charChanger);  // stop changing random letters in the wheel
-    document.getElementById('wheel-letter').innerHTML = "?";  // insert '?' instead of random letters
-    animCircle.style.animationDuration = '20s';  // return the wheel animation to normal rotation speed
-    document.getElementById('btn-sm').disabled = false; // enable submit button
+    stopWheel(letterChanger);
+    // enable submit button
+    document.getElementById('btn-sm').disabled = false;
+    // check user answer on click submit button
+    document.getElementById('btn-sm').addEventListener('click', () => {checkAnswer(topic, word);});
   }, 1000);
 }
 
 /**
- * Clear the wheel, definition, word sections; reset credit score; clear and disable input field;
+ * Clear the wheel, definition, word sections; reset credit score;
+ * clear and disable input field; disable spin button
  */
 function resetFields() {
   document.getElementById('wheel-letter').innerHTML = "";  // clear the wheel
@@ -46,51 +44,59 @@ function resetFields() {
   document.getElementById('word-section').style.background = '#7f8b7c';  // return the initial background-color for word section rectangle
   document.getElementById('credit-score').innerHTML = '0';  // reset credit-score
   disableInputBox();
+  // disable the btn-spin to prevent restart the 'runGame' function while the word not guessed
+  document.getElementById('btn-spin').disabled = true;
 }
 
 /**
- * Extract random word by topic from the array of words in data.js file
+ * Spinning wheel animation with changing letters
  */
-function getRandomWord(topicName) {
-  let word;
-  if (data.hasOwnProperty(topicName)) {
-    let wordList = data[topicName];  // het array of words by topic
-    let randNum = Math.floor(Math.random() * wordList.length); // get rand number from 0 to word array length
-    word = wordList.splice(randNum, 1)[0];  // pop the word from array by random index
-  } else {
-    alert(`Topic "${topicName}" not found! Try another.`)
-    throw(`Error! User selected Topic "${topicName}" not found!`)
-  }
+function spinWheel() {
+  // start spinning the wheel faster
+  let animCircle = document.getElementsByClassName('animated-circle')[0];
+  animCircle.style.animationDuration = '0.3s';
+  // Insert random char to the wheel the wheel by interval
+  let letterChanger = setInterval(() => {
+    let wheel = document.getElementById('wheel-letter');
+    let ranNum = Math.floor(Math.random() * capitalLatinChars.length);  //generate random num from 0 to 'chars' string length
+    wheel.innerHTML = capitalLatinChars[ranNum];  // get random char from the 'chars' string and insert to the 'wheel' element
+  }, 100);
 
-  word = validateWord(topicName, word);
-
-  return word;
+  return letterChanger;
 }
 
 /**
- * Cleans the word from excess spaces and special characters; converts to lower case and
- * returns if word.length > 1, otherwise restarts the game
+ * Reset the wheel animation
  */
-function validateWord(topicName, word) {
-  word = word.toLowerCase().trim();  // convert to LowerCase and Remove the leading and trailing whitespace
-  word = word.replace(/  +/g, ' ');  // replace multiple spaces with a single space
-  word = word.replace(/[^a-z ]/g, '');  // remove all special characters except lower case letters and spaces
-
-  if (word && word.length > 1) {
-    return word;
-  } else {
-    runGame(topicName);
-  }
+function stopWheel(letterChanger) {
+  let animCircle = document.getElementsByClassName('animated-circle')[0];
+  animCircle.style.animationDuration = '20s';  // return the wheel animation to normal rotation speed
+  clearInterval(letterChanger);  // stop changing random letters in the wheel
+  document.getElementById('wheel-letter').innerHTML = "?";  // insert '?' instead of random letters
 }
 
 /**
- * Insert random char to the wheel
+ * Enable access to the input field and and get focus text cursor on it
  */
-function insertRandomChar() {
-  let wheel = document.getElementById('wheel-letter');
-  let ranNum = Math.floor(Math.random() * capitalLatinChars.length);  //generate random num from 0 to 'chars' string length
-  wheel.innerHTML = capitalLatinChars[ranNum];  // get random char from the 'chars' string and insert to the 'wheel' element
-};
+function activateInputBox() {
+  let answerBox = document.getElementById('answer-box');
+
+  answerBox.disabled = false;
+  answerBox.placeholder = 'type your answer';
+  answerBox.classList.add('active');
+}
+
+/**
+ * Clear and disable input box
+ */
+function disableInputBox() {
+  let answerBox = document.getElementById('answer-box');
+
+  answerBox.placeholder = 'spin the wheel';
+  answerBox.value = '';  // clear input field
+  answerBox.disabled = true;
+  answerBox.classList.remove('active');
+}
 
 /**
  * Get and Display the word definition to the user
@@ -102,6 +108,18 @@ function displayDefinition(definition) {
   let textHeight = definitionEl.offsetHeight;  // Get the height of the inserted text;
   document.getElementById('definition-wrapper').style.height = `${textHeight + 15}px`;  // Expand the definition-wrapper to text height;
 }
+
+/**
+ * Reveal all letter-cards
+ */
+function displayCorrectWord() {
+  document.querySelectorAll('.flip').forEach(function(li) {
+    // Reveal the hidden letter by fliping the card and removing the 'flip' class from 'li' element
+    li.classList.remove('flip');
+    // remove the event listener from the open char to prevent re-clicking which could lead to the next creditScore decreasing
+    li.removeEventListener('click', decrementCreditScore);
+  })
+};
 
 /**
  * Insert a word into flip cards for each letter
@@ -139,29 +157,8 @@ function insertWord(word) {
 }
 
 /**
- * Enable access to the input field and and get focus text cursor on it
+ * Checks if user answer equal to correct word and call relevant functions
  */
-function activateInputBox() {
-  let answerBox = document.getElementById('answer-box');
-
-  answerBox.disabled = false;
-  answerBox.placeholder = 'type your answer';
-  answerBox.classList.add('active');
-}
-
-/**
- * Clear and disable input box
- */
-function disableInputBox() {
-  let answerBox = document.getElementById('answer-box');
-
-  answerBox.placeholder = 'spin the wheel';
-  answerBox.value = '';  // clear input field
-  answerBox.disabled = true;
-  answerBox.classList.remove('active');
-}
-
-
 function checkAnswer(correctWord) {
   let answer = document.getElementById('answer-box').value
 
@@ -183,6 +180,8 @@ function checkAnswer(correctWord) {
   }
 }
 
+
+/* ----Total Score ---- */
 /**
  * Get the remaining points from the credit score and adds them to the total
  */
@@ -208,18 +207,8 @@ function displayWin() {}; // display green wheel
 function displayGameOver() {}; // display red wheel
 // TODO ----
 
-/**
- * Reveal all letter-cards
- */
-function displayCorrectWord() {
-  document.querySelectorAll('.flip').forEach(function(li) {
-    // Reveal the hidden letter by fliping the card and removing the 'flip' class from 'li' element
-    li.classList.remove('flip');
-    // remove the event listener from the open char to prevent re-clicking which could lead to the next creditScore decreasing
-    li.removeEventListener('click', decrementCreditScore);
-  })
-};
 
+/* ----Gredit Score ---- */
 /**
  * @description Gives the number of credit points to the user based on word length
  * @param {String} word extracted from data.js using 'getRandomWord' function
