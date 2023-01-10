@@ -1,33 +1,32 @@
 
+// TODO: add new Class constructor extending error class for getRandomWord errors
 /**
  * Extract and delete a random word by topic from the an array of words in data.js file
  */
 async function getRandomWord(topicName) {
-  // TODO if topic is end and start new topic
-  // FIXME total score counter
-  let result;
-  try {
-    let wordList = data[topicName];  // het array of words by topic
-    let randNum = Math.floor(Math.random() * wordList.length); // get rand number from 0 to word array length
-    let word = wordList.splice(randNum, 1)[0];  // pop the word from array by random index
-
-    if (word) {
-      lowerCaseWord = word.toLowerCase().trim();  // convert to LowerCase and Remove the leading and trailing whitespace
-      withoutSpacesWord = lowerCaseWord.replace(/  +/g, ' ');  // replace multiple spaces with a single space
-      result = withoutSpacesWord.replace(/[^a-z ]/g, '');  // remove all special characters except lower case letters and spaces
-      if (result) {
-        return result;
-      } else {
-        result = getRandomWord(topicName);  // recursive function that extracts new word from data
-      };
-    } else {
-      result = getRandomWord(topicName);
-    }
-    console.log(`Validated word: ${result}`);
-    return result;
+  console.log(data[topicName])
+  if (data[topicName].length < 1) {
+    throw new Error(`The word list of topic <${topicName}> is Empty!`);
   }
-  catch (error) {
-    console.log(error)
+
+  let wordList = data[topicName];  // get array of words by topic
+  let result;
+
+  let randNum = Math.floor(Math.random() * wordList.length); // get rand number from 0 to word array length
+  let word = wordList.splice(randNum, 1)[0];  // pop the word from array by random index
+
+  if (word) {
+    lowerCaseWord = word.toLowerCase().trim();  // convert to LowerCase and Remove the leading and trailing whitespace
+    withoutSpacesWord = lowerCaseWord.replace(/  +/g, ' ');  // replace multiple spaces with a single space
+    result = withoutSpacesWord.replace(/[^a-z ]/g, '');  // remove all special characters except lower case letters and spaces
+    if (result) {
+      console.log(`Validated word: ${result}`);
+      return result;
+    } else {
+      throw new Error(`The word <${word}> cannon be processed!`);
+    };
+  } else {
+    throw new Error(`An empty string cannot be processed!`);
   }
 }
 
@@ -58,10 +57,10 @@ async function getDefinition(word) {
  * Parse definition from data object
  */
 function parseDefinition(dataObj) {
-  return dataObj[0].meanings[0].definitions[0].definition
+  return dataObj[0].meanings[0].definitions[0].definition;
 }
 
-// TODO check length
+// TODO check the definition string length and cut it by the last dot while the string too long
 function validateDefinition(definition) {
   console.log('definition.length:', definition.length);
   return definition;
@@ -86,13 +85,13 @@ async function getData(topic) {
       definition = await getDefinition(word);
       break;
     } catch (error) {
-      console.log(error);
       // handle rethrow-ed HttpError instance and check responce status code. Restart loop
       // code 404 - the server cannot find the requested resource
       if (error instanceof HttpError && error.response.status == 404) {
         console.log(`Error: ${error}. | Definition for word <${word}> Not found. Searching new one...`);
       } else {
-        throw error;
+        // TODO: Catch passed(rethrow) errors from getRandomWord and print them here, otherwise <else: throw error;> to runGame
+        console.log(error);
       }
     }
   }
