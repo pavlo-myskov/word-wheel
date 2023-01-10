@@ -6,6 +6,9 @@
 async function getRandomWord(topicName) {
   console.log(data[topicName])
   if (data[topicName].length < 1) {
+    //TODO: remove current topic
+    //TODO: displayTopics(); // get updated list if the existing topics and display in dropdown list
+    //TODO: topicName = getTopic(); // get new topic name from dropdown list
     throw new Error(`The word list of topic <${topicName}> is Empty!`);
   }
 
@@ -92,6 +95,7 @@ async function getData(topic) {
       } else {
         // TODO: Catch passed(rethrow) errors from getRandomWord and print them here, otherwise <else: throw error;> to runGame
         console.log(error);
+        console.log(error.message);
       }
     }
   }

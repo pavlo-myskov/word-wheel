@@ -1,18 +1,24 @@
-document.getElementById('btn-spin').addEventListener('click', addSpinButtonListener)
-
 const capitalLatinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+// TODO: onload:
+// displayTopics()
+// get topics from data.js and display in dropdown menu; by default set to dropdown list anytopic
+// add event listener for on click spin button with event handler that asks the user to choose topic from dropdown list, not once
+// add event listener for on click dropdown menu and choosing a topic
+document.getElementById('btn-spin').addEventListener('click', runGameHandler)
+
 
 /**
  * Event handler that gives access to init start new game on click spin-button using runGame function only once
  */
-function addSpinButtonListener() {
+function runGameHandler() {
   runGame(getTopic());  // this will execute only once as after the event listener will be removed
-  this.removeEventListener('click', addSpinButtonListener);  // remove the event listener after the callback
+  this.removeEventListener('click', runGameHandler);  // remove the event listener after the callback
 }
 
 //TODO: get topic, choosed by user from dropdown list elements
 function getTopic() {
-  return 'furniture'
+  return 'cutlery'
 }
 
 /**
@@ -199,7 +205,7 @@ function checkAnswer(correctWord) {
     displayCorrectWord();
     disableInputBox();
     // add event listener for spin-button with runGame event handler to give access init start new game
-    document.getElementById('btn-spin').addEventListener('click', addSpinButtonListener);
+    document.getElementById('btn-spin').addEventListener('click', runGameHandler);
   }
 }
 
