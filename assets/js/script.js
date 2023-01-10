@@ -1,19 +1,26 @@
-document.getElementById('btn-spin').addEventListener('click', () => { runGame(getTopic()); })
+document.getElementById('btn-spin').addEventListener('click', addSpinButtonListener)
 
 const capitalLatinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+/**
+ * Event handler that gives access to init start new game on click spin-button using runGame function only once
+ */
+function addSpinButtonListener() {
+  runGame(getTopic());  // this will execute only once as after the event listener will be removed
+  this.removeEventListener('click', addSpinButtonListener);  // remove the event listener after the callback
+}
+
+//TODO: get topic, choosed by user from dropdown list elements
 function getTopic() {
-  //TODO: get topic, choosed by user from dropdown list elements
-  return 'wild_animals'
+  return 'furniture'
 }
 
 /**
  * Initializes the launch of the game
  */
 async function runGame(topic) {
-  let word;
-  let definition;
-
+  let word = '';
+  let definition = '';
   try {
     resetFields();
     let letterChanger = spinWheel();
@@ -33,7 +40,9 @@ async function runGame(topic) {
       // enable submit button
       document.getElementById('btn-sm').disabled = false;
       // check user answer on click submit button
-      document.getElementById('btn-sm').addEventListener('click', () => { checkAnswer(topic, word); });
+      document.getElementById('btn-sm').addEventListener('click', () => {
+        checkAnswer(word);
+      }, { once: true });  // remove the event listener after the callback
     }, 1000);
   }
   catch (error) {
@@ -95,7 +104,7 @@ function activateInputBox() {
 }
 
 /**
- * Clear and disable input box
+ * Reset and disable input box
  */
 function disableInputBox() {
   let answerBox = document.getElementById('answer-box');
@@ -172,8 +181,11 @@ function checkAnswer(correctWord) {
 
   if (!answer) {
     alert('Type the anwer!');
+    document.getElementById('btn-sm').addEventListener('click', () => {
+      checkAnswer(correctWord);
+    }, { once: true });  // re-init the checkAnswer event handler on click submit-button only once
   } else {
-    if (answer.toLowerCase() === correctWord) {
+    if (answer.toLowerCase().trim() === correctWord) {
       incrementTotalScore();
       displayWin();
     } else {
@@ -185,6 +197,9 @@ function checkAnswer(correctWord) {
     document.getElementById('btn-sm').disabled = true;  // disable submit button
     document.getElementById('btn-spin').disabled = false;  // enable spin button
     displayCorrectWord();
+    disableInputBox();
+    // add event listener for spin-button with runGame event handler to give access init start new game
+    document.getElementById('btn-spin').addEventListener('click', addSpinButtonListener);
   }
 }
 
