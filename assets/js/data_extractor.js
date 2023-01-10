@@ -32,68 +32,83 @@ async function getRandomWord(topicName) {
 }
 
 /**
- * Get a definition from the free dictionary api by the random word
+ * Get a definition from the dictionary api by the random word
  * extracted from data.js using the getRandomWord(topicName) func
  */
 async function getDefinition(word) {
   const BASE_API_URL = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
-  let definition;
 
-  try {
-    let response = await fetch(BASE_API_URL + word);
-    console.log(response)
-    if (!response.ok) {
-      switch (response.status) {
-        case 404:
-          console.log(`Definition for word: <${word}> not found!`)
-          break;
-        default:
-          alert('There has been a breakdown. Restart the game or try again later');
-          throw new Error(`HTTP error: ${response.status}`);
-      }
+  let response = await fetch(BASE_API_URL + word);
+  console.log(response)
+  if (response.status == 200) {
+    let dataObj = await response.json();  // .json method convert json to js obj
 
-    } else {
-      let dataObj = await response.json();  // .json method convert json to js obj
+    let rowDefinition = parseDefinition(dataObj);
+    let definition = validateDefinition(rowDefinition);
 
-      let rowDefinition = parseDefinition(dataObj);
-      definition = validateDefinition(rowDefinition)
+    return definition;
 
-      return definition;
-    }
-  }
-  catch (error) {
-    console.log(error)
+  } else {
+    // creates new error object with passing a response of a fetch request
+    throw new HttpError(response);
   }
 }
 
 /**
- * Extracts definition from data object
+ * Parse definition from data object
  */
 function parseDefinition(dataObj) {
   return dataObj[0].meanings[0].definitions[0].definition
 }
 
+// TODO check length
 function validateDefinition(definition) {
   console.log('definition.length:', definition.length);
   return definition;
 }
 
+
+/**
+ * @description Start a loop in which the call of functions is initialized that try to get data:
+ * a random word from data.js, and definition from the dictionary api.
+ * If it fails, the cycle restarts.
+ * @param {String} topicName
+ * @returns {Object} Object: word as property, definition as value
+ */
 async function getData(topic) {
-  try {
-    let word = await getRandomWord(topic);
-    let definition = await getDefinition(word);
-    let dataObj = { 'word': word, 'definition': definition }
+  let word;
+  let definition;
 
-    console.log(`|${arguments.callee.name}()| word: ${word}, definition: ${definition}`)
-
-    if (!word || !definition) {
-      console.log(`|${arguments.callee.name}()| word: ${word}, definition: ${definition}`)
-      dataObj = getData(topic);
+  while (true) {
+    try {
+      // Try to get values. Of success, break the loop and return values
+      word = await getRandomWord(topic);
+      definition = await getDefinition(word);
+      break;
+    } catch (error) {
+      console.log(error);
+      // handle rethrow-ed HttpError instance and check responce status code. Restart loop
+      // code 404 - the server cannot find the requested resource
+      if (error instanceof HttpError && error.response.status == 404) {
+        console.log(`Error: ${error}. | Definition for word <${word}> Not found. Searching new one...`);
+      } else {
+        throw error;
+      }
     }
-
-    return dataObj
   }
-  catch (error) {
-    console.log(error)
+
+  console.log(`|${arguments.callee.name}()| word: ${word}, definition: ${definition}`);
+  return { 'word': word, 'definition': definition }
+}
+
+/**
+ * Error handling middleware.
+ * From the instance of the class you can acces the error value from the fetch response message property
+ */
+class HttpError extends Error {
+  constructor(response) {
+    super(`${response.status} for ${response.url}`);
+    this.name = 'HttpError';
+    this.response = response;
   }
 }
