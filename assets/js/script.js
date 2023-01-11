@@ -4,6 +4,14 @@ const capitalLatinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 window.addEventListener('load', () => {
   displayTopics();
   document.getElementById('btn-spin').addEventListener('click', runGameHandler);
+
+  // Trigger the submit button with a click if the user presses the "Enter" key
+  document.getElementById('answer-box').addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById('btn-sm').click();
+    }
+  });
 })
 
 /**
@@ -32,7 +40,7 @@ function displayTopics() {
  */
 function getTopic() {
   let selectedTopic = document.getElementById('topics');
-    return selectedTopic.value
+  return selectedTopic.value
 }
 
 /**
@@ -44,7 +52,7 @@ function getTopic() {
 function changeColor(element, color, milliseconds) {
   var originalColor = element.style.color;
   element.style.color = color;
-  setTimeout(function() {
+  setTimeout(function () {
     element.style.color = originalColor;
   }, milliseconds);
 }
@@ -56,10 +64,10 @@ function runGameHandler() {
   let topic = getTopic();
   if (topic) {
     runGame(topic);  // this will execute only once as after the event listener will be removed
-  this.removeEventListener('click', runGameHandler);  // remove the event listener after the callback
+    this.removeEventListener('click', runGameHandler);  // remove the event listener after the callback
   } else {
     alert('Select a topic!');
-    let topicEl =  document.getElementById('topics');
+    let topicEl = document.getElementById('topics');
     changeColor(topicEl, '#ba4c03', 1000);
   }
 }
