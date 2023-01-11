@@ -90,6 +90,12 @@ body {
     padding: 10px 20px;
 }
 
+/* Logo */
+.logo {
+    width: 7em;
+}
+
+/* Nav menu */
 nav div {
     display: flex;
     align-items: center;
@@ -107,8 +113,42 @@ nav .ico {
     padding-left: 8px;
 }
 
-.logo {
-    width: 7em;
+/* Select dropdown */
+.topics-box {
+    margin-top: 5px;
+    position: relative;
+}
+
+.topics-box::after {
+    content: "\f078";
+    font-family: FontAwesome;
+    position: relative;
+    top: 0;
+    right: 0;
+    text-align: center;
+}
+
+#topics {
+    max-width: 150px;
+    background-color: transparent;
+    padding-right: 5px;
+    appearance: none;
+    font-size: 1.0em;
+    font-weight: 700;
+    color: #6c582c;
+    border: none;
+    white-space: pre-wrap;
+}
+
+.topics-box:hover::after, #topics:hover, #topics:active, #topics:focus {
+    outline: none;
+    color: #ba4c03;
+    cursor: pointer;
+}
+
+select > option {
+    background-color: #ecece6;
+    color: black;
 }
 
 /* Spin button */
@@ -354,6 +394,22 @@ nav .ico {
     html {
         font-size: 18px;
       }
+    #topics, #rules {
+        font-size: 0.9em;
+    }
+    #topics {
+        max-width: 150px;
+    }
+}
+
+/* for tablets and screen sizes from 600px wide and DOWN */
+@media screen and (max-width: 600px) {
+    #topics, #rules {
+        font-size: 0.9em;
+    }
+    #topics {
+        max-width: 100px;
+    }
 }
 
 /* for mobile and screen sizes from 480px wide and DOWN */
@@ -367,5 +423,11 @@ nav .ico {
     }
     #btn-sm {
         margin: 0;
+    }
+    #topics, #rules {
+        font-size: 0.8em;
+    }
+    #topics {
+        max-width: 70px;
     }
 }
