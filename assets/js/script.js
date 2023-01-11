@@ -45,33 +45,40 @@ function runGameHandler() {
 /**
  * Initializes the launch of the game
  */
-async function runGame(topic) {
+function runGame(topic) {
   let word = '';
   let definition = '';
-  try {
-    resetFields();
-    let letterChanger = spinWheel();  // start wheel animation
 
-    let obj = await getData(topic);  // wait until it is resolved
-    word = obj.word
-    definition = obj.definition
+  resetFields();
+  let letterChanger = spinWheel();  // start wheel animation
 
-    // Set a delay 1sec for running functions
-    setTimeout(function () {
-      displayDefinition(definition);  // call displayDefinition func with passed definition
-      insertWord(word);  // call insertWord func with passed word
-      activateInputBox();  // focus text cursor on the input field
-      giveCredit(word);  // fill credit score field based on word length
-      activateSubmitBtn(word);
 
+  getData(topic) // wait until it is resolved
+    .then(obj => new Promise(function (resolve, reject) {
+      word = obj.word;
+      definition = obj.definition;
+
+      // Set a delay for running functions
+      setTimeout(() => {
+        displayDefinition(definition);  // call displayDefinition func with passed definition
+        insertWord(word);  // call insertWord func with passed word
+        activateInputBox();  // focus text cursor on the input field
+        giveCredit(word);  // fill credit score field based on word length
+        activateSubmitBtn(word);
+        resolve(obj);
+      }, 1000);
+    }))
+    .catch(err => {
+      console.log(err);
+      console.log('Resseting game..');
+      resetFields();
+      document.getElementById('btn-spin').disabled = true;
+      document.getElementById('btn-spin').addEventListener('click', runGameHandler);
+    })
+    .finally(() => {
       stopWheel(letterChanger);  // stop wheel animation
-    }, 1000);
-  }
-  catch (error) {
-    console.log(error)
-  }
+    })
 }
-
 /**
  * Clear the wheel, definition, word sections; reset credit score;
  * clear and disable input field; disable spin button

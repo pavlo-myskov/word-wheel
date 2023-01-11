@@ -4,11 +4,11 @@
  * Extract and delete a random word by topic from the an array of words in data.js file
  */
 async function getRandomWord(topicName) {
-  console.log(data[topicName])
   if (data[topicName].length < 1) {
-    //TODO: remove current topic
-    //TODO: displayTopics(); // get updated list if the existing topics and display in dropdown list
-    //TODO: topicName = getTopic(); // get new topic name from dropdown list
+    delete data[topicName]; // remove current topic from data as array is empty
+    displayTopics(); // display updated dropdown list
+    console.log(data)
+    alert(`The word list of topic <${topicName}> is Empty! Choose another one.`)
     throw new Error(`The word list of topic <${topicName}> is Empty!`);
   }
 
@@ -23,7 +23,6 @@ async function getRandomWord(topicName) {
     withoutSpacesWord = lowerCaseWord.replace(/  +/g, ' ');  // replace multiple spaces with a single space
     result = withoutSpacesWord.replace(/[^a-z ]/g, '');  // remove all special characters except lower case letters and spaces
     if (result) {
-      console.log(`Validated word: ${result}`);
       return result;
     } else {
       throw new Error(`The word <${word}> cannon be processed!`);
@@ -41,7 +40,6 @@ async function getDefinition(word) {
   const BASE_API_URL = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 
   let response = await fetch(BASE_API_URL + word);
-  console.log(response)
   if (response.status == 200) {
     let dataObj = await response.json();  // .json method convert json to js obj
 
@@ -65,7 +63,6 @@ function parseDefinition(dataObj) {
 
 // TODO check the definition string length and cut it by the last dot while the string too long
 function validateDefinition(definition) {
-  console.log('definition.length:', definition.length);
   return definition;
 }
 
@@ -93,9 +90,8 @@ async function getData(topic) {
       if (error instanceof HttpError && error.response.status == 404) {
         console.log(`Error: ${error}. | Definition for word <${word}> Not found. Searching new one...`);
       } else {
-        // TODO: Catch passed(rethrow) errors from getRandomWord and print them here, otherwise <else: throw error;> to runGame
-        console.log(error);
-        console.log(error.message);
+        // TODO: Catch passed(rethrow) custom error instance from getRandomWord and print them here, otherwise <else: throw error;> to runGame
+        throw error;
       }
     }
   }
