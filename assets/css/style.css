@@ -140,7 +140,7 @@ nav .ico {
     white-space: pre-wrap;
 }
 
-.topics-box:hover::after, #topics:hover, #topics:active, #topics:focus {
+.topics-box:hover::after, #topics:hover, #topics:active, #topics:focus, #rules:hover {
     outline: none;
     color: #ba4c03;
     cursor: pointer;

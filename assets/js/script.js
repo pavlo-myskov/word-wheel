@@ -12,6 +12,24 @@ window.addEventListener('load', () => {
       document.getElementById('btn-sm').click();
     }
   });
+
+  document.getElementById('rules').addEventListener('click', () => {
+    alert(`Welcome to WordWheel Educational Game!
+
+    1.Choose a topic.
+    2.Spin the wheel.
+    3.Guess the word by its definition or open it spell by letter.
+    4.Earn points:
+      - initially, for each word, a credit score is given in the amount of the number of letters in the word;
+      - for each open letter, one point is deducted from the credit score;
+      - for a guessed word, the balance of credit points, which is equivalent to undisclosed letters is summed up to the total score;
+      - if the word is entered incorrectly, the total score counter is reset to zero;
+      - if the whole word is opened manually, the total score is not reset.
+
+    Have a Good Game!
+    Developed by FlashDrag (https://github.com/FlashDrag)
+    `)
+  })
 })
 
 /**
