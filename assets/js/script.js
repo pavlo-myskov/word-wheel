@@ -29,9 +29,9 @@ async function runGame(topic) {
   let definition = '';
   try {
     resetFields();
-    let letterChanger = spinWheel();
+    let letterChanger = spinWheel();  // start wheel animation
 
-    let obj = await getData(topic);  // waiting until it is resolved
+    let obj = await getData(topic);  // wait until it is resolved
     word = obj.word
     definition = obj.definition
 
@@ -41,14 +41,9 @@ async function runGame(topic) {
       insertWord(word);  // call insertWord func with passed word
       activateInputBox();  // focus text cursor on the input field
       giveCredit(word);  // fill credit score field based on word length
+      activateSubmitBtn(word);
 
-      stopWheel(letterChanger);
-      // enable submit button
-      document.getElementById('btn-sm').disabled = false;
-      // check user answer on click submit button
-      document.getElementById('btn-sm').addEventListener('click', () => {
-        checkAnswer(word);
-      }, { once: true });  // remove the event listener after the callback
+      stopWheel(letterChanger);  // stop wheel animation
     }, 1000);
   }
   catch (error) {
@@ -122,6 +117,24 @@ function disableInputBox() {
 }
 
 /**
+ * Enable submit button and add event listener on click
+ */
+function activateSubmitBtn(word) {
+  // enable submit button
+  document.getElementById('btn-sm').disabled = false;
+  // check user answer on click submit button
+  document.getElementById('btn-sm').onclick = () => { checkAnswer(word); };
+}
+
+/**
+ * Remove event listener and disable submit button
+ */
+function disableSubmitBtn() {
+  document.getElementById('btn-sm').onclick = null; // remove event listener
+  document.getElementById('btn-sm').disabled = true;  // disable submit button
+}
+
+/**
  * Get and Display the word definition to the user
  */
 function displayDefinition(definition) {
@@ -187,9 +200,6 @@ function checkAnswer(correctWord) {
 
   if (!answer) {
     alert('Type the anwer!');
-    document.getElementById('btn-sm').addEventListener('click', () => {
-      checkAnswer(correctWord);
-    }, { once: true });  // re-init the checkAnswer event handler on click submit-button only once
   } else {
     if (answer.toLowerCase().trim() === correctWord) {
       incrementTotalScore();
@@ -199,11 +209,13 @@ function checkAnswer(correctWord) {
       displayGameOver(); // display red wheel
     };
 
-    document.getElementById('credit-score').innerHTML = '0'; // reset credit-score
-    document.getElementById('btn-sm').disabled = true;  // disable submit button
-    document.getElementById('btn-spin').disabled = false;  // enable spin button
+    disableSubmitBtn();
     displayCorrectWord();
     disableInputBox();
+
+    document.getElementById('credit-score').innerHTML = 0; // reset credit-score
+
+    document.getElementById('btn-spin').disabled = false;  // enable spin button
     // add event listener for spin-button with runGame event handler to give access init start new game
     document.getElementById('btn-spin').addEventListener('click', runGameHandler);
   }
@@ -260,4 +272,23 @@ function decrementCreditScore() {
 
   // remove the event listener from the open char to prevent re-clicking which could lead to the next creditScore decreasing
   this.removeEventListener('click', decrementCreditScore);
+
+  if (creditScore < 1) {
+    restartGameByCreditScore();
+  }
+}
+
+/**
+ * If all hidden letters opened by the user, the func disables acces to sumbit btn
+ * and gives access to continue the game
+ */
+function restartGameByCreditScore() {
+  disableSubmitBtn();
+  disableInputBox();
+  displayGameOver();
+
+  // enable spin button
+  document.getElementById('btn-spin').disabled = false;
+  // add event listener for spin-button with runGame event handler to give access to continue the game
+  document.getElementById('btn-spin').addEventListener('click', runGameHandler);
 }
