@@ -60,7 +60,7 @@ function runGameHandler() {
   } else {
     alert('Select a topic!');
     let topicEl =  document.getElementById('topics');
-    changeColor(topicEl, 'yellow', 1000);
+    changeColor(topicEl, '#ba4c03', 1000);
   }
 }
 
@@ -82,6 +82,8 @@ function runGame(topic) {
 
       // Set a delay for running functions
       setTimeout(() => {
+        document.getElementsByClassName('wheel-outer')[0].style.background = '#d4d387'; // change wheel color
+        document.getElementById('wheel-letter').innerHTML = "?";  // insert '?' instead of random letters
         displayDefinition(definition);  // call displayDefinition func with passed definition
         insertWord(word);  // call insertWord func with passed word
         activateInputBox();  // focus text cursor on the input field
@@ -109,6 +111,7 @@ function resetFields() {
   document.getElementById('wheel-letter').innerHTML = "";  // clear the wheel
   document.getElementById('definition-wrapper').style.height = '0px';  // collapse borders of definition section by reseting the element height
   document.getElementById('word-section').innerHTML = '';  // clear the card-letter section
+  document.getElementsByClassName('wheel-outer')[0].style.background = '#bac189';  // reset color of the wheel
   document.getElementById('word-section').style.background = '#7f8b7c';  // return the initial background-color for word section rectangle
   document.getElementById('credit-score').innerHTML = '0';  // reset credit-score
   disableInputBox();
@@ -140,7 +143,6 @@ function stopWheel(letterChanger) {
   let animCircle = document.getElementsByClassName('animated-circle')[0];
   animCircle.style.animationDuration = '20s';  // return the wheel animation to normal rotation speed
   clearInterval(letterChanger);  // stop changing random letters in the wheel
-  document.getElementById('wheel-letter').innerHTML = "?";  // insert '?' instead of random letters
 }
 
 /**
@@ -293,10 +295,22 @@ function resetScore() {
   document.getElementById('total-score').innerHTML = 0;
 };
 
-// TODO ----
-function displayWin() { }; // display green wheel
-function displayGameOver() { }; // display red wheel
-// TODO ----
+/**
+ * Display green wheel and check xmark ico
+ */
+function displayWin() {
+  document.getElementById('wheel-letter').innerHTML = '<i class="fa-solid fa-check"></i>';
+  document.getElementsByClassName('wheel-outer')[0].style.background = '#8cd1cf';
+};
+
+/**
+ * Display red wheel and
+ */
+function displayGameOver() {
+  document.getElementById('wheel-letter').innerHTML = '<i class="fa-solid fa-xmark"></i>';
+  document.getElementsByClassName('wheel-outer')[0].style.background = '#d8b69d'; // change wheel color
+};
+
 
 
 /* ----Gredit Score ---- */

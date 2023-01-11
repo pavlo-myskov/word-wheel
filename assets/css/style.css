@@ -173,6 +173,7 @@ select > option {
     height: 100%;
     border-radius: 50%;
     border: 8px solid #d9d9db;
+    transition: 1s ease-out;
 }
 
 .animated-circle {
@@ -216,11 +217,14 @@ select > option {
 }
 
 /* Word Definition */
+#definition-wrapper, #word-wrapper {
+    margin: 0 40px;
+}
+
 #definition-wrapper {
     overflow: hidden;
     color: black;
     text-align: center;
-    margin: 0 40px;
     padding: 5px 0;
     border-top: 2px inset;
     border-bottom: 2px outset;
@@ -236,7 +240,6 @@ select > option {
 /* Hidden word */
 #word-wrapper {
     height: 10vh;
-    margin: 0 40px;
 }
 
 #word-section {
@@ -410,6 +413,10 @@ select > option {
     #topics {
         max-width: 100px;
     }
+
+    #definition-wrapper, #word-wrapper {
+        margin: 0 25px;
+    }
 }
 
 /* for mobile and screen sizes from 480px wide and DOWN */
@@ -429,5 +436,9 @@ select > option {
     }
     #topics {
         max-width: 70px;
+    }
+
+    #definition-wrapper, #word-wrapper {
+        margin: 0 15px;
     }
 }

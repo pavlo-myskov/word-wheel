@@ -1,5 +1,8 @@
 const data = {
-  bathroom_accessories: [
+  test_topic: [
+    'house', '1232sPoOn', 'abcd', '/coffee32', 'egg'
+  ],
+  bathroom: [
     'Bath toys',        'Bathrobe',
     'Bathroom cabinet', 'Bathtub',
     'Bucket',           'Clothespin',
