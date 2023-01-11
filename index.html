@@ -27,10 +27,17 @@
         <div class="spin-section">
             <div class="heading">
                 <img class="logo" src="assets/images/logo.png" alt="Word Wheel">
-                <div class="rules">
-                    <i class="fa-solid fa-circle-info"></i>
-                    <span>Rules</span>
-                </div>
+                <nav>
+                    <div id="rules">
+                        <p>Rules</p>
+                        <span class="ico"><i class="fa-solid fa-circle-info"></i></span>
+                    </div>
+                    <div class="topics-box">
+                        <select id="topics">
+                            <option value="null" hidden>Topics</option>
+                         </select>
+                    </div>
+                </nav>
             </div>
             <button id="btn-spin" class="btn">Spin the Wheel!</button>
             <div class="wheel-wrapper">
@@ -54,15 +61,15 @@
         </div>
 
         <div class="submit-section">
-            <button id="btn-sm" class="btn">SUBMIT</button>
+            <button id="btn-sm" class="btn" disabled>SUBMIT</button>
             <div class="score-section">
                 <p>
                     <span class="score-title">Total<br>score</span>
                     <span id="total-score" class="score">0</span>
                 </p>
                 <p>
-                    <span class="score-title">Credit<br>score</span>
                     <span id="credit-score" class="score">0</span>
+                    <span class="score-title">Credit<br>score</span>
                 </p>
             </div>
         </div>
