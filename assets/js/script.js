@@ -1,12 +1,38 @@
 const capitalLatinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-// TODO: onload:
-// displayTopics()
-// get topics from data.js and display in dropdown menu; by default set to dropdown list anytopic
-// add event listener for on click spin button with event handler that asks the user to choose topic from dropdown list, not once
-// add event listener for on click dropdown menu and choosing a topic
-document.getElementById('btn-spin').addEventListener('click', runGameHandler)
+// TODO: add event listener for on click spin button with event handler that asks the user to choose topic from dropdown list, not once
+//TODO add event listener for on click dropdown menu and choosing a topic; change dropdown select to li elemnts for more css flexibility
+window.addEventListener('load', () => {
+  console.log('load OK');
+  displayTopics();
+  document.getElementById('btn-spin').addEventListener('click', runGameHandler);
+})
 
+/**
+ * Get topic names from data.js and display them in dropdown menu
+ */
+function displayTopics() {
+  let selectEl = document.getElementById('topics');
+  selectEl.innerHTML = '<option value="null" hidden>Topics</option>';
+  let topicsNames = Object.keys(data);
+
+  for (let topicName of topicsNames) {
+    let clearString = topicName.replace(/[^A-Za-z0-9']/g, ' ').trim();  // change all special characters to spaces
+    let topic = clearString.split(' ').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');  // capitale first letter for every word in the string
+
+    let topicEl = document.createElement('option');
+    topicEl.setAttribute('value', topicName);  // set row topic name string to the 'option' value
+    topicEl.innerHTML = topic;  // insert the parsed topic name to the 'option' element
+
+    selectEl.appendChild(topicEl);
+  }
+
+}
+
+//TODO: get topic, choosed by user from dropdown list elements
+function getTopic() {
+  return 'cutlery'
+}
 
 /**
  * Event handler that gives access to init start new game on click spin-button using runGame function only once
@@ -14,11 +40,6 @@ document.getElementById('btn-spin').addEventListener('click', runGameHandler)
 function runGameHandler() {
   runGame(getTopic());  // this will execute only once as after the event listener will be removed
   this.removeEventListener('click', runGameHandler);  // remove the event listener after the callback
-}
-
-//TODO: get topic, choosed by user from dropdown list elements
-function getTopic() {
-  return 'cutlery'
 }
 
 /**
