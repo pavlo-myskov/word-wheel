@@ -1,9 +1,7 @@
 const capitalLatinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-// TODO: add event listener for on click spin button with event handler that asks the user to choose topic from dropdown list, not once
 //TODO add event listener for on click dropdown menu and choosing a topic; change dropdown select to li elemnts for more css flexibility
 window.addEventListener('load', () => {
-  console.log('load OK');
   displayTopics();
   document.getElementById('btn-spin').addEventListener('click', runGameHandler);
 })
@@ -13,7 +11,7 @@ window.addEventListener('load', () => {
  */
 function displayTopics() {
   let selectEl = document.getElementById('topics');
-  selectEl.innerHTML = '<option value="null" hidden>Topics</option>';
+  selectEl.innerHTML = '<option value="" hidden>Topics</option>';
   let topicsNames = Object.keys(data);
 
   for (let topicName of topicsNames) {
@@ -29,17 +27,41 @@ function displayTopics() {
 
 }
 
-//TODO: get topic, choosed by user from dropdown list elements
+/**
+ * Get topic value from dropdown list element
+ */
 function getTopic() {
-  return 'cutlery'
+  let selectedTopic = document.getElementById('topics');
+    return selectedTopic.value
 }
 
 /**
- * Event handler that gives access to init start new game on click spin-button using runGame function only once
+ * @description Change color of a passed element for a given amount of time and than return original color
+ * @param {String} element
+ * @param {String} color New color
+ * @param {String} milliseconds
+ */
+function changeColor(element, color, milliseconds) {
+  var originalColor = element.style.color;
+  element.style.color = color;
+  setTimeout(function() {
+    element.style.color = originalColor;
+  }, milliseconds);
+}
+
+/**
+ * Event handler will execute runGame function only once on click spin-button
  */
 function runGameHandler() {
-  runGame(getTopic());  // this will execute only once as after the event listener will be removed
+  let topic = getTopic();
+  if (topic) {
+    runGame(topic);  // this will execute only once as after the event listener will be removed
   this.removeEventListener('click', runGameHandler);  // remove the event listener after the callback
+  } else {
+    alert('Select a topic!');
+    let topicEl =  document.getElementById('topics');
+    changeColor(topicEl, 'yellow', 1000);
+  }
 }
 
 /**
@@ -72,7 +94,7 @@ function runGame(topic) {
       console.log(err);
       console.log('Resseting game..');
       resetFields();
-      document.getElementById('btn-spin').disabled = true;
+      document.getElementById('btn-spin').disabled = false;
       document.getElementById('btn-spin').addEventListener('click', runGameHandler);
     })
     .finally(() => {
