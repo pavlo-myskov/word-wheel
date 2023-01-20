@@ -12,12 +12,15 @@ Node.js is required
 How to use:
 1. Add txt file with topic name to the 'topics' folder located next to the 'parser.js' file.
 - Relative path to the the parser: < assets/data/parser.js >
-- The file name must be without spaces. A space can be replaced with an underscore.
+- The file name must be without spaces. A space can be replaced with an underscore, e.g. wild_animals
 2. Fill in this file with the English words you want to add to the game.
 - Each word must be on the new line.
 - Avoid words that are too long or contain any characters other than letters of the Latin alphabet.
-3. Run in the terminal: < nodejs path_to/parser.js >
-4. data.js file is sucsesfully generated on path < assets/js/data.js >
+3. Run in the terminal: < nodejs relative_path_to/parser.js >, e.g. nodejs assets/data/parser.js
+4. data.js file is sucsesfully generated on path < assets/js/data.js >.
+- All topics and words will be replaced with the words from 'topics' folder located next to the 'parser.js' file.
+- The filename will be used as a property in the javascript object in < assets/js/data.js >
+- All words from the file will be added to array and used as a value in the javascript object in < assets/js/data.js >
 */
 
 const fs = require('fs');
