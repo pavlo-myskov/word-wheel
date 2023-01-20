@@ -35,25 +35,25 @@
 
 ### User Stories
 - #### Firt time user
-    - As a first time player, I want to see the game instructions/rules.
-    - As a first time user of the game, I want to easily understand the aims of the game.
-    - As a first time user of the game, I want to be able to start the game easily.
-    - As a first time player, I want to be able select a topic of the words
+  - As a first time player, I want to see the game instructions/rules.
+  - As a first time user of the game, I want to easily understand the aims of the game.
+  - As a first time user of the game, I want to be able to start the game easily.
+  - As a first time player, I want to be able select a topic of the words
 
 - #### Returning user
-    - As a returning user of the game, I want to be able to start the game again.
-    - As a returning user, I want to select other topics of the words
-    - As a returning user, I want to learn the meanings of new words
+  - As a returning user of the game, I want to be able to start the game again.
+  - As a returning user, I want to select other topics of the words
+  - As a returning user, I want to learn the meanings of new words
 
 
 - #### Frequent user goals
-    - As a frequent user, I want initiates and controls game actions.
-    - As a frequent user, I want see progress indicators.
-    - As a player, I want to be able to spell out a word if the definition is hard to understand.
-    - As a frequent user, I want to discover an intuitive interface that will guide me through all the stages of the game.
-    - As a frequent user, I want to contact with the game developer.
-    - As a frequent user, I want get all interaction feedback.
-    - As a frequent user, I want to be notified of all errors resulting from my actions.
+  - As a frequent user, I want initiates and controls game actions.
+  - As a frequent user, I want see progress indicators.
+  - As a player, I want to be able to spell out a word if the definition is hard to understand.
+  - As a frequent user, I want to discover an intuitive interface that will guide me through all the stages of the game.
+  - As a frequent user, I want to contact with the game developer.
+  - As a frequent user, I want get all interaction feedback.
+  - As a frequent user, I want to be notified of all errors resulting from my actions.
 
 [Back to top](#table-of-contents)
 
@@ -96,22 +96,44 @@ The Word Wheel game is designed to strictly adhere to accessibility guidelines a
 Any interaction causes a positive response to the user through the semantic structured information, colors, clear and unambiguous navigation structures.
 
 ### Words and their Definitions
-...
+Topic names and words are stored in the [data.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/data.js) file as a Javascript object. Topic name is a property, array of relevant words is a value. The definition of words is retrieved automatically makes HTTP request to the [Free Dictionary API](https://dictionaryapi.dev).
+- #### Parser
+  This script is NOT a part of the GAME!
+  Node.js is required!
+
+  This [Parser](https://github.com/FlashDrag/word-wheel/blob/master/assets/data/parser.js) is an additional script that simplifies the work for developer and helps to get words from the external file and add them to the game.
+  Manual for the parser inside the [script](https://github.com/FlashDrag/word-wheel/blob/master/assets/data/parser.js).
+
+
+- #### Topics
+  The Topic Dropdown list generates from the properties of the Javascript object which is in [data.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/data.js) file and displayes to the user. The dropdown list is generated after each page refresh, and also at the beginning of each new game cycle. If the array of words is exhausted during the game, the js object with the name of the topic is removed from the data.js file, followed by updating the dropdown list, which is notified to the user.
+
+- #### Words
+  New words can be added to the game using the [Parser](https://github.com/FlashDrag/word-wheel/blob/master/assets/data/parser.js) or directly into the array in the [data.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/data.js) file.
+  When the user starts a new game cycle, the app gets a random word from the array in [data.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/data.js) file for the chosen topic. If the word fails the validation, it is removed from the array and a new random word is extracted.
+
+- #### Definitions
+  When a suitable word is found, the app makes a asynchronous HTTP request using the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to the [Free Dictionary](https://dictionaryapi.dev) and gets the definition of this word. If no definition is found, the app extracts the new word from the array and makes a new request. If the keyword itself was found in the definition, it is replaced with asterisks.
 
 
 ### Game Menu
-The game menu includes two buttons and was implemented so that the user had the opportunity to see the game instructions/rules and select a topic of words which is an integral part of the game.
-The menu located on the top right corner of the game page for convenient access to the user. The menu buttons respond to mouse hover and change text color to brighter to give user feedback.
-
-- #### Topic dropdown menu
-  The choice of topics is implemented on click on the Topic button as a drop-down menu. The topic in the dropdown menu is displayed only if the list of words for this topic is not empty. The topic name is also removing from the dropdown menu during the game of the topics wordlist is exhausted. The user can choose a topic of the words at any time of the game, but a new word from the topic will be received only when the cycle of current game is completed.
-
-- #### Rules
-The rule set can be opened at any time by the user, as he/she may need to clarify some details of the game.
-The rules section opens on the same page on top of the game window.
-On the rules pages, in addition to the ruleset itself, the user also has access to a link to the game repository itself which opens in a new page.
+  The game menu includes two buttons and was implemented so that the user had the opportunity to see the game instructions/rules and select a topic of words which is an integral part of the game.
+  The menu located on the top right corner of the game page for convenient access to the user. The menu buttons respond to mouse hover and change text color to brighter to give user feedback.
 
 ![Menu](docs/features/menu.png)
+
+- #### Topic dropdown menu
+  The choice of topics is implemented on click on the Topic button as a drop-down menu. When the user starts a new game cycle, the app gets the name of the topic the user has selected from the drop-down menu. If no topic is selected, the user will be prompted to select one.
+  The topic name will be removed from the dropdown menu during the game if the topics word list is exhausted. The user can select a topic of the words at any time of the game, but a new word from the topic will be received only when the cycle of current game is completed.
+
+  ![Dropdown menu](docs/features/dropdown-menu.png)
+
+- #### Rules
+  The rule set can be opened at any time by the user, as he/she may need to clarify some details of the game.
+  The rules section opens on the same page on top of the game window.
+  On the rules pages, in addition to the ruleset itself, the user also has access to a link to the game repository itself which opens in a new page.
+
+  ![Rules](docs/features/rules.png)
 
 ### Start game Button
 ....
@@ -155,6 +177,7 @@ On the rules pages, in addition to the ruleset itself, the user also has access 
 - [HTML5](https://developer.mozilla.org/en-US/docs/Glossary/HTML5) - building, structuring and presenting project
 - [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS) - game styling
 - [Java Script](https://developer.mozilla.org/en-US/docs/Web/JavaScript) - game functionality
+- [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) - request a data from the [Free Dictionary API](https://dictionaryapi.dev)
 - [Node.js](https://nodejs.org/) - JavaScript runtime environment. Used for get words from the external file and add them to the game.
 - [WSL - Ubuntu](https://ubuntu.com/wsl) - terminal environment
 - [Balsamiq](https://balsamiq.com) - wireframes
