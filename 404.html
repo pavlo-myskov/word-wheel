@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="author" content="FlashDrag" />
+    <meta
+      name="description"
+      content="The Javascript game in which the user guesses words from their definitions."
+    />
+    <meta
+      name="keywords"
+      content="word definition, word meaning, word game, word-game, js game, java script game, javascript word game"
+    />
+
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <style>
+      .spin-section {
+        flex-direction: row;
+        justify-content: center;
+      }
+      .wheel-wrapper {
+        aspect-ratio: 1 / 1.2;
+        height: 40%;
+      }
+      .error {
+        font-size: 14vh;
+      }
+      .animated-circle {
+        width: 70%;
+        animation-duration: 0s;
+      }
+
+      /* middle section */
+      .main-section {
+        text-align: center;
+        font-size: 5vh;
+        padding: 0 10px;
+      }
+
+      /* back to home section */
+      .submit-section {
+        position: relative;
+      }
+
+      /*Back to home button*/
+      .back-home-btn {
+        margin: 0;
+        padding: 10px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: inherit;
+        background: linear-gradient(#cae0b3, #ede3cd, #cae0b3);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 2.5vh;
+        text-align: center;
+      }
+      .back-home-btn:hover {
+        color: #ba4c03;
+      }
+    </style>
+    <title>Word Wheel Game - 404 Error</title>
+  </head>
+  <body>
+    <div class="game-container">
+      <div class="spin-section">
+        <span class="error">4</span>
+        <div class="wheel-wrapper">
+          <div class="wheel-outer">
+            <div id="wheel-letter">?</div>
+            <div class="animated-circle"></div>
+          </div>
+        </div>
+        <span class="error">4</span>
+      </div>
+
+      <div class="main-section">
+        <p>PAGE NOT FOUND</p>
+      </div>
+
+      <div class="submit-section">
+        <a href="index.html" class="btn back-home-btn">Back to the Game</a>
+      </div>
+    </div>
+  </body>
+</html>
