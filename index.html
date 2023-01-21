@@ -1,83 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="author" content="FlashDrag">
+    <meta name="author" content="FlashDrag" />
     <meta
       name="description"
       content="The Javascript game in which the user guesses words from their definitions."
-   >
+    />
     <meta
       name="keywords"
       content="word definition, word meaning, word game, word-game, js game, java script game, javascript word game"
-   >
+    />
 
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css" />
     <title>Word Wheel Game</title>
-</head>
-<body>
-
+  </head>
+  <body>
     <!-- Game container -->
     <div class="game-container">
-
-        <!-- Spin and header section -->
-        <div class="spin-section">
-            <div class="heading">
-                <img class="logo" src="assets/images/logo.png" alt="Word Wheel">
-                <nav>
-                    <div id="rules">
-                        <p>Rules</p>
-                        <span class="ico"><i class="fa-solid fa-circle-info"></i></span>
-                    </div>
-                    <div class="topics-box">
-                        <select id="topics">
-                            <option value="" hidden>Topics</option>
-                         </select>
-                    </div>
-                </nav>
+      <!-- Spin and header section -->
+      <div class="spin-section">
+        <div class="heading">
+          <img class="logo" src="assets/images/logo.png" alt="Word Wheel" />
+          <nav>
+            <div id="rules">
+              <p>Rules</p>
+              <span class="ico"><i class="fa-solid fa-circle-info"></i></span>
             </div>
-            <button id="btn-spin" class="btn">Spin the Wheel!</button>
-            <div class="wheel-wrapper">
-                <div class="wheel-outer">
-                    <div id="wheel-letter"></div>
-                    <div class="animated-circle"></div>
-                </div>
+            <div class="topics-box">
+              <select id="topics">
+                <option value="" hidden>Topics</option>
+              </select>
             </div>
+          </nav>
         </div>
-
-        <div class="main-section">
-            <div id="definition-wrapper">
-                <p id="definition"></p>
-            </div>
-            <div id="word-wrapper">
-                <ul id="word-section"></ul>
-            </div>
-            <div id="answer-wrapper">
-                <input id="answer-box" type="text" placeholder="spin the wheel" disabled>
-            </div>
+        <button id="btn-spin" class="btn">Spin the Wheel!</button>
+        <div class="wheel-wrapper">
+          <div class="wheel-outer">
+            <div id="wheel-letter"></div>
+            <div class="animated-circle"></div>
+          </div>
         </div>
+      </div>
 
-        <div class="submit-section">
-            <button id="btn-sm" class="btn" disabled>SUBMIT</button>
-            <div class="score-section">
-                <p>
-                    <span class="score-title">Total<br>score</span>
-                    <span id="total-score" class="score">0</span>
-                </p>
-                <p>
-                    <span id="credit-score" class="score">0</span>
-                    <span class="score-title">Credit<br>score</span>
-                </p>
-            </div>
+      <div class="main-section">
+        <div id="definition-wrapper">
+          <p id="definition"></p>
         </div>
+        <div id="word-wrapper">
+          <ul id="word-section"></ul>
+        </div>
+        <div id="answer-wrapper">
+          <input
+            id="answer-box"
+            type="text"
+            placeholder="spin the wheel"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="submit-section">
+        <button id="btn-sm" class="btn" disabled>SUBMIT</button>
+        <div class="score-section">
+          <p>
+            <span class="score-title">Total<br />score</span>
+            <span id="total-score" class="score">0</span>
+          </p>
+          <p>
+            <span id="credit-score" class="score">0</span>
+            <span class="score-title">Credit<br />score</span>
+          </p>
+        </div>
+      </div>
     </div>
 
-    <script src="https://kit.fontawesome.com/b4aef698f5.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/b4aef698f5.js"
+      crossorigin="anonymous"
+    ></script>
     <script type="text/javascript" src="assets/js/script.js"></script>
     <script type="text/javascript" src="assets/js/data.js"></script>
     <script type="text/javascript" src="assets/js/data_extractor.js"></script>
-</body>
+  </body>
 </html>
