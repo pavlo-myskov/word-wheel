@@ -1,6 +1,5 @@
 const capitalLatinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-//TODO add event listener for on click dropdown menu and choosing a topic; change dropdown select to li elemnts for more css flexibility
 window.addEventListener('load', () => {
   displayTopics();
   document.getElementById('btn-spin').addEventListener('click', runGameHandler);
@@ -13,23 +12,7 @@ window.addEventListener('load', () => {
     }
   });
 
-  document.getElementById('rules').addEventListener('click', () => {
-    alert(`Welcome to WordWheel Educational Game!
-
-    1.Choose a topic.
-    2.Spin the wheel.
-    3.Guess the word by its definition or open it spell by letter.
-    4.Earn points:
-      - initially, for each word, a credit score is given in the amount of the number of letters in the word;
-      - for each open letter, one point is deducted from the credit score;
-      - for a guessed word, the balance of credit points, which is equivalent to undisclosed letters is summed up to the total score;
-      - if the word is entered incorrectly, the total score counter is reset to zero;
-      - if the whole word is opened manually, the total score is not reset.
-
-    Have a Good Game!
-    Developed by FlashDrag (https://github.com/FlashDrag)
-    `)
-  })
+  document.getElementById('rules').addEventListener('click', displayRules);
 })
 
 /**
@@ -381,4 +364,22 @@ function restartGameByCreditScore() {
   document.getElementById('btn-spin').disabled = false;
   // add event listener for spin-button with runGame event handler to give access to continue the game
   document.getElementById('btn-spin').addEventListener('click', runGameHandler);
+}
+
+/**
+ * Display the box of rules over the game window
+ */
+function displayRules() {
+  document.getElementById('manual-box').style.display = 'block';
+  document.getElementById('close').addEventListener('click', closeRules);
+  document.getElementById('bye').addEventListener('click', closeRules);
+}
+
+/**
+ * Close the box of rules and remove event listeners from `close` and `bye` buttons
+ */
+function closeRules() {
+  document.getElementById('manual-box').style.display = 'none';
+  document.getElementById('close').removeEventListener('click', closeRules)
+  document.getElementById('bye').removeEventListener('click', closeRules)
 }
