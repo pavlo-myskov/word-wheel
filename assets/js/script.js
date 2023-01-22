@@ -1,7 +1,11 @@
 const capitalLatinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 window.addEventListener('load', () => {
+  // Attach an event listener to the topic button
   document.getElementById('topic-btn').addEventListener('click', displayTopics);
+  // Attach an event listener to the dropdown menu
+  document.getElementById('topic-dropdown-menu').addEventListener('click', updateTopicBtn);
+  // Attach an event listener to the spin button
   document.getElementById('btn-spin').addEventListener('click', runGameHandler);
 
   // Trigger the submit button with a click if the user presses the "Enter" key
@@ -13,66 +17,81 @@ window.addEventListener('load', () => {
   });
 
   document.getElementById('rules-btn').addEventListener('click', displayRules);
+
+
 })
 
 /**
- * Call the `loadTopics` func and show or hide the dropdown menu with loaded topics
+ * Call the `loadTopics` and `toggleMenu` funcs
  */
 function displayTopics() {
   loadTopics();
-  let dropdownMenu = document.getElementById('topic-dropdown-menu');
-  dropdownMenu.style.display = dropdownMenu.style.display === "none" ? "block" : "none";
-
-  //FIXME
-  this.classList.toggle("active");
-  this.classList.toggle("inactive");
+  toggleMenu();
 }
 
 /**
- * Load topic names from data.js and add them to the dropdown menu
+ * Load topic names from data.js and populate the dropdown menu with a list of topics
  */
 function loadTopics() {
+  let topicBtn = document.getElementById('topic-btn');
   let dropdownMenu = document.getElementById('topic-dropdown-menu');
-  dropdownMenu.innerHTML = '';
-  let topicNames = Object.keys(data);  // array of topic names
+  // get the data-value attribute of the button which is equal to the value of the selected list item
+  let topicBtnDataValue = topicBtn.getAttribute('data-value');
+  // clear the content of the dropdown menu
+  dropdownMenu.innerHTML = "";
+  let topicNames = Object.keys(data);  // get array of topic names
 
   topicNames.forEach(topicName => {
-    let clearString = topicName.replace(/[^A-Za-z0-9']/g, ' ').trim();  // change all special characters to spaces
-    let topic = clearString.split(' ').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');  // capitale first letter for every word in the string
+    // change all special characters with spaces
+    let clearString = topicName.replace(/[^A-Za-z0-9']/g, ' ').trim();
+    // capitalize the first letter for each word of the topic name string
+    let topic = clearString.split(' ').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
 
     let li = document.createElement("li");
-    li.innerHTML = topic;  // insert the parsed topic name to the 'li' element which will be displayed to the user
-    li.setAttribute('value', topicName);  // set row topic name string to the 'li' value
+    // insert the parsed topic name to the 'li' element which will be displayed to the user
+    li.innerHTML = topic;
+    // set a row topic name string as a 'li' value
+    li.setAttribute('value', topicName);
+
+    // if the topic name is equal to the currently selected topic,
+    // add the class "active-dropdown" to the <li> element to hide it from the dropdown menu
+    if (topicName === topicBtnDataValue) {
+      li.classList.add("active-dropdown");
+    }
+
     dropdownMenu.appendChild(li);
   });
-
-  updateTopicBtn();
 }
 
 /**
- * Update the `topic-btn` text when a menu item is clicked
+ * Update the topic button text to the text of the clicked topic.
  */
-function updateTopicBtn() {
-  let dropdownMenu = document.getElementById('topic-dropdown-menu');
+function updateTopicBtn(event) {
   let topicBtn = document.getElementById('topic-btn');
 
-  // Attach an event listener to the dropdown menu
-  dropdownMenu.addEventListener("click", event => {
-    // if the clicked element is an li
-    if (event.target.tagName === "LI") {
-      // get the value attribute of the clicked li
-      let value = event.target.getAttribute('value');
-      // store the value in a data attribute of the topic-btn element
-      topicBtn.setAttribute("data-value", value);
-      // Update the text of the button with the innerHTML of the clicked li element
-      topicBtn.innerHTML = event.target.innerHTML;
-      dropdownMenu.style.display = "none";
-    }
-  });
+  // if the clicked element is an li
+  if (event.target.tagName === "LI") {
+    // Update the name of topic button with the innerText of the clicked li element
+    topicBtn.innerHTML = event.target.innerText;
+    // get the row value attribute of the clicked li element
+    let activeValue = event.target.getAttribute('value');
+    // sets the data-value attribute of the topic-btn to the value of the clicked list item
+    topicBtn.setAttribute("data-value", activeValue);
+
+    toggleMenu();
+  }
+};
+
+function toggleMenu() {
+  let topicBtn = document.getElementById('topic-btn');
+  let dropdownMenu = document.getElementById('topic-dropdown-menu');
+  topicBtn.classList.toggle("inactive");
+  topicBtn.classList.toggle("active");
+  dropdownMenu.style.display = dropdownMenu.style.display === "none" ? "block" : "none";
 }
 
 /**
- * Retrieve topic row value stored in a data attribute of the `topic-btn` element
+ * Retrieve topic row value stored in a data-value attribute of the topic button
  */
 function getTopic() {
   let topicBtn = document.getElementById('topic-btn');

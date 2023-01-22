@@ -146,6 +146,10 @@ nav {
   text-align: right;
 }
 
+.active-dropdown {
+  display: none;
+}
+
 /* Spin button */
 #btn-spin {
   margin-top: 50px;
