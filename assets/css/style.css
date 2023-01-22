@@ -96,148 +96,54 @@ body {
 }
 
 /* Nav menu */
-nav div {
+nav {
   display: flex;
+  flex-direction: column;
+}
+
+.nav-btn {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-}
 
-nav p {
-  display: flex;
-  justify-content: flex-start;
-}
-
-nav .ico {
-  display: flex;
-  width: 100%;
-  justify-content: flex-end;
-  padding-left: 8px;
-}
-
-/* Rules box */
-#manual-box {
-  display: none;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: hsla(0, 0%, 0%, 0.372);
-  z-index: 10;
-}
-
-.manual-wrapper {
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  max-height: 70%;
-  overflow-y: auto;
-
-  padding: 40px;
-
-  color: black;
-  background: linear-gradient(#a4946f, #cae0b3, #a4946f);
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-  border-radius: 5px;
-}
-
-.manual-heading {
-  text-align: center;
-  padding: 0 30px 20px;
-  font-size: 1.6em;
-  color: #3d1b0b;
-}
-
-.manual-list {
-  text-align: justify;
-}
-
-.manual-list ul {
-  padding-left: 20px;
-}
-
-.manual-wrapper p, .copyright {
-  text-align: center;
-  margin-top: 20px;
-}
-
-#bye {
-  color: #3d1b0b;
-  border-bottom: 0.1px dotted;
-  cursor: pointer;
-}
-
-#bye:hover {
-  color: #7d3402;
-}
-
-/* link */
-.copyright a {
-  color: #3d1b0b;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.copyright a:hover {
-  text-decoration: 1px underline;
-}
-
-/* close button */
-.close-button {
-  position: absolute;
-  right: 20px;
-  top: 10px;
-  font-size: 2em;
   background: transparent;
   border: none;
-  cursor: pointer;
-  color: #efe8e4;
-}
-
-.close-button:hover {
-  text-shadow: 0 0 5px #ba4c03;
-}
-
-
-/* Select dropdown */
-.topics-box {
-  margin-top: 5px;
-  position: relative;
-}
-
-.topics-box::after {
-  content: "\f078";
-  font-family: FontAwesome;
-  position: relative;
-  top: 0;
-  right: 0;
-  text-align: center;
-}
-
-#topics {
-  max-width: 150px;
-  background-color: transparent;
-  padding-right: 5px;
-  appearance: none;
+  color: inherit;
   font-size: 1em;
   font-weight: 700;
-  color: #6c582c;
-  border: none;
-  white-space: pre-wrap;
-}
-
-.topics-box:hover::after,
-#topics:hover,
-#topics:active,
-#topics:focus,
-#rules:hover {
-  outline: none;
-  color: #ba4c03;
+  line-height: 1.5;
   cursor: pointer;
 }
 
-select > option {
-  background-color: #ecece6;
-  color: black;
+.nav-btn-name {
+  text-align: left;
+}
+
+.nav-btn span {
+  padding-right: 10px;
+}
+
+.nav-btn:hover {
+  color: #ba4c03;
+}
+
+.nav-btn:focus {
+  color: #ba4c03;
+}
+
+/*Dropdown topic menu*/
+#topic-btn.inactive::after {
+  content: "\f078"; /* FontAwesome icon code for inactive icon */
+  font-family: "FontAwesome";
+  /* align the icon to the right */
+  text-align: right;
+}
+
+#topic-btn.active::after {
+  content: "\f077"; /* FontAwesome icon code for active icon */
+  font-family: "FontAwesome";
+  /* align the icon to the right */
+  text-align: right;
 }
 
 /* Spin button */
@@ -480,6 +386,92 @@ select > option {
   font-size: 1.6em;
   font-weight: 600;
   padding: 0 15px;
+}
+
+/* Rules box */
+#manual-box {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: hsla(0, 0%, 0%, 0.372);
+  z-index: 10;
+}
+
+.manual-wrapper {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-height: 70%;
+  overflow-y: auto;
+
+  padding: 40px;
+
+  color: black;
+  background: linear-gradient(#a4946f, #cae0b3, #a4946f);
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  border-radius: 5px;
+}
+
+.manual-heading {
+  text-align: center;
+  padding: 0 30px 20px;
+  font-size: 1.6em;
+  color: #3d1b0b;
+}
+
+.manual-list {
+  text-align: justify;
+}
+
+.manual-list ul {
+  padding-left: 20px;
+}
+
+.manual-wrapper p,
+.copyright {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#bye {
+  color: #3d1b0b;
+  border-bottom: 0.1px dotted;
+  cursor: pointer;
+}
+
+#bye:hover {
+  color: #7d3402;
+}
+
+/* link */
+.copyright a {
+  color: #3d1b0b;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.copyright a:hover {
+  text-decoration: 1px underline;
+}
+
+/* close button */
+.close-button {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 2em;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #efe8e4;
+}
+
+.close-button:hover {
+  text-shadow: 0 0 5px #ba4c03;
 }
 
 /* ---- MEDIA QUERIES ---- */

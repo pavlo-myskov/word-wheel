@@ -6,7 +6,7 @@
 async function getRandomWord(topicName) {
   if (data[topicName].length < 1) {
     delete data[topicName]; // remove current topic from data as array is empty
-    displayTopics(); // display updated dropdown list
+    loadTopics(); // update dropdown list
     alert(`Topic <${topicName}> is out of words! Choose another topic.`)
     throw new Error(`The word list of topic <${topicName}> is Empty!`);
   }
@@ -61,6 +61,7 @@ function parseDefinition(dataObj) {
 }
 
 // TODO check the definition string length and cut it by the last dot while the string too long
+// TODO replace keyword with asterixes
 function validateDefinition(definition) {
   return definition;
 }

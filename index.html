@@ -26,15 +26,14 @@
         <div class="heading">
           <img class="logo" src="assets/images/logo.png" alt="Word Wheel" />
           <nav>
-            <div id="rules">
-              <p>Rules</p>
-              <span class="ico"><i class="fa-solid fa-circle-info"></i></span>
-            </div>
-            <div class="topics-box">
-              <select id="topics">
-                <option value="" hidden>Topics</option>
-              </select>
-            </div>
+              <button id="rules-btn" class="nav-btn">
+                <span class="nav-btn-name">Rules</span>
+                <i class="fa-solid fa-circle-info"></i>
+              </button>
+              <button id="topic-btn" class="nav-btn inactive">
+                <span class="nav-btn-name">Topics</span>
+              </button>
+              <ul id="topic-dropdown-menu" style="display: none"></ul>
           </nav>
         </div>
         <button id="btn-spin" class="btn">Spin the Wheel!</button>

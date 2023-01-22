@@ -1,7 +1,7 @@
 const capitalLatinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 window.addEventListener('load', () => {
-  displayTopics();
+  document.getElementById('topic-btn').addEventListener('click', displayTopics);
   document.getElementById('btn-spin').addEventListener('click', runGameHandler);
 
   // Trigger the submit button with a click if the user presses the "Enter" key
@@ -12,36 +12,72 @@ window.addEventListener('load', () => {
     }
   });
 
-  document.getElementById('rules').addEventListener('click', displayRules);
+  document.getElementById('rules-btn').addEventListener('click', displayRules);
 })
 
 /**
- * Get topic names from data.js and display them in dropdown menu
+ * Call the `loadTopics` func and show or hide the dropdown menu with loaded topics
  */
 function displayTopics() {
-  let selectEl = document.getElementById('topics');
-  selectEl.innerHTML = '<option value="" hidden>Topics</option>';
-  let topicsNames = Object.keys(data);
+  loadTopics();
+  let dropdownMenu = document.getElementById('topic-dropdown-menu');
+  dropdownMenu.style.display = dropdownMenu.style.display === "none" ? "block" : "none";
 
-  for (let topicName of topicsNames) {
-    let clearString = topicName.replace(/[^A-Za-z0-9']/g, ' ').trim();  // change all special characters to spaces
-    let topic = clearString.split(' ').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');  // capitale first letter for every word in the string
-
-    let topicEl = document.createElement('option');
-    topicEl.setAttribute('value', topicName);  // set row topic name string to the 'option' value
-    topicEl.innerHTML = topic;  // insert the parsed topic name to the 'option' element
-
-    selectEl.appendChild(topicEl);
-  }
-
+  //FIXME
+  this.classList.toggle("active");
+  this.classList.toggle("inactive");
 }
 
 /**
- * Get topic value from dropdown list element
+ * Load topic names from data.js and add them to the dropdown menu
+ */
+function loadTopics() {
+  let dropdownMenu = document.getElementById('topic-dropdown-menu');
+  dropdownMenu.innerHTML = '';
+  let topicNames = Object.keys(data);  // array of topic names
+
+  topicNames.forEach(topicName => {
+    let clearString = topicName.replace(/[^A-Za-z0-9']/g, ' ').trim();  // change all special characters to spaces
+    let topic = clearString.split(' ').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');  // capitale first letter for every word in the string
+
+    let li = document.createElement("li");
+    li.innerHTML = topic;  // insert the parsed topic name to the 'li' element which will be displayed to the user
+    li.setAttribute('value', topicName);  // set row topic name string to the 'li' value
+    dropdownMenu.appendChild(li);
+  });
+
+  updateTopicBtn();
+}
+
+/**
+ * Update the `topic-btn` text when a menu item is clicked
+ */
+function updateTopicBtn() {
+  let dropdownMenu = document.getElementById('topic-dropdown-menu');
+  let topicBtn = document.getElementById('topic-btn');
+
+  // Attach an event listener to the dropdown menu
+  dropdownMenu.addEventListener("click", event => {
+    // if the clicked element is an li
+    if (event.target.tagName === "LI") {
+      // get the value attribute of the clicked li
+      let value = event.target.getAttribute('value');
+      // store the value in a data attribute of the topic-btn element
+      topicBtn.setAttribute("data-value", value);
+      // Update the text of the button with the innerHTML of the clicked li element
+      topicBtn.innerHTML = event.target.innerHTML;
+      dropdownMenu.style.display = "none";
+    }
+  });
+}
+
+/**
+ * Retrieve topic row value stored in a data attribute of the `topic-btn` element
  */
 function getTopic() {
-  let selectedTopic = document.getElementById('topics');
-  return selectedTopic.value
+  let topicBtn = document.getElementById('topic-btn');
+  let selectedTopic = topicBtn.getAttribute('data-value');
+  return selectedTopic
 }
 
 /**
@@ -68,8 +104,8 @@ function runGameHandler() {
     this.removeEventListener('click', runGameHandler);  // remove the event listener after the callback
   } else {
     alert('Select a topic!');
-    let topicEl = document.getElementById('topics');
-    changeColor(topicEl, '#ba4c03', 1000);
+    let topicBtn = document.getElementById('topic-btn');
+    changeColor(topicBtn, '#ba4c03', 1000);
   }
 }
 
