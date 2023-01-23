@@ -72,7 +72,7 @@ function updateTopicBtn(event) {
   // if the clicked element is an li
   if (event.target.tagName === "LI") {
     // Update the name of topic button with the innerText of the clicked li element
-    topicBtn.innerHTML = event.target.innerText;
+    topicBtn.innerHTML = event.target.innerText + ' ';
     // get the row value attribute of the clicked li element
     let activeValue = event.target.getAttribute('value');
     // sets the data-value attribute of the topic-btn to the value of the clicked list item
