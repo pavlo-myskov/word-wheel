@@ -17,10 +17,10 @@ How to use:
 - Each word must be on the new line.
 - Avoid words that are too long or contain any characters other than letters of the Latin alphabet.
 3. Run in the terminal: < nodejs relative_path_to/parser.js >, e.g. nodejs assets/data/parser.js
-4. data.js file is sucsesfully generated on path < assets/js/data.js >.
+4. vocabData.js file is sucsesfully generated on path < assets/js/vocabData.js >.
 - All topics and words will be replaced with the words from 'topics' folder located next to the 'parser.js' file.
-- The filename will be used as a property in the javascript object in < assets/js/data.js >
-- All words from the file will be added to array and used as a value in the javascript object in < assets/js/data.js >
+- The filename will be used as a property in the javascript object in < assets/js/vocabData.js >
+- All words from the file will be added to array and used as a value in the javascript object in < assets/js/vocabData.js >
 */
 
 const fs = require('fs');
@@ -55,11 +55,11 @@ function readFilesSync(dir) {
 const words = readFilesSync('assets/data/topics/');
 
 const string = util.inspect(words, { maxArrayLength: null });  // convert an object to a string
-const stringForJS = `const data = ${string}`; // create variable contains an object with topics and words for javascript file
+const stringForJS = `const topicWords = ${string}`; // create variable contains an object with topics and words for javascript file
 
 try {
-  fs.writeFileSync('assets/js/data.js', stringForJS, 'utf-8');  // generate javascript file with object of topics and words
-  console.log('data.js file is sucsesfully generated')
+  fs.writeFileSync('assets/js/vocabData.js', stringForJS, 'utf-8');  // generate javascript file with object of topics and words
+  console.log('vocabData.js file is sucsesfully generated')
 } catch (err) {
   console.error(err);
 }

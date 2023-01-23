@@ -96,7 +96,7 @@ The Word Wheel game is designed to strictly adhere to accessibility guidelines a
 Any interaction causes a positive response to the user through the semantic structured information, colors, clear and unambiguous navigation structures.
 
 ### Words and their Definitions
-Topic names and words are stored in the [data.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/data.js) file as a Javascript object. Topic name is a property, array of relevant words is a value. The definition of words is retrieved automatically makes HTTP request to the [Free Dictionary API](https://dictionaryapi.dev).
+Topic names and words are stored in the [vocabData.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/vocabData.js) file as a Javascript object. Topic name is a property, array of relevant words is a value. The definition of words is retrieved automatically makes HTTP request to the [Free Dictionary API](https://dictionaryapi.dev).
 - #### Parser
   This script is NOT a part of the GAME!
   Node.js is required!
@@ -106,11 +106,11 @@ Topic names and words are stored in the [data.js](https://github.com/FlashDrag/w
 
 
 - #### Topics
-  The Topic Dropdown list generates from the properties of the Javascript object which is in [data.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/data.js) file and displayes to the user. The dropdown list is generated after each page refresh, and also at the beginning of each new game cycle. If the array of words is exhausted during the game, the js object with the name of the topic is removed from the data.js file, followed by updating the dropdown list, which is notified to the user.
+  The Topic Dropdown list generates from the properties of the Javascript object which is in [vocabData.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/vocabData.js) file and displayes to the user. The dropdown list is generated after each page refresh, and also at the beginning of each new game cycle. If the array of words is exhausted during the game, the js object with the name of the topic is removed from the vocabData.js file, followed by updating the dropdown list, which is notified to the user.
 
 - #### Words
-  New words can be added to the game using the [Parser](https://github.com/FlashDrag/word-wheel/blob/master/assets/data/parser.js) or directly into the array in the [data.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/data.js) file.
-  When the user starts a new game cycle, the app gets a random word from the array in [data.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/data.js) file for the chosen topic. If the word fails the validation, it is removed from the array and a new random word is extracted.
+  New words can be added to the game using the [Parser](https://github.com/FlashDrag/word-wheel/blob/master/assets/data/parser.js) or directly into the array in the [vocabData.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/vocabData.js) file.
+  When the user starts a new game cycle, the app gets a random word from the array in [vocabData.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/vocabData.js) file for the chosen topic. If the word fails the validation, it is removed from the array and a new random word is extracted.
 
 - #### Definitions
   When a suitable word is found, the app makes a asynchronous HTTP request using the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to the [Free Dictionary](https://dictionaryapi.dev) and gets the definition of this word. If no definition is found, the app extracts the new word from the array and makes a new request. If the keyword itself was found in the definition, it is replaced with asterisks.

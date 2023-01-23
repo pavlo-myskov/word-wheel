@@ -1,17 +1,17 @@
 
 // TODO: add new Class constructor extending error class for getRandomWord errors
 /**
- * Extract and delete a random word by topic from the an array of words in data.js file
+ * Extract and delete a random word by topic from the an array of words in vocabData.js file
  */
 async function getRandomWord(topicName) {
-  if (data[topicName].length < 1) {
-    delete data[topicName]; // remove current topic from data as array is empty
+  if (topicWords[topicName].length < 1) {
+    delete topicWords[topicName]; // remove current topic from topicWords as array is empty
     loadTopics(); // update dropdown list
     alert(`Topic <${topicName}> is out of words! Choose another topic.`)
     throw new Error(`The word list of topic <${topicName}> is Empty!`);
   }
 
-  let wordList = data[topicName];  // get array of words by topic
+  let wordList = topicWords[topicName];  // get array of words by topic
   let result;
 
   let randNum = Math.floor(Math.random() * wordList.length); // get rand number from 0 to word array length
@@ -33,7 +33,7 @@ async function getRandomWord(topicName) {
 
 /**
  * Get a definition from the dictionary api by the random word
- * extracted from data.js using the getRandomWord(topicName) func
+ * extracted from vocabData.js using the getRandomWord(topicName) func
  */
 async function getDefinition(word) {
   const BASE_API_URL = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
@@ -54,7 +54,7 @@ async function getDefinition(word) {
 }
 
 /**
- * Parse definition from data object
+ * Parse definition from topicWords object
  */
 function parseDefinition(dataObj) {
   return dataObj[0].meanings[0].definitions[0].definition;
@@ -69,7 +69,7 @@ function validateDefinition(definition) {
 
 /**
  * @description Start a loop in which the call of functions is initialized that try to get data:
- * a random word from data.js, and definition from the dictionary api.
+ * a random word from vocabData.js, and definition from the dictionary api.
  * If it fails, the cycle restarts.
  * @param {String} topicName
  * @returns {Object} Object: word as property, definition as value

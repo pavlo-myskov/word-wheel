@@ -30,7 +30,7 @@ function displayTopics() {
 }
 
 /**
- * Load topic names from data.js and populate the dropdown menu with a list of topics
+ * Load topic names from vocabData.js and populate the dropdown menu with a list of topics
  */
 function loadTopics() {
   let topicBtn = document.getElementById('topic-btn');
@@ -39,7 +39,7 @@ function loadTopics() {
   let topicBtnDataValue = topicBtn.getAttribute('data-value');
   // clear the content of the dropdown menu
   dropdownMenu.innerHTML = "";
-  let topicNames = Object.keys(data);  // get array of topic names
+  let topicNames = Object.keys(topicWords);  // get array of topic names
 
   topicNames.forEach(topicName => {
     // change all special characters with spaces
@@ -380,7 +380,7 @@ function displayGameOver() {
 /* ----Gredit Score ---- */
 /**
  * @description Gives the number of credit points to the user based on word length
- * @param {String} word extracted from data.js using 'getRandomWord' function
+ * @param {String} word extracted from vocabData.js using 'getRandomWord' function
  */
 function giveCredit(word) {
   word = word.replace(/ /g, '');  // remove all spaces from the string

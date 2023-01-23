@@ -1,4 +1,4 @@
-const data = {
+const topicWords = {
   test_topic: [
     'house', '1232sPoOn', 'abcd', '/coffee32', 'egg'
   ],
