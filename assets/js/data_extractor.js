@@ -103,8 +103,7 @@ async function getDefinition(word) {
   if (response.status == 200) {
     let dataObj = await response.json();  // .json method convert json to js obj
 
-    let rowDefinition = parseDefinition(dataObj);
-    let definition = validateDefinition(rowDefinition);
+    let definition = processDefinition(word, dataObj);
 
     return definition;
 
@@ -115,16 +114,21 @@ async function getDefinition(word) {
 }
 
 /**
- * Parse definition from topicWords object
+ * Extract definition from dataObj.
+ * Replace all occurrences of the keyword with asterisks.
+ * Truncate the definition to 210 characters if it longer.
  */
-function parseDefinition(dataObj) {
-  return dataObj[0].meanings[0].definitions[0].definition;
-}
-
-// TODO check the definition string length and cut it by the last dot while the string too long
-// TODO replace keyword with asterixes
-function validateDefinition(definition) {
-  return definition;
+function processDefinition(word, dataObj) {
+  // Parse definition from topicWords object
+  let definition = dataObj[0].meanings[0].definitions[0].definition;
+  let wordLength = word.length;
+  // Replace the keyword with a string of asterisks of the word length
+  // using pattern of a new regular expression with flag "i" to make it case-insensitive
+  // and flag "g" - replace all occurrences of the substring
+  let hiddenWordDef = definition.replace(new RegExp(word, 'gi'), '*'.repeat(wordLength));
+  // truncate definition to 210 characters if it longer and add '...' to the end
+  let truncatedDef = hiddenWordDef.length > 210 ? hiddenWordDef.substring(0, 210) + '...' : hiddenWordDef;
+  return truncatedDef;
 }
 
 /**
