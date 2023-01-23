@@ -5,8 +5,8 @@ window.addEventListener('load', () => {
   document.getElementById('topic-btn').addEventListener('click', displayTopics);
   // Attach an event listener to the dropdown menu
   document.getElementById('topic-dropdown-menu').addEventListener('click', updateTopicBtn);
-  // Attach an event listener to the spin button
-  document.getElementById('btn-spin').addEventListener('click', runGameHandler);
+  // Attach an event listener to the spin button and remove it after runs the func runGame only once
+  document.getElementById('btn-spin').addEventListener('click', () => {runGame()}, { once: true });
 
   // Trigger the submit button with a click if the user presses the "Enter" key
   document.getElementById('answer-box').addEventListener("keydown", function (event) {
@@ -91,47 +91,18 @@ function toggleMenu() {
 }
 
 /**
- * Retrieve topic row value stored in a data-value attribute of the topic button
- */
-function getTopic() {
-  let topicBtn = document.getElementById('topic-btn');
-  let selectedTopic = topicBtn.getAttribute('data-value');
-  return selectedTopic
-}
-
-/**
- * @description Change color of a passed element for a given amount of time and than return original color
- * @param {String} element
- * @param {String} color New color
- * @param {String} milliseconds
- */
-function changeColor(element, color, milliseconds) {
-  var originalColor = element.style.color;
-  element.style.color = color;
-  setTimeout(function () {
-    element.style.color = originalColor;
-  }, milliseconds);
-}
-
-/**
  * Event handler will execute runGame function only once on click spin-button
  */
 function runGameHandler() {
-  let topic = getTopic();
-  if (topic) {
-    runGame(topic);  // this will execute only once as after the event listener will be removed
-    this.removeEventListener('click', runGameHandler);  // remove the event listener after the callback
-  } else {
-    alert('Select a topic!');
-    let topicBtn = document.getElementById('topic-btn');
-    changeColor(topicBtn, '#ba4c03', 1000);
-  }
+  runGame();  // this will execute only once as after the event listener will be removed
+  // let topic = getTopic();
+  this.removeEventListener('click', runGameHandler);
 }
 
 /**
  * Initializes the launch of the game
  */
-function runGame(topic) {
+function runGame() {
   let word = '';
   let definition = '';
 
@@ -139,7 +110,7 @@ function runGame(topic) {
   let letterChanger = spinWheel();  // start wheel animation
 
 
-  getData(topic) // wait until it is resolved
+  getData() // wait until the func is resolved
     .then(obj => new Promise(function (resolve, reject) {
       word = obj.word;
       definition = obj.definition;

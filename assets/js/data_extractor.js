@@ -1,15 +1,76 @@
-
 // TODO: add new Class constructor extending error class for getRandomWord errors
+/**
+ * @description Start a loop in which the call of functions is initialized that try to get data:
+ * topic data-value from topic button, random word from vocabData.js, definition from the dictionary api.
+ * If it fails, the cycle restarts.
+ * @param {String} topicName
+ * @returns {Object} Object: word as property, definition as value
+ */
+async function getData() {
+  let topic;
+  let word;
+  let definition;
+
+  while (true) {
+    try {
+      // Try to get values. Of success, break the loop and return values
+      topic = await getTopic();
+      word = await getRandomWord(topic);
+      definition = await getDefinition(word);
+      break;
+    } catch (error) {
+      // handle rethrow-ed HttpError instance and check responce status code. Restart loop
+      // code 404 - the server cannot find the requested resource
+      if (error instanceof HttpError && error.response.status == 404) {
+        console.log(`Error: ${error}. | Definition for word <${word}> Not found. Searching new one...`);
+      } else {
+        // TODO: Catch passed(rethrow) custom error instance from getRandomWord and print them here, otherwise <else: throw error;> to runGame
+        throw error;
+      }
+    }
+  }
+
+  console.log(`|${arguments.callee.name}()| word: ${word}, definition: ${definition}`);
+  return { 'word': word, 'definition': definition }
+}
+
+/**
+ * Retrieve topic row value stored in a data-value attribute of the topic button
+ */
+async function getTopic() {
+  let topicBtn = document.getElementById('topic-btn');
+  let selectedTopic = topicBtn.getAttribute('data-value');
+
+  // if topic is selected and the array of the related topic words is NOT empty, return data-value of the topic button
+  if (selectedTopic && topicWords[selectedTopic].length > 0) {
+    return selectedTopic
+    // if topic is selected by the user, but array of the related topic words is EMPTY
+  } else if (selectedTopic && topicWords[selectedTopic].length < 1) {
+    delete topicWords[selectedTopic]; // remove current topic from topicWords object
+    topicBtn.innerHTML = 'Topics ';  // reset name of the topic button
+    topicBtn.removeAttribute('data-value'); // remove data-value attribute from the topic button
+    alert(`Topic <${selectedTopic}> is out of words! Choose another topic.`); // notify the user
+    changeColor(topicBtn, '#ba4c03', 1000);  // highlight the topic button in 1 sec
+    throw new Error(`The word list of topic <${selectedTopic}> is Empty!`);
+    // if data-value attribute of the topic button is empty, prompt the user select a topic
+  } else if (!selectedTopic) {
+    alert('Select a topic!');
+    changeColor(topicBtn, '#ba4c03', 1000);  // highlight the topic button
+    throw new Error(`Topic not selected by the User`);
+  } else {
+    alert('Select a topic or refresh the game page!');
+    throw `
+    Data-value of the topic button: <${selectedTopic}>;
+    InnerHTML of the topic button: <${topicBtn.innerHTML}>;
+    Unknown error thought extracting topic. Aborting!
+    `
+  }
+}
+
 /**
  * Extract and delete a random word by topic from the an array of words in vocabData.js file
  */
 async function getRandomWord(topicName) {
-  if (topicWords[topicName].length < 1) {
-    delete topicWords[topicName]; // remove current topic from topicWords as array is empty
-    loadTopics(); // update dropdown list
-    alert(`Topic <${topicName}> is out of words! Choose another topic.`)
-    throw new Error(`The word list of topic <${topicName}> is Empty!`);
-  }
 
   let wordList = topicWords[topicName];  // get array of words by topic
   let result;
@@ -66,40 +127,6 @@ function validateDefinition(definition) {
   return definition;
 }
 
-
-/**
- * @description Start a loop in which the call of functions is initialized that try to get data:
- * a random word from vocabData.js, and definition from the dictionary api.
- * If it fails, the cycle restarts.
- * @param {String} topicName
- * @returns {Object} Object: word as property, definition as value
- */
-async function getData(topic) {
-  let word;
-  let definition;
-
-  while (true) {
-    try {
-      // Try to get values. Of success, break the loop and return values
-      word = await getRandomWord(topic);
-      definition = await getDefinition(word);
-      break;
-    } catch (error) {
-      // handle rethrow-ed HttpError instance and check responce status code. Restart loop
-      // code 404 - the server cannot find the requested resource
-      if (error instanceof HttpError && error.response.status == 404) {
-        console.log(`Error: ${error}. | Definition for word <${word}> Not found. Searching new one...`);
-      } else {
-        // TODO: Catch passed(rethrow) custom error instance from getRandomWord and print them here, otherwise <else: throw error;> to runGame
-        throw error;
-      }
-    }
-  }
-
-  console.log(`|${arguments.callee.name}()| word: ${word}, definition: ${definition}`);
-  return { 'word': word, 'definition': definition }
-}
-
 /**
  * Error handling middleware.
  * From the instance of the class you can acces the error value from the fetch response message property
@@ -110,4 +137,18 @@ class HttpError extends Error {
     this.name = 'HttpError';
     this.response = response;
   }
+}
+
+/**
+ * @description Change color of a passed element for a given amount of time and than return original color
+ * @param {String} element
+ * @param {String} color New color
+ * @param {String} milliseconds
+ */
+function changeColor(element, color, milliseconds) {
+  var originalColor = element.style.color;
+  element.style.color = color;
+  setTimeout(function () {
+    element.style.color = originalColor;
+  }, milliseconds);
 }
