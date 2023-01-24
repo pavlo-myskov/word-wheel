@@ -1,3 +1,5 @@
+import { topicWords } from "./vocabData.js";
+
 /**
  * @description Start a loop in which the call of functions is initialized that try to get data:
  * topic data-value from topic button, random word from vocabData.js, definition from the dictionary api.
@@ -5,7 +7,7 @@
  * @param {String} topicName
  * @returns {Object} Object: word as property, definition as value
  */
-async function getData() {
+export async function getData() {
   let topic;
   let word;
   let definition;
@@ -30,8 +32,42 @@ async function getData() {
     }
   }
 
-  console.log(`|${arguments.callee.name}()| word: ${word}, definition: ${definition}`);
+  console.log(`|getData()| word: ${word}, definition: ${definition}`);
   return { 'word': word, 'definition': definition }
+}
+
+/**
+ * Load topic names from vocabData.js and populate the dropdown menu with a list of topics
+ */
+export function loadTopics() {
+  let topicBtn = document.getElementById('topic-btn');
+  let dropdownMenu = document.getElementById('topic-dropdown-menu');
+  // get the data-value attribute of the button which is equal to the value of the selected list item
+  let topicBtnDataValue = topicBtn.getAttribute('data-value');
+  // clear the content of the dropdown menu
+  dropdownMenu.innerHTML = "";
+  let topicNames = Object.keys(topicWords);  // get array of topic names
+
+  topicNames.forEach(topicName => {
+    // change all special characters with spaces
+    let clearString = topicName.replace(/[^A-Za-z0-9']/g, ' ').trim();
+    // capitalize the first letter for each word of the topic name string
+    let topic = clearString.split(' ').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
+
+    let li = document.createElement("li");
+    // insert the parsed topic name to the 'li' element which will be displayed to the user
+    li.innerHTML = topic;
+    // set a row topic name string as a 'li' value
+    li.setAttribute('value', topicName);
+
+    // if the topic name is equal to the currently selected topic,
+    // add the class "active-dropdown" to the <li> element to hide it from the dropdown menu
+    if (topicName === topicBtnDataValue) {
+      li.classList.add("active-dropdown");
+    }
+
+    dropdownMenu.appendChild(li);
+  });
 }
 
 /**
@@ -73,15 +109,14 @@ async function getTopic() {
 async function getRandomWord(topicName) {
 
   let wordList = topicWords[topicName];  // get array of words by topic
-  let result;
 
   let randNum = Math.floor(Math.random() * wordList.length); // get rand number from 0 to word array length
   let word = wordList.splice(randNum, 1)[0];  // pop the word from array by random index
 
   if (word) {
-    lowerCaseWord = word.toLowerCase().trim();  // convert to LowerCase and Remove the leading and trailing whitespace
-    withoutSpacesWord = lowerCaseWord.replace(/  +/g, ' ');  // replace multiple spaces with a single space
-    result = withoutSpacesWord.replace(/[^a-z ]/g, '');  // remove all special characters except lower case letters and spaces
+    let lowerCaseWord = word.toLowerCase().trim();  // convert to LowerCase and Remove the leading and trailing whitespace
+    let withoutSpacesWord = lowerCaseWord.replace(/  +/g, ' ');  // replace multiple spaces with a single space
+    let result = withoutSpacesWord.replace(/[^a-z ]/g, '');  // remove all special characters except lower case letters and spaces
     if (result) {
       return result;
     } else {

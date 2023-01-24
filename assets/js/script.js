@@ -1,3 +1,5 @@
+import { loadTopics, getData } from "./data_extractor.js";
+
 const capitalLatinChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 window.addEventListener('load', () => {
@@ -27,40 +29,6 @@ window.addEventListener('load', () => {
 function displayTopics() {
   loadTopics();
   toggleMenu();
-}
-
-/**
- * Load topic names from vocabData.js and populate the dropdown menu with a list of topics
- */
-function loadTopics() {
-  let topicBtn = document.getElementById('topic-btn');
-  let dropdownMenu = document.getElementById('topic-dropdown-menu');
-  // get the data-value attribute of the button which is equal to the value of the selected list item
-  let topicBtnDataValue = topicBtn.getAttribute('data-value');
-  // clear the content of the dropdown menu
-  dropdownMenu.innerHTML = "";
-  let topicNames = Object.keys(topicWords);  // get array of topic names
-
-  topicNames.forEach(topicName => {
-    // change all special characters with spaces
-    let clearString = topicName.replace(/[^A-Za-z0-9']/g, ' ').trim();
-    // capitalize the first letter for each word of the topic name string
-    let topic = clearString.split(' ').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
-
-    let li = document.createElement("li");
-    // insert the parsed topic name to the 'li' element which will be displayed to the user
-    li.innerHTML = topic;
-    // set a row topic name string as a 'li' value
-    li.setAttribute('value', topicName);
-
-    // if the topic name is equal to the currently selected topic,
-    // add the class "active-dropdown" to the <li> element to hide it from the dropdown menu
-    if (topicName === topicBtnDataValue) {
-      li.classList.add("active-dropdown");
-    }
-
-    dropdownMenu.appendChild(li);
-  });
 }
 
 /**
@@ -350,7 +318,7 @@ function displayGameOver() {
  */
 function giveCredit(word) {
   word = word.replace(/ /g, '');  // remove all spaces from the string
-  numLetters = word.length;
+  let numLetters = word.length;
 
   document.getElementById('credit-score').innerHTML = numLetters;  // insert credit points
 }

@@ -1,6 +1,6 @@
-const topicWords = {
+export const topicWords = {
   test_topic: [
-    'house', '1232sPoOn', 'abcd', '/coffee32', 'egg'
+    'house', '1232sPoOn', 'abcd', '/coffee32', '34214', '//*+'
   ],
   bathroom: [
     'Bath toys',        'Bathrobe',
