@@ -109,24 +109,26 @@ function runGame() {
   resetFields();
   let letterChanger = spinWheel();  // start wheel animation
 
+  // calls the getData() function which returns a promise
+  // start a promise chaining, create new promise and pass the resolved value of getData()
+  getData()
+    .then(obj => new Promise(function (resolve) {
+      word = obj.word;  // get a word value
+      definition = obj.definition;  // get a definition value
 
-  getData() // wait until the func is resolved
-    .then(obj => new Promise(function (resolve, reject) {
-      word = obj.word;
-      definition = obj.definition;
-
-      // Set a delay for running functions
+      // sets a timeout of 1 sec and after that the callback function is executed
       setTimeout(() => {
         document.getElementsByClassName('wheel-outer')[0].style.background = '#d4d387'; // change wheel color
         document.getElementById('wheel-letter').innerHTML = "?";  // insert '?' instead of random letters
         displayDefinition(definition);  // call displayDefinition func with passed definition
         insertWord(word);  // call insertWord func with passed word
-        activateInputBox();  // focus text cursor on the input field
+        activateInputBox();  // Enable access to the input field
         giveCredit(word);  // fill credit score field based on word length
         activateSubmitBtn(word);
-        resolve(obj);
+        resolve(obj);  // resolve the promise
       }, 1000);
     }))
+    // catch block for the promise, where if the promise is rejected, it logs the error message and resets the game
     .catch(err => {
       console.log(err);
       console.log('Resseting game..');
@@ -181,7 +183,7 @@ function stopWheel(letterChanger) {
 }
 
 /**
- * Enable access to the input field and and get focus text cursor on it
+ * Enable access to the input field
  */
 function activateInputBox() {
   let answerBox = document.getElementById('answer-box');
