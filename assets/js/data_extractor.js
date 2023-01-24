@@ -1,4 +1,3 @@
-// TODO: add new Class constructor extending error class for getRandomWord errors
 /**
  * @description Start a loop in which the call of functions is initialized that try to get data:
  * topic data-value from topic button, random word from vocabData.js, definition from the dictionary api.
@@ -22,9 +21,10 @@ async function getData() {
       // handle rethrow-ed HttpError instance and check responce status code. Restart loop
       // code 404 - the server cannot find the requested resource
       if (error instanceof HttpError && error.response.status == 404) {
-        console.log(`Error: ${error}. | Definition for word <${word}> Not found. Searching new one...`);
+        console.log(`${error}. | Definition for word <${word}> Not found. Searching new one...`);
+      } else if (error instanceof WordError) {
+        console.log(`${error} Searching new one...`)
       } else {
-        // TODO: Catch passed(rethrow) custom error instance from getRandomWord and print them here, otherwise <else: throw error;> to runGame
         throw error;
       }
     }
@@ -47,23 +47,23 @@ async function getTopic() {
     // if topic is selected by the user, but array of the related topic words is EMPTY
   } else if (selectedTopic && topicWords[selectedTopic].length < 1) {
     delete topicWords[selectedTopic]; // remove current topic from topicWords object
-    topicBtn.innerHTML = 'Topics ';  // reset name of the topic button
     topicBtn.removeAttribute('data-value'); // remove data-value attribute from the topic button
-    alert(`Topic <${selectedTopic}> is out of words! Choose another topic.`); // notify the user
-    changeColor(topicBtn, '#ba4c03', 1000);  // highlight the topic button in 1 sec
-    throw new Error(`The word list of topic <${selectedTopic}> is Empty!`);
+    alert(`Topic <${topicBtn.innerHTML}> is out of words! Choose another topic.`); // notify the user
+    topicBtn.innerHTML = 'Topics ';  // reset name of the topic button
+    changeColor(topicBtn, '#ba4c03', 2000);  // highlight the topic button in 2 sec
+    throw new TopicError(`The word list of topic <${selectedTopic}> is Empty!`);
     // if data-value attribute of the topic button is empty, prompt the user select a topic
   } else if (!selectedTopic) {
     alert('Select a topic!');
     changeColor(topicBtn, '#ba4c03', 1000);  // highlight the topic button
-    throw new Error(`Topic not selected by the User`);
+    throw new TopicError(`Topic not selected by the User`);
   } else {
     alert('Select a topic or refresh the game page!');
-    throw `
+    throw new TopicError( `
     Data-value of the topic button: <${selectedTopic}>;
     InnerHTML of the topic button: <${topicBtn.innerHTML}>;
     Unknown error thought extracting topic. Aborting!
-    `
+    `);
   }
 }
 
@@ -85,10 +85,10 @@ async function getRandomWord(topicName) {
     if (result) {
       return result;
     } else {
-      throw new Error(`The word <${word}> cannon be processed!`);
+      throw new WordError(`The word <${word}> cannon be processed!`);
     };
   } else {
-    throw new Error(`An empty string cannot be processed!`);
+    throw new WordError(`An empty string cannot be processed!`);
   }
 }
 
@@ -132,14 +132,44 @@ function processDefinition(word, dataObj) {
 }
 
 /**
- * Error handling middleware.
- * From the instance of the class you can acces the error value from the fetch response message property
+ * Class representing an HTTP error.
+ * @extends Error
  */
 class HttpError extends Error {
+  /**
+     * Create an HTTP error.
+     * @param {Object} response - The HTTP response object.
+     * @property {number} response.status - The HTTP status code of the response.
+     * @property {string} response.url - The URL of the request.
+     * @property {string} name - The name of the error, defaults to "HttpError".
+     * @property {Object} response - The HTTP response object.
+     */
   constructor(response) {
     super(`${response.status} for ${response.url}`);
     this.name = 'HttpError';
     this.response = response;
+  }
+}
+
+/**
+ * A custom error class for handling errors related to processing topics.
+ * @extends {Error}
+ */
+class WordError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'WordError';
+  }
+}
+
+/**
+ * A custom error class for handling errors related to processing words.
+ * @extends {Error}
+ */
+class TopicError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'TopicError';
   }
 }
 
