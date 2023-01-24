@@ -91,15 +91,6 @@ function toggleMenu() {
 }
 
 /**
- * Event handler will execute runGame function only once on click spin-button
- */
-function runGameHandler() {
-  runGame();  // this will execute only once as after the event listener will be removed
-  // let topic = getTopic();
-  this.removeEventListener('click', runGameHandler);
-}
-
-/**
  * Initializes the launch of the game
  */
 function runGame() {
@@ -133,8 +124,10 @@ function runGame() {
       console.log(err);
       console.log('Resseting game..');
       resetFields();
+      // enable spin button
       document.getElementById('btn-spin').disabled = false;
-      document.getElementById('btn-spin').addEventListener('click', runGameHandler);
+      // Attach an event listener to the spin button and remove it after runs the func runGame only once
+      document.getElementById('btn-spin').addEventListener('click', () => {runGame()}, { once: true });
     })
     .finally(() => {
       stopWheel(letterChanger);  // stop wheel animation
@@ -305,8 +298,8 @@ function checkAnswer(correctWord) {
     document.getElementById('credit-score').innerHTML = 0; // reset credit-score
 
     document.getElementById('btn-spin').disabled = false;  // enable spin button
-    // add event listener for spin-button with runGame event handler to give access init start new game
-    document.getElementById('btn-spin').addEventListener('click', runGameHandler);
+    // Attach an event listener to the spin button and remove it after runs the func runGame only once
+    document.getElementById('btn-spin').addEventListener('click', () => {runGame()}, { once: true });
   }
 }
 
@@ -390,8 +383,8 @@ function restartGameByCreditScore() {
 
   // enable spin button
   document.getElementById('btn-spin').disabled = false;
-  // add event listener for spin-button with runGame event handler to give access to continue the game
-  document.getElementById('btn-spin').addEventListener('click', runGameHandler);
+  // Attach an event listener to the spin button and remove it after runs the func runGame only once
+  document.getElementById('btn-spin').addEventListener('click', () => {runGame()}, { once: true });
 }
 
 /**
