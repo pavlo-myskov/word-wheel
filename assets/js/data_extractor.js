@@ -86,12 +86,12 @@ async function getTopic() {
     topicBtn.removeAttribute('data-value'); // remove data-value attribute from the topic button
     alert(`Topic <${topicBtn.innerHTML}> is out of words! Choose another topic.`); // notify the user
     topicBtn.innerHTML = 'Topics ';  // reset name of the topic button
-    changeColor(topicBtn, '#ba4c03', 2000);  // highlight the topic button in 2 sec
+    changeColor(topicBtn, 'rgb(186, 76, 3)', 2000);  // highlight the topic button in 2 sec
     throw new TopicError(`The word list of topic <${selectedTopic}> is Empty!`);
     // if data-value attribute of the topic button is empty, prompt the user select a topic
   } else if (!selectedTopic) {
     alert('Select a topic!');
-    changeColor(topicBtn, '#ba4c03', 1000);  // highlight the topic button
+    changeColor(topicBtn, 'rgb(186, 76, 3)', 1000);  // highlight the topic button
     throw new TopicError(`Topic not selected by the User`);
   } else {
     alert('Select a topic or refresh the game page!');
@@ -215,7 +215,10 @@ class TopicError extends Error {
  * @param {String} milliseconds
  */
 function changeColor(element, color, milliseconds) {
-  var originalColor = element.style.color;
+  let originalColor = element.style.color;
+  if (originalColor == color) {
+    return;
+  }
   element.style.color = color;
   setTimeout(function () {
     element.style.color = originalColor;
