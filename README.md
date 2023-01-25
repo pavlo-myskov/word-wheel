@@ -142,7 +142,7 @@ Topic names and words are stored in the [vocabData.js](https://github.com/FlashD
 
   Dropdown menu|Selected Topic
   |-|-|
-  |![Dropdown menu](docs/features/dropdown-menu.png)|![Selected Topic](docs/features/selected-topic.png)
+  |![Dropdown menu](docs/features/dropdown-menu.png)|![Selected Topic](docs/features/selected-topic.png)|
 
 
 - #### Rules
@@ -152,15 +152,23 @@ Topic names and words are stored in the [vocabData.js](https://github.com/FlashD
 
   ![Rules](docs/features/rules.png)
 
-### Start game Button
-....
+### Game Start (`Spin the Wheel` button)
+Clicking on the `Spin the Wheel` button once initiates the launch of the game cycle and the start of the wheel animation, after which the button is deactivated to prevent the creation of a new game cycle instance.
 
-![Start game Button](docs/features/start-game-button.png)
+|||
+|-|-|
+|![Activate spin button](docs/features/active-spin-button.png)|![Deactivated spin button](docs/features/deactivate-spin-button.png)|
 
 ### Wheel
-....
+At the beginning of the game cycle, the animation of the wheel spinning and the random change of letters that are not associated with the word is started
+If the data is successfully extracted, the color of the wheel changes to yellow and a question mark is displayed inside.
+If the user entered the wrong answer or opened the whole word manually, the color changes to red and X mark is displayed inside.
+If the user gave the correct answer, the color changes to turquoise and the checkmark is displayed inside.
 
-![Wheel](docs/features/wheel.png)
+|||
+|-|-|
+|![Wheel](docs/features/spin-letter.png)|![Wheel](docs/features/spin-question.png)|
+|![Wheel](docs/features/spin-correct.png)|![Wheel](docs/features/spin-wrong.png)|
 
 ### Definition
 If the keyword itself was found in the definition, it is replaced with asterisks. If the definition is too long, it is truncated before being shown to the user.
