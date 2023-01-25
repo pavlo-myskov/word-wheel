@@ -118,6 +118,9 @@ async function getRandomWord(topicName) {
     let withoutSpacesWord = lowerCaseWord.replace(/  +/g, ' ');  // replace multiple spaces with a single space
     let result = withoutSpacesWord.replace(/[^a-z ]/g, '');  // remove all special characters except lower case letters and spaces
     if (result) {
+      if (result.length > 15) {
+        throw new WordError(`The word <${word}> is too long!`);
+      }
       return result;
     } else {
       throw new WordError(`The word <${word}> cannon be processed!`);
