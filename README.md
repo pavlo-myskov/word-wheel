@@ -76,7 +76,6 @@ The appearance and UI design is quite user-friendly, simple and responsive. The 
 
 - #### Game Structure
   The game is based on a single interactive page with significant interactive functionality. The page is designed in a such way to guide the user through all stages of the game from top to bottom in a consistent and intuitive manner, reducing cognitive overload for a better user experience.
-   <b>...404 page..</b>
 
 - #### Typography
   The main game font is [Open Sans](https://fonts.google.com/specimen/Open+Sans). It's is a clean and modern sans-serif typeface designed by Steve Matteson and commissioned by Google.
@@ -84,8 +83,8 @@ The appearance and UI design is quite user-friendly, simple and responsive. The 
 
 - #### Color Scheme
   The game design meets accessibility requirements including sufficient contrast between background and foreground colours.
-  The basic colors are yellow and green. The top and bottom sections of the game page as well as the buttons are implemented in a minimalist modern style using a gradient from two base colors such as yellow and green.
-  Red tones and brighter light yellows are used to accentuate more important objects of the game. Muted shades of the same color scheme are used for temporarily inactive objects.
+  The basic color is Light Moss Green. The top and bottom sections of the game page as well as the buttons are implemented in a minimalist modern style using a gradient from two base colors such as Yellow-Green and Crystal.
+  Red tones and brighter Yellow-Green are used to accentuate more important objects of the game. Muted shades of the same color scheme are used for temporarily inactive objects.
 
   ![Color palette](docs/supp-images/palette.png)
 
