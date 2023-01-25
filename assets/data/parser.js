@@ -55,7 +55,7 @@ function readFilesSync(dir) {
 const words = readFilesSync('assets/data/topics/');
 
 const string = util.inspect(words, { maxArrayLength: null });  // convert an object to a string
-const stringForJS = `const topicWords = ${string}`; // create variable contains an object with topics and words for javascript file
+const stringForJS = `export const topicWords = ${string}`; // create variable contains an object with topics and words for javascript file
 
 try {
   fs.writeFileSync('assets/js/vocabData.js', stringForJS, 'utf-8');  // generate javascript file with object of topics and words
