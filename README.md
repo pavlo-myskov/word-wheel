@@ -76,6 +76,8 @@ The appearance and UI design is quite user-friendly, simple and responsive. The 
 
 - #### Game Structure
   The game is based on a single interactive page with significant interactive functionality. The page is designed in a such way to guide the user through all stages of the game from top to bottom in a consistent and intuitive manner, reducing cognitive overload for a better user experience.
+  The main js script is attached to the index.html page as a module.
+  ES6 modules with import and export statements are used to get data.
 
 - #### Typography
   The main game font is [Open Sans](https://fonts.google.com/specimen/Open+Sans). It's is a clean and modern sans-serif typeface designed by Steve Matteson and commissioned by Google.
@@ -107,14 +109,20 @@ Topic names and words are stored in the [vocabData.js](https://github.com/FlashD
 
 
 - #### Topics
-  The Topic Dropdown list generates from the properties of the Javascript object which is in [vocabData.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/vocabData.js) file and displayes to the user. The dropdown list is generated after each page refresh, and also at the beginning of each new game cycle. If the array of words is exhausted during the game, the js object with the name of the topic is removed from the vocabData.js file, followed by updating the dropdown list, which is notified to the user.
+  The Topic Dropdown list generated from the properties of the Javascript object `topicWords` which is in [vocabData.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/vocabData.js) file and populate the dropdown menu with a list of topics. The dropdown list is updated every time the user clicks on the `Topic` button and is displayed to the user.
+  If the array of words is exhausted during the game, the js object with the name of the topic is removed from the vocabData.js file, which is notified to the user.
 
 - #### Words
-  New words can be added to the game using the [Parser](https://github.com/FlashDrag/word-wheel/blob/master/assets/data/parser.js) or directly into the array in the [vocabData.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/vocabData.js) file.
-  When the user starts a new game cycle, the app gets a random word from the array in [vocabData.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/vocabData.js) file for the chosen topic. If the word fails the validation, it is removed from the array and a new random word is extracted.
+  New words can be added to the game using the [Parser](https://github.com/FlashDrag/word-wheel/blob/master/assets/data/parser.js) or directly into the array of the relevant topic in the Javascript object `topicWords` found in the [vocabData.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/vocabData.js) file.
+  When the user starts a new game cycle, the app extracts a random word from the array of the Javascript object `topicWords` for the chosen topic. If the word fails the validation, it is removed from the array and a new random word is extracted.
 
 - #### Definitions
-  When a suitable word is found, the app makes a asynchronous HTTP request using the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to the [Free Dictionary](https://dictionaryapi.dev) and gets the definition of this word. If no definition is found, the app extracts the new word from the array and makes a new request. If the keyword itself was found in the definition, it is replaced with asterisks.
+  When a suitable word is found, the app makes a asynchronous HTTP request using the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to the [Free Dictionary](https://dictionaryapi.dev) and gets the definition of this word. If no definition is found, the app extracts the new word from the array and makes a new request.
+
+- #### Error handing
+  To handle errors that occur during data processing, were created custom error handlers that extend native `Error` object.
+  Custom error handlers help catch specific errors and provide better control over code flow.
+
 
 
 ### Game Menu
@@ -126,6 +134,8 @@ Topic names and words are stored in the [vocabData.js](https://github.com/FlashD
 - #### Topic dropdown menu
   The choice of topics is implemented on click on the Topic button as a drop-down menu. When the user starts a new game cycle, the app gets the name of the topic the user has selected from the drop-down menu. If no topic is selected, the user will be prompted to select one.
   The topic name will be removed from the dropdown menu during the game if the topics word list is exhausted. The user can select a topic of the words at any time of the game, but a new word from the topic will be received only when the cycle of current game is completed.
+
+  The `Topics` button name changes to the topic name itself.
 
   ![Dropdown menu](docs/features/dropdown-menu.png)
 
@@ -147,7 +157,7 @@ Topic names and words are stored in the [vocabData.js](https://github.com/FlashD
 ![Wheel](docs/features/wheel.png)
 
 ### Definition
-....
+If the keyword itself was found in the definition, it is replaced with asterisks. If the definition is too long, it is truncated before being shown to the user.
 
 ![Definition](docs/features/definition.png)
 
