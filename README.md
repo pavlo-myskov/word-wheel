@@ -2,7 +2,7 @@
 
 [Word Wheel](https://flashdrag.github.io/word-wheel) is JavaScript educational game in which the user guesses words by their definitions. After a player has selected a certain topic of words and starts the game, the app gets a random word on this topic from the local array and searches for a definition in the online dictionary using api. If the definition succesfully finded, the app shows it to the user, and the word itself is hidden behind flip cards.
 
-![Responsive Mockup](docs/supp-images/amiresponsive.png)
+![Responsive Mockup](docs/supp-images/responsive-mockup.png)
 
 ## Table of Contents
 - [**User Experience UX**](#user-experience-ux)
