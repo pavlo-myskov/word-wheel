@@ -86,12 +86,15 @@ body {
 .heading > * {
   font-size: 1.2em;
   font-weight: 700;
-  padding: 10px 20px;
+}
+
+.heading {
+  padding: 20px;
 }
 
 /* Logo */
 .logo {
-  width: 7em;
+  width: 5em;
 }
 
 /* Nav menu */
@@ -127,9 +130,9 @@ nav {
   background: linear-gradient(#ecece6, whitesmoke);
   border-radius: 10px;
   padding: 5px 10px;
-  font-size: 0.9em;
+  font-size: 1em;
   font-style: italic;
-  line-height: 30px;
+  line-height: 40px;
   z-index: 9;
   box-shadow: 0 0 5px black;
 }
@@ -537,8 +540,30 @@ nav {
     max-width: 70px;
   }
 
+  #topic-dropdown-menu {
+    line-height: 30px;
+  }
+
   #definition-wrapper,
   #word-wrapper {
     margin: 0 15px;
+  }
+  #word-section {
+    font-size: 13px;
+  }
+}
+
+/* for mobile and screen sizes from 360px wide and DOWN */
+@media screen and (max-width: 360px) {
+  .heading {
+    padding: 10px;
+    font-size: 13px;
+  }
+  #word-section {
+    font-size: 10px;
+  }
+  #answer-box {
+    letter-spacing: 1.5px;
+    font-size: 1.3em;
   }
 }
