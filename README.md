@@ -126,18 +126,24 @@ Topic names and words are stored in the [vocabData.js](https://github.com/FlashD
 
 
 ### Game Menu
-  The game menu includes two buttons and was implemented so that the user had the opportunity to see the game instructions/rules and select a topic of words which is an integral part of the game.
-  The menu located on the top right corner of the game page for convenient access to the user. The menu buttons respond to mouse hover and change text color to brighter to give user feedback.
+  The game menu includes two buttons (`Topics` and `Rules`) and was implemented in such a way that the user can read the game instructions/rules and select the topic of words which is an integral part of the game.
+  The nav menu located on the top right corner of the game page for convenient user access. The menu buttons respond to mouse hover and change text color to brighter to give user feedback. Also, if the user tries to start the game but the topic has not yet been selected, the `Topics` button is temporarily highlighted.
 
-![Menu](docs/features/menu.png)
+  Menu|Highlighted Menu
+  |-|-|
+  |![Menu](docs/features/menu.png)|![Highlighted Menu](docs/features/menu-highlighted.png)|
+
 
 - #### Topic dropdown menu
-  The choice of topics is implemented on click on the Topic button as a drop-down menu. When the user starts a new game cycle, the app gets the name of the topic the user has selected from the drop-down menu. If no topic is selected, the user will be prompted to select one.
+  The choice of topics is implemented by clicking on the `Topics` button in the form of a drop-down menu. The list of topics updated and displays every time when the user clicks on `Topics` button. If the user tries to start a new game cycle but no topic is selected, the user will be prompted to select one.
+  When the topic is selected by the user from dropdown menu, the app changes the button name for the name of the selected topic.
+  During the game cycle, the app will refer to the button's `data-value` attribute which stores the row topic name, to search for the relevant word.
   The topic name will be removed from the dropdown menu during the game if the topics word list is exhausted. The user can select a topic of the words at any time of the game, but a new word from the topic will be received only when the cycle of current game is completed.
 
-  The `Topics` button name changes to the topic name itself.
+  Dropdown menu|Selected Topic
+  |-|-|
+  |![Dropdown menu](docs/features/dropdown-menu.png)|![Selected Topic](docs/features/selected-topic.png)
 
-  ![Dropdown menu](docs/features/dropdown-menu.png)
 
 - #### Rules
   The rule set can be opened at any time by the user, as he/she may need to clarify some details of the game.
