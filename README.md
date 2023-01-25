@@ -61,7 +61,9 @@
 
 The Word Wheel game was designed based on wireframes produced in [Balsamiq](https://balsamiq.com/). All design features were implemented.
 
-![Wireframe](docs/supp-images//wireframe.png)
+| Desktop|Tablet|
+|-|-|
+| ![Desktop wireframe](docs/supp-images//wireframe-desktop.png) | ![Tablet wireframe](docs/supp-images/wireframe-tablet.png) |
 
 [Back to top](#table-of-contents)
 
