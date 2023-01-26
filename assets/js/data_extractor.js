@@ -20,7 +20,6 @@ export async function getData() {
       definition = await getDefinition(word);
       break;
     } catch (error) {
-      console.log(error.response.status);
       // handle rethrow-ed HttpError instance and check responce status code. Restart loop
       // code 404 - the server cannot find the requested resource
       if (error instanceof HttpError && error.response.status == 404) {
