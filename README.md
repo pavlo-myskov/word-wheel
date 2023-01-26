@@ -12,16 +12,19 @@
     - [Game Structure](#game-structure)
     - [Typography](#typography)
     - [Color Scheme](#color-scheme)
-    - [Images](#images)
 - [**Features**](#features)
-  - [Words and their Definitions](#words-and-their-definitions)
+  - [Data](#data)
+    - [Parser](#parser)
+    - [Topics](#topics)
+    - [Words](#words)
+    - [Definitions](#definitions)
   - [Game Menu](#game-menu)
     - [Topic dropdown menu](#topic-dropdown-menu)
     - [Rules](#rules)
-  - [Start game Button](#start-game-button)
+  - [Game Start](#game-start-spin-the-wheel-button)
   - [Wheel](#wheel)
   - [Definition](#definition)
-  - [Hidden word](#hidden-word)
+  - [Hidden/Revealed word](#hiddenrevealed-word)
   - [Input field](#input-field)
   - [Submit button](#submit-button)
   - [Score section](#score-section)
@@ -78,6 +81,7 @@ The appearance and UI design is quite user-friendly, simple and responsive. The 
   The game is based on a single interactive page with significant interactive functionality. The page is designed in a such way to guide the user through all stages of the game from top to bottom in a consistent and intuitive manner, reducing cognitive overload for a better user experience.
   The main js script is attached to the index.html page as a module.
   ES6 modules with import and export statements are used to get data.
+  404.html page for defensive design.
 
 - #### Typography
   The main game font is [Open Sans](https://fonts.google.com/specimen/Open+Sans). It's is a clean and modern sans-serif typeface designed by Steve Matteson and commissioned by Google.
@@ -98,7 +102,7 @@ The appearance and UI design is quite user-friendly, simple and responsive. The 
 The Word Wheel game is designed to strictly adhere to accessibility guidelines across all sections of the page and all interactive elements.
 Any interaction causes a positive response to the user through the semantic structured information, colors, clear and unambiguous navigation structures.
 
-### Words and their Definitions
+### Data
 Topic names and words are stored in the [vocabData.js](https://github.com/FlashDrag/word-wheel/blob/master/assets/js/vocabData.js) file as a Javascript object. Topic name is a property, array of relevant words is a value. The definition of words is retrieved automatically makes HTTP request to the [Free Dictionary API](https://dictionaryapi.dev).
 - #### Parser
   This script is NOT a part of the GAME!
@@ -119,11 +123,7 @@ Topic names and words are stored in the [vocabData.js](https://github.com/FlashD
 - #### Definitions
   When a suitable word is found, the app makes a asynchronous HTTP request using the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to the [Free Dictionary](https://dictionaryapi.dev) and gets the definition of this word. If no definition is found, the app extracts the new word from the array and makes a new request.
 
-- #### Error handing
-  To handle errors that occur during data processing, were created custom error handlers that extend native `Error` object.
-  Custom error handlers help catch specific errors and provide better control over code flow.
-
-
+[Back to top](#table-of-contents)
 
 ### Game Menu
   The game menu includes two buttons (`Topics` and `Rules`) and was implemented in such a way that the user can read the game instructions/rules and select the topic of words which is an integral part of the game.
@@ -152,12 +152,14 @@ Topic names and words are stored in the [vocabData.js](https://github.com/FlashD
 
   ![Rules](docs/features/rules.png)
 
+[Back to top](#table-of-contents)
+
 ### Game Start (`Spin the Wheel` button)
-Clicking on the `Spin the Wheel` button once initiates the launch of the game cycle and the start of the wheel animation, after which the button is deactivated to prevent the creation of a new game cycle instance.
+Clicking on the `Spin the Wheel` button once initiates the launch of the game cycle and the start of the wheel animation, after which the button is deactivated to prevent the creation of a new game cycle instance. The user can also spin the wheel by pressing the `Space` key on the keyboard.
 
 |||
 |-|-|
-|![Activate spin button](docs/features/active-spin-button.png)|![Deactivated spin button](docs/features/deactivate-spin-button.png)|
+|![Activate spin button](docs/features/active-spin-button.png)|![Deactivated spin button](docs/features/disabled-spin-button.png)|
 
 ### Wheel
 At the beginning of the game cycle, the animation of the wheel spinning and the random change of letters that are not associated with the word is started
@@ -171,29 +173,36 @@ If the user gave the correct answer, the color changes to turquoise and the chec
 |![Wheel](docs/features/spin-correct.png)|![Wheel](docs/features/spin-wrong.png)|
 
 ### Definition
-If the keyword itself was found in the definition, it is replaced with asterisks. If the definition is too long, it is truncated before being shown to the user.
+The word definition is obtained by HTTP request to the [Free Dictionary API](https://dictionaryapi.dev), parsed, validated and displayed to the user.
+If the keyword itself was found in the definition, it is replaced with asterisks. Also if the definition is too long, it is truncated before being shown to the user.
 
 ![Definition](docs/features/definition.png)
 
-### Hidden word
-....
+### Hidden/Revealed word
+Initially, the keyword is hidden behind the flipped tiles. The user has the ability to reveal each letter separately by clicking on a tile if it is difficult to guess the whole word. At the end of the game cycle, after the user clicks on the `Submit` button the word is revealed completely, regardless of the outcome of the game.
 
-![Hidden word](docs/features/hidden-word.png)
+|Hidden word|Revealed word|
+|-|-|
+|![Hidden word](docs/features/hidden-word.png)|![Revealed word](docs/features/revealed-word.png)|
 
 ### Input field
-....
+While the game is not active, the input field is disabled and the placeholder text prompts the user to `spin the wheel`. When the user has started the game cycle, the input field becomes active and the user is prompted to enter a answer.
 
-![Input field](docs/features/input-field.png)
+|Disabled Input field|Active Input field|
+|-|-|
+|![Disabled Input field](docs/features/disabled-input.png)|![Input field](docs/features/active-input.png)|
 
 ### Submit button
-....
+While the game is not active, the `submit` button is disabled. When the user has started the game cycle, the `submit` button becomes active. If the button was clicked by the user and the input field is empty, an alert appears prompting the user to enter an answer. The user can also submit the answer by pressing the `Enter` key on the keyboard.
 
-![Submit button](docs/features/submit-button.png)
+|Disabled Submit button|Active Submit button|
+|-|-|
+|![Disabled Submit button](docs/features/disabled-submit-button.png)|![Active Submit button](docs/features/active-submit-button.png)|
 
 ### Score section
-....
+At the start of each game cycle, a credit score is given that adds up to the number of letters in the word. For each open letter, one point is deducted from the credit score. For a guessed word, the balance of credit points, which is equal to the number of hidden letters, is added to the total score. If the word is entered incorrectly, the total score counter is reset to zero. If each letter tile is clicked, revealing the letters, the total score is not reset.
 
-![Score section](docs/features/score-section.png)
+![Score section](docs/features/score.png)
 
 
 [Back to top](#table-of-contents)
@@ -209,15 +218,25 @@ If the keyword itself was found in the definition, it is replaced with asterisks
 - [VScode](https://code.visualstudio.com) - code editing
 - [GIT](https://git-scm.com/), [GitHub](https://github.com/) - tracking, storing, hosting project
 - [Chrome DevTools](https://developer.chrome.com/docs/devtools) - inspecting and debugging code
+- [Adobe Photoshop](https://www.adobe.com/products/photoshop.html) - favicon, readme support images
+- [iloveIMG](https://www.iloveimg.com) - compressing and resizing readme support images
+- [NameCheap](https://www.namecheap.com) - Custom Domain name
 
 [Back to top](#table-of-contents)
 
 ## Testing
 See [TESTING.md](https://github.com/FlashDrag/word-wheel/blob/master/docs/TESTING.md) for an overview of the game testing and debugging.
 
-## Deployment
+[Back to top](#table-of-contents)
 
+## Deployment
 The Live link is https://flashdrag.github.io/word-wheel
+
+The app is hosted on GitHub pages and used a custom domain, which is registered via Namecheap [Educational Promotion](https://nc.me/).
+The game also can be accessed using link: https://www.wordwheel.me
+
+Here you can find instructions:
+[How to register a domain at nc.me](https://www.namecheap.com/support/knowledgebase/article.aspx/9687/35/how-to-register-a-domain-via-our-educational-promotion-at-ncme/)
 
 #### To deploy the project:
 1. In the [GitHub repository](https://github.com/FlashDrag/word-wheel), navigate to the *Settings* tab.
@@ -225,7 +244,6 @@ The Live link is https://flashdrag.github.io/word-wheel
 3. In the *Build and deployment* section under *Branch*, select the **master** branch and click *Save*.
 4. Once the master branch has been selected, the page will be automatically refreshed and a display indicates the successful deployment and the link to the address.
 
-![GitHub deployment settings](docs/deployment/deploy.png)
 
 #### To run the game on a local machine:
 1. Go to the [WordWheel Github Repo](https://github.com/FlashDrag/word-wheel)
@@ -233,15 +251,11 @@ The Live link is https://flashdrag.github.io/word-wheel
 3. Extract the ZIP file on your local machine
 4. Run the *index.html* file in a browser
 
-![GitHub Download ZIP section](docs/deployment/local-run.png)
-
 #### To clone the repo:
 1. Go to the [Word Wheel Github Repo](https://github.com/FlashDrag/word-wheel)
 2. Click the *Code* button to the right of the screen and copy the *HTTPs* link there
 3. Open a GitBash terminal and navigate to the directory where you want to locate the clone
 4. Type `git clone` and paste the copied *HTTPs* link, press the *Enter* key to begin the clone process
-
-![GitHub section with repo HTTPs link](docs/deployment/clone.png)
 
 [Back to top](#table-of-contents)
 
@@ -249,13 +263,11 @@ The Live link is https://flashdrag.github.io/word-wheel
 ### Code
 The [Word Wheel](https://flashdrag.github.io/word-wheel) game based on my own implementation of code, applying what I've learned from [CodeInstitute Full Stack Developer Course](https://codeinstitute.net/ie/full-stack-software-development-diploma/) and other tutorials.
 
-
-
 ### Content
 - [Google Fonts](https://fonts.google.com) - fonts
 - [FontAwesome](https://fontawesome.com) - icons
 - [Dictionary API](https://dictionaryapi.dev) - Free Dictionary API for words definitions
 - [Visual Dictionary](https://visualdictionary.org) - word sets
-
+- [Logo](https://logo.com) - game logo
 
 [Back to top](#table-of-contents)
