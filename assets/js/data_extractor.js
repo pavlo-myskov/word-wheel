@@ -39,7 +39,7 @@ export async function getData() {
       }
     }
   }
-  return { 'word': word, 'definition': definition }
+  return { 'word': word, 'definition': definition };
 }
 
 /**
@@ -85,7 +85,7 @@ async function getTopic() {
 
   // if topic is selected and the array of the related topic words is NOT empty, return data-value of the topic button
   if (selectedTopic && topicWords[selectedTopic].length > 0) {
-    return selectedTopic
+    return selectedTopic;
     // if topic is selected by the user, but array of the related topic words is EMPTY
   } else if (selectedTopic && topicWords[selectedTopic].length < 1) {
     delete topicWords[selectedTopic]; // remove current topic from topicWords object
@@ -130,7 +130,7 @@ async function getRandomWord(topicName) {
       return result;
     } else {
       throw new WordError(`The word <${word}> cannon be processed!`);
-    };
+    }
   } else {
     throw new WordError(`An empty string cannot be processed!`);
   }

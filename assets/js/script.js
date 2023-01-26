@@ -8,7 +8,7 @@ window.addEventListener('load', () => {
   // Attach an event listener to the dropdown menu
   document.getElementById('topic-dropdown-menu').addEventListener('click', updateTopicBtn);
   // Attach an event listener to the spin button and remove it after runs the func runGame only once
-  document.getElementById('btn-spin').addEventListener('click', () => { runGame() }, { once: true });
+  document.getElementById('btn-spin').addEventListener('click', () => { runGame(); }, { once: true });
   // Attach an event listener to the rules button
   document.getElementById('rules-btn').addEventListener('click', displayRules);
 
@@ -20,12 +20,12 @@ window.addEventListener('load', () => {
       e.preventDefault();
       document.getElementById('btn-spin').click();
     }
-      // Trigger the `Submit` button with a click if the user presses the "Enter" key and input field is Active
-    if (!isDisabledInput && e.key === "Enter" ) {
+    // Trigger the `Submit` button with a click if the user presses the "Enter" key and input field is Active
+    if (!isDisabledInput && e.key === "Enter") {
       e.preventDefault();
       document.getElementById('btn-sm').click();
     }
-  }
+  };
 })
 
 /**
@@ -53,7 +53,7 @@ function updateTopicBtn(event) {
 
     toggleMenu();
   }
-};
+}
 
 function toggleMenu() {
   let topicBtn = document.getElementById('topic-btn');
@@ -100,11 +100,11 @@ function runGame() {
       // enable spin button
       document.getElementById('btn-spin').disabled = false;
       // Attach an event listener to the spin button and remove it after runs the func runGame only once
-      document.getElementById('btn-spin').addEventListener('click', () => {runGame()}, { once: true });
+      document.getElementById('btn-spin').addEventListener('click', () => { runGame(); }, { once: true });
     })
     .finally(() => {
       stopWheel(letterChanger);  // stop wheel animation
-    })
+    });
 }
 /**
  * Clear the wheel, definition, word sections; reset credit score;
@@ -209,8 +209,8 @@ function displayCorrectWord() {
     li.classList.remove('flip');
     // remove the event listener from the open char to prevent re-clicking which could lead to the next creditScore decreasing
     li.removeEventListener('click', decrementCreditScore);
-  })
-};
+  });
+}
 
 /**
  * Insert a word into flip cards for each letter
@@ -233,7 +233,7 @@ function insertWord(word) {
       <div class="front">${char}</div>
       <div class="back"></div>`;
       li.innerHTML = listInner;
-    };
+    }
 
     wordListEl.appendChild(li);
 
@@ -243,15 +243,15 @@ function insertWord(word) {
       li.addEventListener('click', function () { this.classList.remove('flip'); });
       // reduce credit score on click
       li.addEventListener('click', decrementCreditScore);
-    };
-  };
+    }
+  }
 }
 
 /**
  * Checks if user answer equal to correct word and call relevant functions
  */
 function checkAnswer(correctWord) {
-  let answer = document.getElementById('answer-box').value
+  let answer = document.getElementById('answer-box').value;
 
   if (!answer) {
     alert('Type the anwer!');
@@ -262,7 +262,7 @@ function checkAnswer(correctWord) {
     } else {
       resetScore(); // reset total score
       displayGameOver(); // display red wheel
-    };
+    }
 
     disableSubmitBtn();
     displayCorrectWord();
@@ -272,7 +272,7 @@ function checkAnswer(correctWord) {
 
     document.getElementById('btn-spin').disabled = false;  // enable spin button
     // Attach an event listener to the spin button and remove it after runs the func runGame only once
-    document.getElementById('btn-spin').addEventListener('click', () => {runGame()}, { once: true });
+    document.getElementById('btn-spin').addEventListener('click', () => { runGame(); }, { once: true });
   }
 }
 
@@ -289,14 +289,14 @@ function incrementTotalScore() {
   let creditScore = parseInt(creditScoreEl.innerText);
 
   totalScoreEl.innerHTML = totalScore + creditScore;
-};
+}
 
 /**
  * Reset total score
  */
 function resetScore() {
   document.getElementById('total-score').innerHTML = 0;
-};
+}
 
 /**
  * Display green wheel and check xmark ico
@@ -304,7 +304,7 @@ function resetScore() {
 function displayWin() {
   document.getElementById('wheel-letter').innerHTML = '<i class="fa-solid fa-check"></i>';
   document.getElementsByClassName('wheel-outer')[0].style.background = '#8cd1cf';
-};
+}
 
 /**
  * Display red wheel and
@@ -312,7 +312,7 @@ function displayWin() {
 function displayGameOver() {
   document.getElementById('wheel-letter').innerHTML = '<i class="fa-solid fa-xmark"></i>';
   document.getElementsByClassName('wheel-outer')[0].style.background = '#d8b69d'; // change wheel color
-};
+}
 
 
 
@@ -357,7 +357,7 @@ function restartGameByCreditScore() {
   // enable spin button
   document.getElementById('btn-spin').disabled = false;
   // Attach an event listener to the spin button and remove it after runs the func runGame only once
-  document.getElementById('btn-spin').addEventListener('click', () => {runGame()}, { once: true });
+  document.getElementById('btn-spin').addEventListener('click', () => { runGame(); }, { once: true });
 }
 
 /**
@@ -374,6 +374,6 @@ function displayRules() {
  */
 function closeRules() {
   document.getElementById('manual-box').style.display = 'none';
-  document.getElementById('close').removeEventListener('click', closeRules)
-  document.getElementById('bye').removeEventListener('click', closeRules)
+  document.getElementById('close').removeEventListener('click', closeRules);
+  document.getElementById('bye').removeEventListener('click', closeRules);
 }

@@ -243,4 +243,4 @@ export const topicWords = {
     'Brown Bear',      'Boa',          'Blue Sheep',      'Bird',
     'Beetle',          'Bee',          'Alpaca',          'Accentor'
   ]
-}
+};
