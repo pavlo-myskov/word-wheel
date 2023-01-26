@@ -1,6 +1,6 @@
 # Word Wheel
 
-[Word Wheel](https://flashdrag.github.io/word-wheel) is JavaScript educational game in which the user guesses words by their definitions. After a player has selected a certain topic of words and starts the game, the app gets a random word on this topic from the local array and searches for a definition in the online dictionary using api. If the definition succesfully finded, the app shows it to the user, and the word itself is hidden behind flip cards.
+[Word Wheel](https://flashdrag.github.io/word-wheel) is JavaScript educational game in which a user guesses words by their definitions. After a player has selected a certain topic of words and starts the game, the app gets a random word on this topic from the local array and searches for a definition in the online dictionary using API. If the definition is successfully found, the app shows it to the user, and the word itself is hidden behind flip cards.
 
 ![Responsive Mockup](docs/supp-images/responsive-mockup.png)
 
@@ -38,10 +38,10 @@
 
 ### User Stories
 - #### Firt time user
-  - As a first time player, I want to see the game instructions/rules.
-  - As a first time user of the game, I want to easily understand the aims of the game.
-  - As a first time user of the game, I want to be able to start the game easily.
-  - As a first time player, I want to be able select a topic of the words
+  - As a first-time player, I want to see the game instructions/rules.
+  - As a first-time user of the game, I want to easily understand the aims of the game.
+  - As a first-time user of the game, I want to be able to start the game easily.
+  - As a first-time player, I want to be able to select a topic of the words
 
 - #### Returning user
   - As a returning user of the game, I want to be able to start the game again.
@@ -50,12 +50,12 @@
 
 
 - #### Frequent user goals
-  - As a frequent user, I want initiates and controls game actions.
-  - As a frequent user, I want see progress indicators.
+  - As a frequent user, I want to initiate and control game actions.
+  - As a frequent user, I want to see progress indicators.
   - As a player, I want to be able to spell out a word if the definition is hard to understand.
   - As a frequent user, I want to discover an intuitive interface that will guide me through all the stages of the game.
-  - As a frequent user, I want to contact with the game developer.
-  - As a frequent user, I want get all interaction feedback.
+  - As a frequent user, I want to contact the game developer.
+  - As a frequent user, I want to get all interaction feedback.
   - As a frequent user, I want to be notified of all errors resulting from my actions.
 
 [Back to top](#table-of-contents)
@@ -73,12 +73,12 @@ The Word Wheel game was designed based on wireframes produced in [Balsamiq](http
 
 ### Design Choices
 
-The game is designed with interactive and intuitive interface. Consistency evident across all page and covers interactivity as well as design. User actions are confirmed where appropriate, feedback is given at all times.
-The appearance and UI design is quite user-friendly, simple and responsive. The game page was designed to fit any mobile screen resolution both vertically and horizontally.
+The game is designed with an interactive and intuitive interface. Consistency evident across all page and covers interactivity as well as design. User actions are confirmed where appropriate, feedback is given at all times.
+The appearance and UI design are quite user-friendly, simple, and responsive. The game page was designed to fit any mobile screen resolution both vertically and horizontally.
 
 
 - #### Game Structure
-  The game is based on a single interactive page with significant interactive functionality. The page is designed in a such way to guide the user through all stages of the game from top to bottom in a consistent and intuitive manner, reducing cognitive overload for a better user experience.
+  The game is based on a single interactive page with significant interactive functionality. The page is designed in a such way as to guide the user through all stages of the game from top to bottom consistently and intuitively, reducing cognitive overload for a better user experience.
   The main js script is attached to the index.html page as a module.
   ES6 modules with import and export statements are used to get data.
   404.html page for defensive design.
@@ -127,7 +127,7 @@ Topic names and words are stored in the [vocabData.js](https://github.com/FlashD
 
 ### Game Menu
   The game menu includes two buttons (`Topics` and `Rules`) and was implemented in such a way that the user can read the game instructions/rules and select the topic of words which is an integral part of the game.
-  The nav menu located on the top right corner of the game page for convenient user access. The menu buttons respond to mouse hover and change text color to brighter to give user feedback. Also, if the user tries to start the game but the topic has not yet been selected, the `Topics` button is temporarily highlighted.
+  The nav menu is located on the top right corner of the game page for convenient user access. The menu buttons respond to mouse hover and change the text color to brighter to give user feedback. Also, if the user tries to start the game but the topic has not yet been selected, the `Topics` button is temporarily highlighted.
 
   Menu|Highlighted Menu
   |-|-|
@@ -135,10 +135,10 @@ Topic names and words are stored in the [vocabData.js](https://github.com/FlashD
 
 
 - #### Topic dropdown menu
-  The choice of topics is implemented by clicking on the `Topics` button in the form of a drop-down menu. The list of topics updated and displays every time when the user clicks on `Topics` button. If the user tries to start a new game cycle but no topic is selected, the user will be prompted to select one.
-  When the topic is selected by the user from dropdown menu, the app changes the button name for the name of the selected topic.
+  The choice of topics is implemented by clicking on the `Topics` button in the form of a drop-down menu. The list of topics is updated and displayed every time when the user clicks on the `Topics` button. If the user tries to start a new game cycle but no topic is selected, the user will be prompted to select one.
+  When the topic is selected by the user from the dropdown menu, the app changes the button name for the name of the selected topic.
   During the game cycle, the app will refer to the button's `data-value` attribute which stores the row topic name, to search for the relevant word.
-  The topic name will be removed from the dropdown menu during the game if the topics word list is exhausted. The user can select a topic of the words at any time of the game, but a new word from the topic will be received only when the cycle of current game is completed.
+  The topic name will be removed from the dropdown menu during the game if the topic's word list is exhausted. The user can select a topic of the words at any time in the game, but a new word from the topic will be received only when the cycle of the current game is completed.
 
   Dropdown menu|Selected Topic
   |-|-|
@@ -148,7 +148,7 @@ Topic names and words are stored in the [vocabData.js](https://github.com/FlashD
 - #### Rules
   The rule set can be opened at any time by the user, as he/she may need to clarify some details of the game.
   The rules section opens on the same page on top of the game window.
-  On the rules pages, in addition to the ruleset itself, the user also has access to a link to the game repository itself which opens in a new page.
+  On the rules pages, in addition to the ruleset itself, the user also has access to a link to the game repository itself which opens on a new page.
 
   ![Rules](docs/features/rules.png)
 
@@ -163,9 +163,9 @@ Clicking on the `Spin the Wheel` button once initiates the launch of the game cy
 
 ### Wheel
 At the beginning of the game cycle, the animation of the wheel spinning and the random change of letters that are not associated with the word is started
-If the data is successfully extracted, the color of the wheel changes to yellow and a question mark is displayed inside.
-If the user entered the wrong answer or opened the whole word manually, the color changes to red and X mark is displayed inside.
-If the user gave the correct answer, the color changes to turquoise and the checkmark is displayed inside.
+If the data is successfully extracted, the color of the wheel changes to yellow, and a question mark is displayed inside.
+If the user entered the wrong answer or opened the whole word manually, the color changes to red, and an X mark is displayed inside.
+If the user gave the correct answer, the color changes to turquoise, and the checkmark is displayed inside.
 
 |||
 |-|-|
@@ -186,7 +186,7 @@ Initially, the keyword is hidden behind the flipped tiles. The user has the abil
 |![Hidden word](docs/features/hidden-word.png)|![Revealed word](docs/features/revealed-word.png)|
 
 ### Input field
-While the game is not active, the input field is disabled and the placeholder text prompts the user to `spin the wheel`. When the user has started the game cycle, the input field becomes active and the user is prompted to enter a answer.
+While the game is not active, the input field is disabled and the placeholder text prompts the user to `spin the wheel`. When the user has started the game cycle, the input field becomes active and the user is prompted to enter an answer.
 
 |Disabled Input field|Active Input field|
 |-|-|

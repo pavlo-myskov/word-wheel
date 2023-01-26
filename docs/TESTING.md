@@ -22,24 +22,24 @@
 - [x] Closing the rules box with the `Have a Good Game!` button
 - [x] Opening a developer repository in a new tab via a link in the rules box
 - [x] Expanding the dropdown menu by clicking on a `Topics` button
-- [x] Hidding the dropdown menu by clicking on a `Topics` button
-- [x] Hidding the dropdown menu after selecting a certain topic
+- [x] Hiding the dropdown menu by clicking on a `Topics` button
+- [x] Hiding the dropdown menu after selecting a certain topic
 - [x] Starting the game cycle and wheel animation by pressing the `space bar`
 - [x] Starting the game cycle and wheel animation by clicking on a `Spin the Wheel` button
 - [x] User notifications when starting the game if no topic is selected
 - [x] Highlighting the topic button if no topic is selected when starting the game
-- [x] Deactivation the `Spin the Wheel` button after a single click and succesfull start
-- [x] Stopping the wheel animation when word and definition is displayed
+- [x] Deactivation the `Spin the Wheel` button after a single click and successful start
+- [x] Stopping the wheel animation when word and definition are displayed
 - [x] Displaying question mark inside the wheel if word and definition is displayed
 - [x] Displaying definition
 - [x] Displaying letters by clicking on the tile
-- [x] Unblocking the input field if word and definition is displayed
-- [x] Highlighting the input field if word and definition is displayed
-- [x] Unblocking the `submit` button if word and definition is displayed
-- [x] User notifications when submitting the answer if input field is empty
-- [x] Submiting the answer by pressing the `Enter` key
+- [x] Unblocking the input field if word and definition are displayed
+- [x] Highlighting the input field if the word and definition are displayed
+- [x] Unblocking the `submit` button if the word and definition are displayed
+- [x] User notifications when submitting the answer if the input field is empty
+- [x] Submitting the answer by pressing the `Enter` key
 - [x] Revealing the whole word if the user submitted an incorrect answer
-- [x] Revealing the whole word if the user submitted an correct answer
+- [x] Revealing the whole word if the user submitted a correct answer
 - [x] Replenishment of the `credit score` at the beginning of the game cycle, which is the number of letters in the word
 - [x] Deducting one point by each revealed letter from the `credit score`
 - [x] Resetting the `credit score` at the end of the game cycle
@@ -128,13 +128,13 @@ The [Google Chrome LightHouse](https://developer.chrome.com/docs/lighthouse) was
 [Back to top](#contents)
 
 ## Bugs/Issues
-When the Dictionary API not responding or is fault, the game does't work as it doesn't receive definitions.
-The user is notified when the API returns status code 500 - Internal Server Error, not responding for 5 or more seconds or getting 'Failed to fetch' error message.
+When the Dictionary API not responding or is at fault, the game doesn't work as it doesn't receive definitions.
+The user is notified when the API returns status code 500 - Internal Server Error, not responding for 5 or more seconds or getting a 'Failed to fetch' error message.
 #### Unresolved
-- 100vh not constant in mobile browser. The page takes up the full height of the screen only when the site bar is hidden on scroll up.
+- 100vh is not constant in a mobile browser. The page takes up the full height of the screen only when the site bar is hidden on the scroll up.
 
 ### Error handing
-- [x] To handle errors that occur during data processing, were created custom error handlers that extend native `Error` object.
+- [x] To handle errors that occur during data processing were created custom error handlers that extend the native `Error` object.
 Custom error handlers help catch specific errors and provide better control over code flow.
 - [x] The code intelligently handles empty or invalid data.
 - [x] API calls that fail to execute or return data will be handled gracefully, with the site users notified in an obvious way
