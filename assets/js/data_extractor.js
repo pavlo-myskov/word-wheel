@@ -20,12 +20,20 @@ export async function getData() {
       definition = await getDefinition(word);
       break;
     } catch (error) {
+      console.log(error.response.status);
       // handle rethrow-ed HttpError instance and check responce status code. Restart loop
       // code 404 - the server cannot find the requested resource
       if (error instanceof HttpError && error.response.status == 404) {
         console.log(`${error}. | Definition for word <${word}> Not found. Searching new one...`);
       } else if (error instanceof WordError) {
-        console.log(`${error} Searching new one...`)
+        console.log(`${error} Searching new one...`);
+      } if (error instanceof HttpError && error.response.status == 500) {
+        console.log(`${error}. Internal Server Error - 500.`);
+        alert(`
+        Sorry pal, something went wrong, and its not your fault.
+        You can try launching the game again at later time`
+        );
+        location.reload();
       } else {
         throw error;
       }
