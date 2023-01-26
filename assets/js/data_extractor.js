@@ -26,13 +26,6 @@ export async function getData() {
         console.log(`${error}. | Definition for word <${word}> Not found. Searching new one...`);
       } else if (error instanceof WordError) {
         console.log(`${error} Searching new one...`);
-      } if (error instanceof HttpError && error.response.status == 500) {
-        console.log(`${error}. Internal Server Error - 500.`);
-        alert(`
-        Sorry pal, something went wrong, and its not your fault.
-        You can try launching the game again at later time`
-        );
-        location.reload();
       } else {
         throw error;
       }
@@ -100,7 +93,7 @@ async function getTopic() {
     throw new TopicError(`Topic not selected by the User`);
   } else {
     alert('Select a topic or refresh the game page!');
-    throw new TopicError( `
+    throw new TopicError(`
     Data-value of the topic button: <${selectedTopic}>;
     InnerHTML of the topic button: <${topicBtn.innerHTML}>;
     Unknown error thought extracting topic. Aborting!
@@ -142,17 +135,45 @@ async function getRandomWord(topicName) {
 async function getDefinition(word) {
   const BASE_API_URL = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 
-  let response = await fetch(BASE_API_URL + word);
-  if (response.status == 200) {
-    let dataObj = await response.json();  // .json method convert json to js obj
+  try {
+    // the timeout promise is set to reject with an error message of "Timeout" after 5 seconds
+    let timeout = new Promise((reject) => {
+      setTimeout(() => reject(new Error('Timeout')), 5000);
+    });
 
-    let definition = processDefinition(word, dataObj);
+    // The Promise.race will return a promise that will resolve or reject as soon as timeout or fetch() is resolved or rejected
+    // If fetch() takes longer than 3 seconds to resolve or reject, the timeout promise will be rejected first,
+    // and the error "Timeout" will be caught in the catch block.
+    let response = await Promise.race([timeout, fetch(BASE_API_URL + word)]);
+    if (response.status == 200) { // Handle successful response
+      let dataObj = await response.json();  // .json method convert json to js obj
 
-    return definition;
+      let definition = processDefinition(word, dataObj);
 
-  } else {
-    // creates new error object with passing a response of a fetch request
-    throw new HttpError(response);
+      return definition;
+
+    } else {
+      // creates new error object with passing a response of a fetch request
+      throw new HttpError(response);
+    }
+  } catch (error) {
+    if (error instanceof HttpError && error.response.status == 500) {  // handle Internal Server Error
+      console.log(`${error}. Internal Server Error - 500.`);
+      alert(`
+      Sorry pal, something went wrong, and its not your fault.
+      You can try launching the game again at later time`
+      );
+      location.reload();
+    } else if (error.message === 'Timeout' || error.message === 'Failed to fetch') {  // Handle timeout error or 'Failed to fetch' message
+      console.log(`${error}. API not responding`);
+      alert(`
+        Sorry pal, something went wrong, and its not your fault.
+        You can try launching the game again at later time`
+      );
+      location.reload();
+    } else {
+      throw error;
+    }
   }
 }
 

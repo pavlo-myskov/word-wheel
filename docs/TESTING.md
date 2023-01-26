@@ -128,9 +128,10 @@ The [Google Chrome LightHouse](https://developer.chrome.com/docs/lighthouse) was
 [Back to top](#contents)
 
 ## Bugs/Issues
+When the Dictionary API not responding or is fault, the game does't work as it doesn't receive definitions.
+The user is notified when the API returns status code 500 - Internal Server Error, not responding for 5 or more seconds or getting 'Failed to fetch' error message.
 #### Unresolved
 - 100vh not constant in mobile browser. The page takes up the full height of the screen only when the site bar is hidden on scroll up.
-- When the Dictionary API not responding, the game does't work as it doesn't receive a definition. The user is notified if the API returns status code 500 - Internal Server Error.
 
 ### Error handing
 - [x] To handle errors that occur during data processing, were created custom error handlers that extend native `Error` object.
