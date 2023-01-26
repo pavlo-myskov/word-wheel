@@ -31,8 +31,6 @@ export async function getData() {
       }
     }
   }
-
-  console.log(`|getData()| word: ${word}, definition: ${definition}`);
   return { 'word': word, 'definition': definition }
 }
 
