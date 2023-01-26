@@ -449,6 +449,10 @@ nav {
   margin-top: 20px;
 }
 
+#hotkeys {
+  font-size: 0.9em;
+}
+
 #bye {
   color: #3d1b0b;
   border-bottom: 0.1px dotted;
