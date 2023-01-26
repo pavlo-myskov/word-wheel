@@ -8,19 +8,24 @@ window.addEventListener('load', () => {
   // Attach an event listener to the dropdown menu
   document.getElementById('topic-dropdown-menu').addEventListener('click', updateTopicBtn);
   // Attach an event listener to the spin button and remove it after runs the func runGame only once
-  document.getElementById('btn-spin').addEventListener('click', () => {runGame()}, { once: true });
-
-  // Trigger the submit button with a click if the user presses the "Enter" key
-  document.getElementById('answer-box').addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      document.getElementById('btn-sm').click();
-    }
-  });
-
+  document.getElementById('btn-spin').addEventListener('click', () => { runGame() }, { once: true });
+  // Attach an event listener to the rules button
   document.getElementById('rules-btn').addEventListener('click', displayRules);
 
 
+  document.body.onkeydown = function (e) {
+    let isDisabledInput = document.getElementById('answer-box').disabled;
+    // Trigger the `Spin the Wheel` button with a click if the user presses the "Space" key and input field is Not active
+    if (isDisabledInput && e.key === " ") {
+      e.preventDefault();
+      document.getElementById('btn-spin').click();
+    }
+      // Trigger the `Submit` button with a click if the user presses the "Enter" key and input field is Active
+    if (!isDisabledInput && e.key === "Enter" ) {
+      e.preventDefault();
+      document.getElementById('btn-sm').click();
+    }
+  }
 })
 
 /**
