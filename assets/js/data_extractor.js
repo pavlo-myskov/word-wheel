@@ -152,6 +152,8 @@ async function getDefinition(word) {
 
       return definition;
 
+    } else if (response == 'Error: Timeout'){
+      throw response;
     } else {
       // creates new error object with passing a response of a fetch request
       throw new HttpError(response);
