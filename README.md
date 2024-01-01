@@ -233,7 +233,7 @@ See [TESTING.md](https://github.com/FlashDrag/word-wheel/blob/master/docs/TESTIN
 The Live link is https://flashdrag.github.io/word-wheel
 
 The app is hosted on GitHub pages and used a custom domain, which is registered via Namecheap [Educational Promotion](https://nc.me/).
-The game also can be accessed using link: https://www.wordwheel.me
+The game also can be accessed using link: https://www.wordwheel.me (expired, not renewed. Use https://flashdrag.github.io/word-wheel instead)
 
 Here you can find instructions:
 [How to register a domain at nc.me](https://www.namecheap.com/support/knowledgebase/article.aspx/9687/35/how-to-register-a-domain-via-our-educational-promotion-at-ncme/)
